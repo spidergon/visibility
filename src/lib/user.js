@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import md5 from 'md5'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import firebase, { auth } from './base'
+import firebase, { auth, addUser } from './base'
 
 /**
  * Hook that gives the authenticated user.
@@ -18,6 +18,13 @@ export default function useUser () {
 
   useEffect(() => {
     if (user) {
+      // Add some info into the database
+      addUser({
+        uid: user.uid,
+        created: new Date(),
+        admin: false
+      })
+      // Set the user
       setFormattedUser({
         displayName: user.displayName,
         email: user.email,

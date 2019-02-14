@@ -55,6 +55,40 @@ export function deleteFile (path) {
 /*  --- FireStore --- */
 
 const storeCollectionName = 'stores'
+const userCollectionName = 'users'
+
+/**
+ * Create a new user in the database.
+ * @param {Object} data - the data of the new user.
+ */
+export async function addUser (data) {
+  if (data && data.uid) {
+    if (!(await userExists(data.uid))) {
+      const uid = data.uid
+      delete data.uid
+      return db
+        .collection(userCollectionName)
+        .doc(uid)
+        .set(data)
+    }
+  }
+}
+
+/**
+ * Check if a user exists.
+ * @param {string} id the id of the user.
+ */
+export async function userExists (id) {
+  const doc = await db
+    .collection(userCollectionName)
+    .doc(id)
+    .get()
+    .catch(() => {
+      /* Silent is golden */
+    })
+  if (doc) return doc.exists
+  return false
+}
 
 /**
  * Create a new store in the database.
@@ -63,8 +97,9 @@ const storeCollectionName = 'stores'
 export function addStore (data) {
   if (auth.currentUser && data && data.slug) {
     const slug = data.slug
+    data.author = auth.currentUser.uid
     data.created = new Date()
-    data.uid = auth.currentUser.uid
+    data.published = false
     delete data.slug
     return db
       .collection(storeCollectionName)
@@ -82,7 +117,11 @@ export async function storeExists (id) {
     .collection(storeCollectionName)
     .doc(id)
     .get()
-  return doc.exists
+    .catch(() => {
+      /* Silent is golden */
+    })
+  if (doc) return doc.exists
+  return false
 }
 
 /**
@@ -113,8 +152,9 @@ export function useMyStores (user) {
       if (cancelled) return
       setLoading(true)
       db.collection(storeCollectionName)
-        .where('uid', '==', user.uid)
+        .where('author', '==', user.uid)
         .orderBy('created', 'desc')
+        .limit(10)
         .get()
         .then(snap => {
           const stores = []

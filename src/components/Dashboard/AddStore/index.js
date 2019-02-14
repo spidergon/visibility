@@ -132,7 +132,12 @@ function AddStore () {
           photos,
           address,
           coordinates
-        }).then(() => setTabVal(0)) //  then, go to tap #0 (Mes Vitrines)
+        })
+          .then(() => setTabVal(0)) //  then, go to tap #0 (Mes Vitrines)
+          .catch(err => {
+            console.log(err)
+            showSnack("Une erreur interne s'est produite.", 'error')
+          })
       } else {
         setLoading(false)
         dispatch('reset')

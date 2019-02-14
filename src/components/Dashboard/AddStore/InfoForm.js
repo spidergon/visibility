@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
 import Grid from '@material-ui/core/Grid'
 import { slugify } from '../../../lib/utils'
-import { storeExists, getStore } from '../../../lib/base'
+import { storeExists } from '../../../lib/base'
 
 const Wrapper = styled.div`
   display: grid;
