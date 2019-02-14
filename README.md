@@ -10,7 +10,7 @@
 - React (UI library)
 - GatsbyJS (static site framework)
 - Firebase (Authentication, Database (Cloud FireStore) and Storage) 
-- styled-components (CSS styling solution library)
+- styled-components (CSS styling)
 - Leaflet and OpenStreetMap (Maps)
 
 ## Setup
