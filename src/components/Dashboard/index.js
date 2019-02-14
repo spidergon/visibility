@@ -24,7 +24,7 @@ function Dash () {
       showSnack('Connexion requise !', 'error')
       navigate('/connexion')
     }
-  })
+  }, [userLoading, user])
 
   const Page = () => {
     switch (tabVal) {

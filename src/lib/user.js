@@ -14,6 +14,9 @@ export default function useUser () {
 
   useEffect(() => {
     setUserLoading(initialising)
+  }, [initialising])
+
+  useEffect(() => {
     if (user) {
       setFormattedUser({
         displayName: user.displayName,
@@ -31,7 +34,7 @@ export default function useUser () {
     } else {
       setFormattedUser(null)
     }
-  }, [user, initialising])
+  }, [user])
 
   return { userLoading, user: formattedUser }
 }

@@ -107,8 +107,10 @@ export function useMyStores (user) {
   const [loading, setLoading] = useState(false)
   const [stores, setStores] = useState([])
 
-  useEffect(() => {
+  const myStores = () => {
+    let cancelled = false
     if (user && user.uid) {
+      if (cancelled) return
       setLoading(true)
       db.collection(storeCollectionName)
         .where('uid', '==', user.uid)
@@ -119,15 +121,23 @@ export function useMyStores (user) {
           snap.forEach(function (doc) {
             stores.push({ id: doc.id, ...doc.data() })
           })
+          if (cancelled) return
           setStores(stores)
           setLoading(false)
         })
         .catch(err => {
+          if (cancelled) return
           setLoading(false)
           console.log(err)
           showSnack("Une erreur interne s'est produite.", 'error')
         })
     }
+    return () => (cancelled = true) // to cancel updates of states when component is unmounted
+  }
+
+  useEffect(() => {
+    const cancel = myStores()
+    return () => cancel() // Cleaning
   }, [user])
 
   return { loading, stores }
