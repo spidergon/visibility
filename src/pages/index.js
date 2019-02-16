@@ -4,7 +4,7 @@ import Image from '../components/Image'
 import Seo from '../components/Seo'
 import Link from '../components/Link'
 
-const IndexPage = () => (
+export default () => (
   <Layout>
     <Seo keywords={['gatsby', 'application', 'react']} title="Accueil" />
     <div className="inner wrap">
@@ -70,5 +70,3 @@ const IndexPage = () => (
     </div>
   </Layout>
 )
-
-export default IndexPage

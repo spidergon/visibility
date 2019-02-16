@@ -2,12 +2,12 @@
   "name": "visibility",
   "description": "Visibilité des entreprises en Guyane et dans les Caraïbes",
   "version": "0.1.0",
-  "author": "Christopher Servius <chris@toucandigitalpartner.com>",
+  "author": "@chrisservius",
   "private": true,
   "license": "MIT",
   "scripts": {
+    "develop": "gatsby develop",
     "build": "gatsby build",
-    "start": "gatsby develop",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' -o ./eslint_result.html -f html ."
   },
