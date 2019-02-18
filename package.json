@@ -2,9 +2,17 @@
   "name": "visibility",
   "description": "Visibilité des entreprises en Guyane et dans les Caraïbes",
   "version": "0.1.0",
-  "author": "@chrisservius",
+  "author": "Chris Servius (https://github.com/spidergon)",
   "private": true,
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spidergon/visibility"
+  },
+  "homepage": "https://github.com/spidergon/visibility#readme",
+  "bugs": {
+    "url": "https://github.com/spidergon/visibility/issues"
+  },
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
@@ -16,8 +24,8 @@
     "@material-ui/icons": "^3.0.2",
     "babel-plugin-styled-components": "^1.10.0",
     "cookieconsent": "^3.1.0",
-    "firebase": "^5.8.2",
-    "gatsby": "^2.1.0",
+    "firebase": "^5.8.3",
+    "gatsby": "^2.1.4",
     "gatsby-image": "^2.0.29",
     "gatsby-plugin-manifest": "^2.0.17",
     "gatsby-plugin-offline": "^2.0.23",
@@ -28,20 +36,20 @@
     "gatsby-transformer-sharp": "^2.1.13",
     "leaflet": "^1.4.0",
     "md5": "^2.2.1",
-    "react": "16.8.1",
-    "react-dom": "16.8.1",
+    "react": "16.8.2",
+    "react-dom": "16.8.2",
     "react-dropzone": "^8.1.0",
-    "react-firebase-hooks": "^1.0.0",
+    "react-firebase-hooks": "^1.1.0",
     "react-helmet": "^5.2.0",
     "react-hooks-global-state": "^0.7.0",
-    "react-leaflet": "^2.2.0",
+    "react-leaflet": "^2.2.1",
     "slugify": "^1.3.4",
     "styled-components": "^4.1.3",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "eslint": "^5.13.0",
+    "eslint": "^5.14.1",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-jsx": "^6.0.2",
     "eslint-plugin-babel": "^5.3.0",
@@ -49,7 +57,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-react": "^7.12.4",
-    "eslint-plugin-react-hooks": "1.0.1",
+    "eslint-plugin-react-hooks": "1.0.2",
     "eslint-plugin-standard": "^4.0.0"
   }
 }

@@ -8,7 +8,9 @@ function Account () {
   return (
     <Wrapper>
       <Seo title="Mon Compte" />
-      <p>{'Mon Compte'}</p>
+      <center>
+        <h2>{'Mon Compte'}</h2>
+      </center>
     </Wrapper>
   )
 }

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
 import { useMyStores } from '../../lib/base'
 
@@ -8,12 +9,20 @@ const Wrapper = styled.div``
 
 function Stores ({ fav, user, userLoading }) {
   const { loading, stores } = useMyStores(user)
+  const [title, setTitle] = useState('')
+
+  useEffect(() => {
+    const nb = stores && stores.length ? ` (${stores.length})` : ``
+    setTitle(fav ? `Mes Favoris${nb}` : `Mes Vitrines${nb}`)
+  }, [stores])
 
   return (
     <Wrapper>
-      <Seo title={fav ? 'Mes Favoris' : 'Mes Vitrines'} />
-      <p>{'Mes Vitrines'}</p>
-      {(userLoading || loading) && <p>{'Loading...'}</p>}
+      <Seo title={title} />
+      <center>
+        <h2>{title}</h2>
+        {(userLoading || loading) && <CircularProgress />}
+      </center>
       {stores && stores.map(store => <div key={store.id}>{store.id}</div>)}
     </Wrapper>
   )
