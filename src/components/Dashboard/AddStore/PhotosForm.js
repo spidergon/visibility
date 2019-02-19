@@ -70,7 +70,7 @@ const limitSize = 5 // MB
 const maxSize = limitSize * 1048576 // maxSize * 1024 * 1024 (MB)
 const maxFiles = 3
 
-function PhotosForm ({ setFormError, photos, setPhotos }) {
+function PhotosForm ({ photos, setPhotos }) {
   const [loading, setLoading] = useState(false)
   const [dropError, setDropError] = useState('')
 
@@ -172,7 +172,6 @@ function PhotosForm ({ setFormError, photos, setPhotos }) {
 }
 
 PhotosForm.propTypes = {
-  setFormError: PropTypes.func.isRequired,
   photos: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   setPhotos: PropTypes.func.isRequired
 }

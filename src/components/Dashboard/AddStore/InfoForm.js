@@ -27,6 +27,8 @@ const Wrapper = styled.div`
   }
 `
 
+let unmounted = false // block async state update when component has been unmouted
+
 function InfoForm ({
   setFormError,
   name,
@@ -47,24 +49,31 @@ function InfoForm ({
   const [siretError, setSiretError] = useState('')
 
   useEffect(() => {
-    setNameError('')
+    if (nameError) setNameError('')
   }, [name])
 
   useEffect(() => {
-    setDescriptionError('')
+    if (descriptionError) setDescriptionError('')
   }, [description])
 
   useEffect(() => {
-    setTagError('')
+    if (tagError) setTagError('')
   }, [tag])
 
   useEffect(() => {
-    setSiretError('')
+    if (siretError) setSiretError('')
   }, [siret])
 
   useEffect(() => {
     setFormError(!!(nameError || descriptionError || tagError || siretError))
   }, [nameError, descriptionError, tagError, siretError])
+
+  useEffect(() => {
+    unmounted = false
+    return () => {
+      unmounted = true
+    }
+  }, [])
 
   const handleAddTag = () => {
     if (!tag) return
@@ -84,6 +93,7 @@ function InfoForm ({
   const verifyName = async () => {
     if (!name) return setNameError('Veuillez saisir un nom.')
     if (await storeExists(slugify(name))) {
+      if (unmounted) return
       setNameError("Ce nom n'est pas disponible.")
     }
   }

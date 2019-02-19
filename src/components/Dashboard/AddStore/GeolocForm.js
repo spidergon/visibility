@@ -20,7 +20,21 @@ async function getAddress (lat, lng) {
   return null
 }
 
-function GeolocForm ({ address, setAddress, coordinates, setCoordinates }) {
+function GeolocForm ({
+  setFormError,
+  address,
+  setAddress,
+  coordinates,
+  setCoordinates
+}) {
+  useEffect(() => {
+    if (!address) setFormError(true)
+  }, [])
+
+  useEffect(() => {
+    if (address) setFormError(false)
+  }, [address])
+
   useEffect(() => {
     const [lat, lng] = coordinates
     if (lat !== 0 && lng !== 0) {
@@ -51,6 +65,7 @@ function GeolocForm ({ address, setAddress, coordinates, setCoordinates }) {
 }
 
 GeolocForm.propTypes = {
+  setFormError: PropTypes.func.isRequired,
   address: PropTypes.string,
   setAddress: PropTypes.func.isRequired,
   coordinates: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,

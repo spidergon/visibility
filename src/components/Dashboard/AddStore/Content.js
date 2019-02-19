@@ -23,10 +23,10 @@ function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
       content = <InfoForm {...info} setFormError={setError} />
       break
     case 1:
-      content = <PhotosForm {...photos} setFormError={setError} />
+      content = <PhotosForm {...photos} />
       break
     case 2:
-      content = <GeolocForm {...geoloc} />
+      content = <GeolocForm {...geoloc} setFormError={setError} />
       break
     default:
       throw new Error(`Unknown step: ${step}`)
@@ -43,7 +43,7 @@ function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
       <Actions>
         <Button
           className="button"
-          disabled={step === 0 || error}
+          disabled={step === 0}
           onClick={e => dispatch('prev')}
         >
           {'Retour'}
