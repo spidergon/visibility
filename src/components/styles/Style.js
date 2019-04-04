@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components'
 import './style.css'
 
 const theme = {
+  primary: '#3f51b5',
   // black: '#17394d',
   black: '#212121',
   gray: '#dadce0',
