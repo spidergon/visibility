@@ -13,7 +13,7 @@ service cloud.firestore {
       return request.query.limit <= limit;
     }
     match /stores/{storeId} {
-      allow get: if isAdmin() || owner() || resource.data.published == true;
+      allow get: if isAdmin() || owner() || resource.data.status == 'online';
       allow list: if (isAdmin() || owner()) && lessThanLimit(10);
       allow create: if signedIn();
       allow update: if isAdmin() || owner();
