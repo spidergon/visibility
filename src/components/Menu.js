@@ -5,6 +5,7 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Divider from '@material-ui/core/Divider'
 import { setTabVal } from '../lib/state'
+import { dashPath } from '../lib/utils'
 
 function goTo (to, hide, action) {
   if (hide) hide()
@@ -23,18 +24,18 @@ function OffMenu ({ anchor, hide, isOpen, user }) {
 function UserMenu ({ anchor, hide, isOpen, user }) {
   return (
     <Menu anchorEl={anchor} id="user-menu" onClose={hide} open={isOpen}>
-      <MenuItem onClick={() => goTo('/dashboard', hide, () => setTabVal(3))}>
+      <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(3))}>
         {`${user.displayName ? `${user.displayName} ` : ''}${
           user.email ? `(${user.email})` : ''
         }`}
       </MenuItem>
       <Divider />
-      {window.location.pathname !== '/dashboard' && (
-        <MenuItem onClick={() => goTo('/dashboard', hide, () => setTabVal(0))}>
+      {window.location.pathname !== dashPath && (
+        <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(0))}>
           {'Mon compte'}
         </MenuItem>
       )}
-      <MenuItem onClick={() => goTo('/dashboard', hide, () => setTabVal(2))}>
+      <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(2))}>
         {'Créer une Vitrine'}
       </MenuItem>
       <Divider />

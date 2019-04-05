@@ -6,6 +6,7 @@ import { $ } from '../lib/bling'
 import useUser from '../lib/user'
 import { OffMenu, UserMenu } from './Menu'
 import { HeaderTab } from './Dashboard/Tabs'
+import { dashPath } from '../lib/utils'
 
 const Wrapper = styled.header`
   position: sticky;
@@ -74,7 +75,7 @@ function Header ({ siteTitle }) {
           </Link>
         </nav>
         <nav className="navs">
-          {window.location.pathname === '/dashboard' && user && <HeaderTab />}
+          {window.location.pathname === dashPath && user && <HeaderTab />}
         </nav>
         <nav className="profile">
           {window.location.pathname !== '/connexion' &&

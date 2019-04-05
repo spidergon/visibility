@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { signOut } from '../lib/user'
 import { setTabVal } from '../lib/state'
 import { $ } from '../lib/bling'
+import { dashPath } from '../lib/utils'
 
 const Wrapper = styled.ul`
   position: absolute;
@@ -109,16 +110,16 @@ function OffMenu ({ anchor, hide, isOpen, user }) {
     <Wrapper className={isOpen ? 'offmenu visible' : 'offmenu'}>
       {user && !user.isAnonymous ? (
         <>
-          <li onClick={() => goTo('/dashboard', hide, () => setTabVal(3))}>{`${
+          <li onClick={() => goTo(dashPath, hide, () => setTabVal(3))}>{`${
             user.displayName ? `${user.displayName} ` : ''
           }${user.email ? `(${user.email})` : ''}`}</li>
           <hr />
-          {window.location.pathname !== '/dashboard' && (
-            <li onClick={() => goTo('/dashboard', hide, () => setTabVal(0))}>
+          {window.location.pathname !== dashPath && (
+            <li onClick={() => goTo(dashPath, hide, () => setTabVal(0))}>
               {'Mon compte'}
             </li>
           )}
-          <li onClick={() => goTo('/dashboard', hide, () => setTabVal(2))}>
+          <li onClick={() => goTo(dashPath, hide, () => setTabVal(2))}>
             {'Créer une Vitrine'}
           </li>
           <hr />
@@ -144,16 +145,16 @@ function UserMenu ({ anchor, hide, isOpen, user }) {
 
   return (
     <Wrapper className={isOpen ? 'usermenu visible' : 'usermenu'}>
-      <li onClick={() => goTo('/dashboard', hide, () => setTabVal(3))}>{`${
+      <li onClick={() => goTo(dashPath, hide, () => setTabVal(3))}>{`${
         user.displayName ? `${user.displayName} ` : ''
       }${user.email ? `(${user.email})` : ''}`}</li>
       <hr />
-      {window.location.pathname !== '/dashboard' && (
-        <li onClick={() => goTo('/dashboard', hide, () => setTabVal(0))}>
+      {window.location.pathname !== dashPath && (
+        <li onClick={() => goTo(dashPath, hide, () => setTabVal(0))}>
           {'Mon compte'}
         </li>
       )}
-      <li onClick={() => goTo('/dashboard', hide, () => setTabVal(2))}>
+      <li onClick={() => goTo(dashPath, hide, () => setTabVal(2))}>
         {'Créer une Vitrine'}
       </li>
       <hr />

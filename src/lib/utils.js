@@ -37,6 +37,8 @@ export function slugify (name) {
   return require('slugify')(name, { remove: /[*+~.()'"!:@]/g, lower: true })
 }
 
+export const dashPath = '/app/dashboard'
+
 // function geoloc (success) {
 //   if ('geolocation' in navigator) {
 //     navigator.geolocation.getCurrentPosition(

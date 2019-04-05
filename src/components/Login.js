@@ -4,6 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { Wrapper } from './styles/LoginStyle'
 import Button from './Button'
 import LoginEmail from './LoginEmail'
+import { dashPath } from '../lib/utils'
 import useUser, {
   AUTH_CREDENTIAL_IN_USE,
   signIn,
@@ -11,7 +12,7 @@ import useUser, {
 } from '../lib/user'
 
 function authHandler () {
-  navigate('/dashboard') // Redirection
+  navigate(dashPath) // Redirection
 }
 
 function Login () {

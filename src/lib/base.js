@@ -124,17 +124,58 @@ export async function storeExists (id) {
   return false
 }
 
+// /**
+//  * Get a store by its id.
+//  * @param {string} id the id of the store.
+//  */
+// export async function getStore (id) {
+//   const doc = await db
+//     .collection(storeCollectionName)
+//     .doc(id)
+//     .get()
+//   if (doc && doc.exists) return { id, ...doc.data() }
+//   return null
+// }
+
 /**
- * Get a store by its id.
- * @param {string} id the id of the store.
+ * Hook that provides the store by its id.
+ * @param {string} id - the id.
+ * @returns {Object} Object containing { loading, store }.
  */
-export async function getStore (id) {
-  const doc = await db
-    .collection(storeCollectionName)
-    .doc(id)
-    .get()
-  if (doc && doc.exists) return { id, ...doc.data() }
-  return null
+export function useMyStore (id) {
+  const [loading, setLoading] = useState(null)
+  const [store, setStore] = useState(null)
+
+  const myStore = () => {
+    let cancelled = false
+    if (id) {
+      if (cancelled) return
+      setLoading(true)
+      db.collection(storeCollectionName)
+        .doc(id)
+        .get()
+        .then(doc => {
+          if (cancelled) return
+          if (doc && doc.exists) {
+            setStore({ id, ...doc.data() })
+          }
+          setLoading(false)
+        })
+        .catch(() => {
+          if (cancelled) return
+          setLoading(false)
+          showSnack(`Vitrine introuvable : ${id}`, 'error')
+        })
+    }
+    return () => (cancelled = true) // to cancel updates of states when component is unmounted
+  }
+
+  useEffect(() => {
+    const cancel = myStore()
+    return () => cancel() // Cleaning
+  }, [])
+
+  return { loading, store }
 }
 
 /**

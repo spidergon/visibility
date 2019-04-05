@@ -3,6 +3,7 @@ import Layout from '../components/Layout'
 import Image from '../components/Image'
 import Seo from '../components/Seo'
 import Link from '../components/Link'
+import { dashPath } from '../lib/utils'
 
 export default () => (
   <Layout>
@@ -14,7 +15,9 @@ export default () => (
       <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
         <Image />
       </div>
-      <Link to="/dashboard">{'Dashboard'}</Link>
+      <Link to={dashPath}>{'Dashboard'}</Link>
+      {' | '}
+      <Link to={'/store/ma-vitrine'}>{'Ma Vitrine'}</Link>
       <p>
         {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta itaque dolor magnam dicta blanditiis, ducimus obcaecati modi dolores non sint sit sunt vitae quia? Ad dolor a qui doloremque?
       Eum officia fugiat corrupti soluta amet aperiam veritatis distinctio sapiente dolorum suscipit debitis architecto nobis consequuntur commodi qui deleniti, dolor blanditiis impedit fuga sequi, tempore inventore velit. Id, voluptatibus ipsam.

@@ -74,7 +74,9 @@ function Card ({
     }
   }, [status])
 
-  console.log(store, userId, defaultImg)
+  useEffect(() => {
+    console.log(store, userId, defaultImg)
+  }, [])
 
   const acceptRemoveDiag = () => {
     setDiagOpen(false)
@@ -113,7 +115,7 @@ function Card ({
         <CardMedia
           className="media"
           image={store.photos.length ? store.photos[0] : defaultImg}
-          onClick={() => navigate(`/${store.id}`)}
+          onClick={() => navigate(`/store/${store.id}`)}
           title="Voir vitrine"
         />
         {/* CONTENT */}
@@ -146,7 +148,7 @@ function Card ({
               open={menuOpen}
               PaperProps={{ style: { maxHeight: 48 * 4.5, width: 200 } }}
             >
-              <MenuItem onClick={() => navigate(`/${store.id}`)}>
+              <MenuItem onClick={() => navigate(`/store/${store.id}`)}>
                 {'Voir vitrine'}
               </MenuItem>
               <Divider />
