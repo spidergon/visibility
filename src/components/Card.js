@@ -24,13 +24,21 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import defaultImg from '../assets/images/gatsby-icon.png'
+import { deleteStore, publishStore } from '../lib/base'
+import { dashPath } from '../lib/utils'
 
 const Wrapper = styled.div`
   .card {
     max-width: 400px;
   }
-  .avatar {
-    background: ${props => props.theme.primary};
+  .status-online {
+    background: green;
+  }
+  .status-waiting {
+    background: orange;
+  }
+  .status-error {
+    background: red;
   }
   .media {
     height: 0;
@@ -45,6 +53,8 @@ const Wrapper = styled.div`
   }
 `
 
+let diagAction
+
 function Card ({
   userId,
   store,
@@ -56,9 +66,11 @@ function Card ({
   const [isOwn] = useState(store.author === userId)
   const [status, setStatus] = useState('(Non publiée)')
   const [loading, setLoading] = useState(false)
-  const [diagOpen, setDiagOpen] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [diagOpen, setDiagOpen] = useState(false)
+  const [diagTitle, setDiagTitle] = useState('')
+  const [diagText, setDiagText] = useState('')
   const [loved, setLoved] = useState(false)
 
   useEffect(() => {
@@ -67,10 +79,9 @@ function Card ({
 
   useEffect(() => {
     if (isOwn) {
-      if (store.published) {
-        if (store.status === 'waiting') setStatus('(En attente)')
-        else if (store.status === 'paused') setStatus('(En pause)')
-      }
+      if (store.status === 'online') setStatus('(En ligne)')
+      if (store.status === 'waiting') setStatus('(En attente)')
+      else if (store.status === 'error') setStatus('(En erreur)')
     }
   }, [status])
 
@@ -78,9 +89,59 @@ function Card ({
     console.log(store, userId, defaultImg)
   }, [])
 
-  const acceptRemoveDiag = () => {
-    setDiagOpen(false)
+  const openDiag = (title, text, action) => {
+    setAnchorEl(null)
+    setDiagOpen(true)
+    setDiagTitle(title)
+    setDiagText(text)
+    diagAction = () => action(store.id, () => navigate(dashPath))
   }
+
+  const openRemoveDiag = () => {
+    openDiag(
+      `Suppression de "${store.name}"`,
+      'Voulez-vous vraiment supprimer cette vitrine ?',
+      deleteStore
+    )
+  }
+
+  const openPublishDiag = () => {
+    openDiag(
+      `Mise en ligne de "${store.name}"`,
+      'Voulez-vous vraiment publier cette vitrine (elle sera placée en attente de validation) ?',
+      publishStore
+    )
+  }
+
+  const Diag = () => (
+    <Dialog
+      aria-labelledby="responsive-dialog-title"
+      onClose={() => setDiagOpen(false)}
+      open={diagOpen}
+    >
+      <DialogTitle id="responsive-dialog-title">{diagTitle}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{diagText}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          autoFocus
+          onClick={() => setDiagOpen(false)}
+          variant="contained"
+        >
+          {'Annuler'}
+        </Button>
+        <Button
+          onClick={() => {
+            setDiagOpen(false)
+            diagAction()
+          }}
+        >
+          {'Ok'}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
 
   return (
     <Wrapper>
@@ -103,7 +164,7 @@ function Card ({
             loading ? (
               <CircularProgress className="progress" />
             ) : (
-              <Avatar aria-label="Store" className="avatar">
+              <Avatar aria-label="Store" className={`status-${store.status}`}>
                 {store.name.substring(0, 1)}
               </Avatar>
             )
@@ -153,45 +214,15 @@ function Card ({
               </MenuItem>
               <Divider />
               <MenuItem>{'Modifier'}</MenuItem>
-              <MenuItem
-                onClick={() => {
-                  setAnchorEl(null)
-                  setDiagOpen(true)
-                }}
-              >
-                {'Supprimer'}
-              </MenuItem>
-              {!store.published && (
+              <MenuItem onClick={openRemoveDiag}>{'Supprimer'}</MenuItem>
+              {!['online', 'waiting'].includes(store.status) && (
                 <div>
                   <Divider />
-                  <MenuItem>{'Publier'}</MenuItem>
+                  <MenuItem onClick={openPublishDiag}>{'Publier'}</MenuItem>
                 </div>
               )}
             </Menu>
-            <Dialog
-              aria-labelledby="responsive-dialog-title"
-              onClose={() => setDiagOpen(false)}
-              open={diagOpen}
-            >
-              <DialogTitle id="responsive-dialog-title">
-                {`Suppression de ${store.name}`}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText>
-                  {'Voulez-vous vraiment supprimer cette vitrine ?'}
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  autoFocus
-                  onClick={() => setDiagOpen(false)}
-                  variant="contained"
-                >
-                  {'Annuler'}
-                </Button>
-                <Button onClick={acceptRemoveDiag}>{'Ok'}</Button>
-              </DialogActions>
-            </Dialog>
+            <Diag />
           </>
         )}
       </MUICard>

@@ -5,6 +5,7 @@
       "queryScope": "COLLECTION",
       "fields": [
         { "fieldPath": "author", "order": "ASCENDING" },
+        { "fieldPath": "archived", "order": "ASCENDING" },
         { "fieldPath": "created", "order": "DESCENDING" }
       ]
     }

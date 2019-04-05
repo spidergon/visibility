@@ -17,7 +17,10 @@
     "develop": "gatsby develop",
     "build": "gatsby build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' -o ./eslint_result.html -f html ."
+    "lint": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' -o ./eslint_result.html -f html .",
+    "fire-storage": "cd firebase && firebase deploy --only storage",
+    "fire-rules": "cd firebase && firebase deploy --only firestore:rules",
+    "fire-index": "cd firebase && firebase deploy --only firestore:indexes"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.3",

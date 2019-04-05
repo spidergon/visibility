@@ -91,24 +91,6 @@ export async function userExists (id) {
 }
 
 /**
- * Create a new store in the database.
- * @param {Object} data - the data of the new store.
- */
-export function addStore (data) {
-  if (auth.currentUser && data && data.slug) {
-    const slug = data.slug
-    data.author = auth.currentUser.uid
-    data.created = new Date()
-    data.published = false
-    delete data.slug
-    return db
-      .collection(storeCollectionName)
-      .doc(slug)
-      .set(data)
-  }
-}
-
-/**
  * Check if a store exists.
  * @param {string} id the id of the store.
  */
@@ -122,6 +104,81 @@ export async function storeExists (id) {
     })
   if (doc) return doc.exists
   return false
+}
+
+/**
+ * Create a new store in the database.
+ * @param {Object} data - the data of the new store.
+ */
+export function addStore (data) {
+  if (auth.currentUser && data && data.slug) {
+    const slug = data.slug
+    data.author = auth.currentUser.uid
+    data.created = new Date()
+    data.archived = false
+    data.status = 'offline'
+    data.errorMsg = ''
+    delete data.slug
+    return db
+      .collection(storeCollectionName)
+      .doc(slug)
+      .set(data)
+  }
+}
+
+/**
+ * Delete a store (will be archived in the database).
+ * @param {string} id - the id of the store to be archived.
+ * @param {function} callback - the success callback.
+ */
+export function deleteStore (id, callback) {
+  if (id) {
+    return db
+      .collection(storeCollectionName)
+      .doc(id)
+      .set(
+        {
+          archived: true,
+          status: 'offline'
+        },
+        { merge: true }
+      )
+      .then(() => {
+        showSnack('Votre vitrine a été supprimée avec succès.', 'success')
+        if (typeof callback === 'function') callback()
+      })
+      .catch(err => {
+        console.log(err)
+        showSnack('Suppression imposible.', 'error')
+      })
+  }
+}
+
+/**
+ * Publish a store.
+ * @param {string} id - the id of the store to be published.
+ * @param {function} callback - the success callback.
+ */
+export function publishStore (id, callback) {
+  if (id) {
+    return db
+      .collection(storeCollectionName)
+      .doc(id)
+      .set(
+        {
+          status: 'waiting'
+        },
+        { merge: true }
+      )
+      .then(() => {
+        showSnack('Votre vitrine est en attente de publication.', 'success')
+        if (typeof callback === 'function') callback()
+      })
+      .catch(err => {
+        console.log(err)
+        showSnack('Mise en ligne imposible.', 'error')
+      })
+  }
 }
 
 // /**
@@ -161,9 +218,10 @@ export function useMyStore (id) {
           }
           setLoading(false)
         })
-        .catch(() => {
+        .catch(err => {
           if (cancelled) return
           setLoading(false)
+          console.log(err)
           showSnack(`Vitrine introuvable : ${id}`, 'error')
         })
     }
@@ -194,6 +252,7 @@ export function useMyStores (user) {
       setLoading(true)
       db.collection(storeCollectionName)
         .where('author', '==', user.uid)
+        .where('archived', '==', false)
         .orderBy('created', 'desc')
         .limit(10)
         .get()
