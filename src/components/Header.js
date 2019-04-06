@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from './Link'
-import { $ } from '../lib/bling'
-import useUser from '../lib/user'
 import { OffMenu, UserMenu } from './Menu'
 import { HeaderTab } from './Dashboard/Tabs'
+import { $ } from '../lib/bling'
 import { dashPath } from '../lib/utils'
+import useUser from '../lib/user'
 
 const Wrapper = styled.header`
   position: sticky;
@@ -43,6 +44,10 @@ const Wrapper = styled.header`
           font-size: 24px;
           vertical-align: middle;
         }
+      }
+      .progress {
+        width: 40px;
+        margin-top: 3px;
       }
     }
   }
@@ -85,6 +90,7 @@ function Header ({ siteTitle }) {
               {'Connexion'}
             </Link>
           )}
+          {(userLoading || !user) && <CircularProgress className="progress" />}
           {!userLoading && user && !user.isAnonymous && (
             <>
               <img
@@ -117,7 +123,6 @@ function Header ({ siteTitle }) {
               />
             </div>
           )}
-          {/* {userLoading && <p>{'loading...'}</p>} */}
         </nav>
       </div>
     </Wrapper>

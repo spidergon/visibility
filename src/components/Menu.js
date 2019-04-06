@@ -32,7 +32,7 @@ function UserMenu ({ anchor, hide, isOpen, user }) {
       <Divider />
       {window.location.pathname !== dashPath && (
         <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(0))}>
-          {'Mon compte'}
+          {'Tableau de bord'}
         </MenuItem>
       )}
       <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(2))}>
