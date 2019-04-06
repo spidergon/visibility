@@ -12,6 +12,9 @@ import Card from '../Card'
 const Wrapper = styled.div`
   .content {
     padding: 24px;
+    text-align: center;
+    text-align: -moz-center;
+    text-align: -webkit-center;
   }
   .button {
     margin-top: 1em;
@@ -40,14 +43,16 @@ function Stores ({ fav, user, userLoading }) {
         {(userLoading || loading) && <CircularProgress />}
       </center>
       <div className="content">
-        {!userLoading &&
-          user &&
-          stores &&
-          stores.map(store => (
-            <Grid item key={store.id} lg={3} md={4} sm={6} xs={12}>
-              <Card store={store} userId={user.uid} />
-            </Grid>
-          ))}
+        <Grid container spacing={16}>
+          {!userLoading &&
+            user &&
+            stores &&
+            stores.map(store => (
+              <Grid item key={store.id} lg={3} md={4} sm={6} xs={12}>
+                <Card store={store} userId={user.uid} />
+              </Grid>
+            ))}
+        </Grid>
       </div>
     </Wrapper>
   )

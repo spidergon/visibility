@@ -85,9 +85,9 @@ function Card ({
     }
   }, [status])
 
-  useEffect(() => {
-    console.log(store, userId, defaultImg)
-  }, [])
+  // useEffect(() => {
+  //   console.log(store, userId, defaultImg)
+  // }, [])
 
   const openDiag = (title, text, action) => {
     setAnchorEl(null)
@@ -175,7 +175,7 @@ function Card ({
         {/* MEDIA */}
         <CardMedia
           className="media"
-          image={store.photos.length ? store.photos[0] : defaultImg}
+          image={store.photos.length ? store.photos[0].src : defaultImg}
           onClick={() => navigate(`/store/${store.id}`)}
           title="Voir vitrine"
         />

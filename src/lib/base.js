@@ -127,31 +127,43 @@ export function addStore (data) {
 }
 
 /**
+ * Update a store.
+ * @param {string} id - the id of the store to be updated.
+ * @param {Object} set - the query to be set.
+ * @param {string} successMsg  - message in case of success.
+ * @param {string} failMsg - message in case of failure
+ * @param {function} callback - the success callback.
+ */
+export function updateStore (id, set, successMsg, failMsg, callback) {
+  if (id) {
+    return db
+      .collection(storeCollectionName)
+      .doc(id)
+      .set(set, { merge: true })
+      .then(() => {
+        showSnack(successMsg, 'success')
+        if (typeof callback === 'function') callback()
+      })
+      .catch(err => {
+        console.log(err)
+        showSnack(failMsg, 'error')
+      })
+  }
+}
+
+/**
  * Delete a store (will be archived in the database).
  * @param {string} id - the id of the store to be archived.
  * @param {function} callback - the success callback.
  */
 export function deleteStore (id, callback) {
-  if (id) {
-    return db
-      .collection(storeCollectionName)
-      .doc(id)
-      .set(
-        {
-          archived: true,
-          status: 'offline'
-        },
-        { merge: true }
-      )
-      .then(() => {
-        showSnack('Votre vitrine a été supprimée avec succès.', 'success')
-        if (typeof callback === 'function') callback()
-      })
-      .catch(err => {
-        console.log(err)
-        showSnack('Suppression imposible.', 'error')
-      })
-  }
+  updateStore(
+    id,
+    { archived: true, status: 'offline' },
+    'Votre vitrine a été supprimée avec succès.',
+    'Suppression imposible.',
+    callback
+  )
 }
 
 /**
@@ -160,25 +172,13 @@ export function deleteStore (id, callback) {
  * @param {function} callback - the success callback.
  */
 export function publishStore (id, callback) {
-  if (id) {
-    return db
-      .collection(storeCollectionName)
-      .doc(id)
-      .set(
-        {
-          status: 'waiting'
-        },
-        { merge: true }
-      )
-      .then(() => {
-        showSnack('Votre vitrine est en attente de publication.', 'success')
-        if (typeof callback === 'function') callback()
-      })
-      .catch(err => {
-        console.log(err)
-        showSnack('Mise en ligne imposible.', 'error')
-      })
-  }
+  updateStore(
+    id,
+    { status: 'waiting' },
+    'Votre vitrine est en attente de publication.',
+    'Mise en ligne imposible.',
+    callback
+  )
 }
 
 // /**
@@ -254,7 +254,7 @@ export function useMyStores (user) {
         .where('author', '==', user.uid)
         .where('archived', '==', false)
         .orderBy('created', 'desc')
-        .limit(10)
+        .limit(8)
         .get()
         .then(snap => {
           const stores = []
