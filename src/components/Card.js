@@ -213,7 +213,9 @@ function Card ({
                 {'Voir vitrine'}
               </MenuItem>
               <Divider />
-              <MenuItem>{'Modifier'}</MenuItem>
+              <MenuItem onClick={() => navigate(`/store/${store.id}/edit`)}>
+                {'Modifier'}
+              </MenuItem>
               <MenuItem onClick={openRemoveDiag}>{'Supprimer'}</MenuItem>
               {!['online', 'waiting'].includes(store.status) && (
                 <div>

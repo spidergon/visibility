@@ -90,7 +90,7 @@ function Header ({ siteTitle }) {
               {'Connexion'}
             </Link>
           )}
-          {(userLoading || !user) && <CircularProgress className="progress" />}
+          {userLoading && !user && <CircularProgress className="progress" />}
           {!userLoading && user && !user.isAnonymous && (
             <>
               <img

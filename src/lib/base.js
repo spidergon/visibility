@@ -129,7 +129,7 @@ export function addStore (data) {
 /**
  * Update a store.
  * @param {string} id - the id of the store to be updated.
- * @param {Object} set - the query to be set.
+ * @param {Object} set - the object query to be set.
  * @param {string} successMsg  - message in case of success.
  * @param {string} failMsg - message in case of failure
  * @param {function} callback - the success callback.

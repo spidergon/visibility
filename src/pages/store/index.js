@@ -14,6 +14,7 @@ export default () => (
     <Router>
       <Index path="/store" />
       <Store path="/store/:storeId" />
+      <Store edit path="/store/:storeId/edit" />
     </Router>
   </Layout>
 )

@@ -17,7 +17,7 @@ export default () => (
       </div>
       <Link to={dashPath}>{'Dashboard'}</Link>
       {' | '}
-      <Link to={'/store/ma-vitrine'}>{'Ma Vitrine'}</Link>
+      <Link to={'/store/ma-vitrine-2'}>{'Ma Vitrine 2'}</Link>
       <p>
         {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel soluta itaque dolor magnam dicta blanditiis, ducimus obcaecati modi dolores non sint sit sunt vitae quia? Ad dolor a qui doloremque?
       Eum officia fugiat corrupti soluta amet aperiam veritatis distinctio sapiente dolorum suscipit debitis architecto nobis consequuntur commodi qui deleniti, dolor blanditiis impedit fuga sequi, tempore inventore velit. Id, voluptatibus ipsam.

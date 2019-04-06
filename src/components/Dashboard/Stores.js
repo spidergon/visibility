@@ -22,8 +22,8 @@ const Wrapper = styled.div`
 `
 
 function Stores ({ fav, user, userLoading }) {
-  const { loading, stores } = useMyStores(user)
   const [title, setTitle] = useState('')
+  const { loading, stores } = useMyStores(user)
 
   useEffect(() => {
     const nb = stores && stores.length ? ` (${stores.length})` : ``
