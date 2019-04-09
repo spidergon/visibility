@@ -49,6 +49,14 @@ function InfoForm ({
   const [siretError, setSiretError] = useState('')
 
   useEffect(() => {
+    verifyName()
+    unmounted = false
+    return () => {
+      unmounted = true
+    }
+  }, [])
+
+  useEffect(() => {
     if (nameError) setNameError('')
   }, [name])
 
@@ -68,13 +76,6 @@ function InfoForm ({
     setFormError(!!(nameError || descriptionError || tagError || siretError))
   }, [nameError, descriptionError, tagError, siretError])
 
-  useEffect(() => {
-    unmounted = false
-    return () => {
-      unmounted = true
-    }
-  }, [])
-
   const handleAddTag = () => {
     if (!tag) return
     if (tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())) {
@@ -92,8 +93,10 @@ function InfoForm ({
 
   const verifyName = async () => {
     if (!name) return setNameError('Veuillez saisir un nom.')
-    if (await storeExists(slugify(name))) {
+    const newName = name.trim()
+    if (await storeExists(slugify(newName))) {
       if (unmounted) return
+      setName(newName)
       setNameError("Ce nom n'est pas disponible.")
     }
   }
