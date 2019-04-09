@@ -3,16 +3,12 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
+import conf from '../../firebase/config'
 import { showSnack } from './state'
 
 /*  --- Init --- */
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyACE8Y3FvGgUixMWKUg3XjqvZ7MfOFQ13Q',
-  authDomain: 'project-zero-csprod.firebaseapp.com',
-  projectId: 'project-zero-csprod',
-  storageBucket: 'project-zero-csprod.appspot.com'
-})
+firebase.initializeApp(conf)
 
 export default firebase
 

@@ -4,6 +4,7 @@ public
 
 # Firebase
 .firebaserc
+firebase/config.js
 
 # Logs
 logs
