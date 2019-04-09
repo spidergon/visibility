@@ -43,7 +43,7 @@ function Stores ({ fav, user, userLoading }) {
         {(userLoading || loading) && <CircularProgress />}
       </center>
       <div className="content">
-        <Grid container spacing={16}>
+        <Grid container spacing={24}>
           {!userLoading &&
             user &&
             stores &&
