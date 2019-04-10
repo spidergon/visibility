@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Link from './Link'
 
+console.log('toto')
+
 const Wrapper = styled.div`
   text-align: -webkit-center;
   .button {
