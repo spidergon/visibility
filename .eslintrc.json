@@ -16,7 +16,7 @@
   "plugins": ["babel", "react-hooks"],
   "rules": {
     "no-debugger": 0,
-    "no-alert": 1,
+    "no-alert": 0,
     "no-console": 0,
     "no-var": "error",
     "no-unused-vars": 1,
