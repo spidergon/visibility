@@ -7,8 +7,8 @@ import { dashPath } from '../lib/utils'
 
 export default () => (
   <Layout>
-    <Seo keywords={['gatsby', 'application', 'react']} title="Accueil" />
-    <div className="inner wrap">
+    <Seo keywords={['gatsby', 'application', 'react']} title='Accueil' />
+    <div className='inner wrap'>
       <h1>{'Hi people'}</h1>
       <p>{'Welcome to your new Gatsby site.'}</p>
       <p>{'Now go build something great.'}</p>

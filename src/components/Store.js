@@ -33,7 +33,7 @@ function Store ({ storeId, edit }) {
     if (userLoading === false && !user) {
       navigate(`/store/${storeId}`) // go back to store page
     }
-  }, [userLoading, user])
+  }, [storeId, userLoading, user])
 
   useEffect(() => {
     // Can't edit if user is not the owner
@@ -41,12 +41,12 @@ function Store ({ storeId, edit }) {
     if (store && user && store.author !== user.uid) {
       navigate(`/store/${storeId}`) // go back to store page
     }
-  }, [store, user])
+  }, [store, storeId, user])
 
   return (
     <Wrapper>
       {loading && (
-        <center className="loading">
+        <center className='loading'>
           <CircularProgress />
         </center>
       )}

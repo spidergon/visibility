@@ -15,7 +15,7 @@ function goTo (to, hide, action) {
 
 function OffMenu ({ anchor, hide, isOpen, user }) {
   return (
-    <Menu anchorEl={anchor} id="off-menu" onClose={hide} open={isOpen}>
+    <Menu anchorEl={anchor} id='off-menu' onClose={hide} open={isOpen}>
       <MenuItem onClick={() => goTo('/connexion')}>{'Connexion'}</MenuItem>
     </Menu>
   )
@@ -23,7 +23,7 @@ function OffMenu ({ anchor, hide, isOpen, user }) {
 
 function UserMenu ({ anchor, hide, isOpen, user }) {
   return (
-    <Menu anchorEl={anchor} id="user-menu" onClose={hide} open={isOpen}>
+    <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
       <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(3))}>
         {`${user.displayName ? `${user.displayName} ` : ''}${
           user.email ? `(${user.email})` : ''
@@ -40,7 +40,7 @@ function UserMenu ({ anchor, hide, isOpen, user }) {
       </MenuItem>
       <Divider />
       <MenuItem
-        className="logout"
+        className='logout'
         onClick={() => {
           user.signOut()
           setTabVal(0)

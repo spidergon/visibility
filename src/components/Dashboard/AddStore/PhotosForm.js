@@ -108,11 +108,11 @@ function PhotosForm ({ photos, setPhotos }) {
   }
 
   const showDropInfo = () => {
-    if (dropError) return <p className="error">{dropError}</p>
+    if (dropError) return <p className='error'>{dropError}</p>
   }
 
   return (
-    <Wrapper className="grid">
+    <Wrapper className='grid'>
       <p>
         {'Déposez vos photos dans la zone ci-dessous'}&nbsp;{':'}
       </p>
@@ -137,11 +137,11 @@ function PhotosForm ({ photos, setPhotos }) {
           >
             <input {...getInputProps()} />
             {loading ? (
-              <div className="label">
+              <div className='label'>
                 <CircularProgress />
               </div>
             ) : (
-              <p className="label">
+              <p className='label'>
                 {isDragAccept && '➡ Déposez... ⬅'}
                 {isDragReject && '⚠️ Photo(s) invalide(s) !'}
                 {!isDragActive && '➡ Insérez vos photos ici ⬅'}
@@ -155,9 +155,9 @@ function PhotosForm ({ photos, setPhotos }) {
         {photos.map((photo, index) => {
           return (
             <Grid item key={index}>
-              <img alt="Preview" className="preview" src={photo.src} />
+              <img alt='Preview' className='preview' src={photo.src} />
               <CloseIcon
-                className="delete"
+                className='delete'
                 onClick={() => {
                   deleteFile(photo.path)
                   setPhotos(photos.filter(p => p.name !== photo.name))

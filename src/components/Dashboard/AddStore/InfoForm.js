@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
@@ -48,33 +48,49 @@ function InfoForm ({
   const [tagError, setTagError] = useState('')
   const [siretError, setSiretError] = useState('')
 
+  const verifyName = useCallback(async () => {
+    if (!name) return setNameError('Veuillez saisir un nom.')
+    const newName = name.trim()
+    if (await storeExists(slugify(newName))) {
+      if (unmounted) return
+      setName(newName)
+      setNameError("Ce nom n'est pas disponible.")
+    }
+  }, [name, setName])
+
   useEffect(() => {
     verifyName()
     unmounted = false
     return () => {
       unmounted = true
     }
-  }, [])
+  }, [verifyName])
 
   useEffect(() => {
-    if (nameError) setNameError('')
+    setNameError('')
   }, [name])
 
   useEffect(() => {
-    if (descriptionError) setDescriptionError('')
+    setDescriptionError('')
   }, [description])
 
   useEffect(() => {
-    if (tagError) setTagError('')
+    setTagError('')
   }, [tag])
 
   useEffect(() => {
-    if (siretError) setSiretError('')
+    setSiretError('')
   }, [siret])
 
   useEffect(() => {
     setFormError(!!(nameError || descriptionError || tagError || siretError))
-  }, [nameError, descriptionError, tagError, siretError])
+  }, [setFormError, nameError, descriptionError, tagError, siretError])
+
+  const verifyDescription = () => {
+    if (!description) {
+      return setDescriptionError('Veuillez saisir une description.')
+    }
+  }
 
   const handleAddTag = () => {
     if (!tag) return
@@ -89,22 +105,6 @@ function InfoForm ({
     }
     setTags([...tags, tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase()])
     setTag('')
-  }
-
-  const verifyName = async () => {
-    if (!name) return setNameError('Veuillez saisir un nom.')
-    const newName = name.trim()
-    if (await storeExists(slugify(newName))) {
-      if (unmounted) return
-      setName(newName)
-      setNameError("Ce nom n'est pas disponible.")
-    }
-  }
-
-  const verifyDescription = () => {
-    if (!description) {
-      return setDescriptionError('Veuillez saisir une description.')
-    }
   }
 
   const verifySiret = () => {
@@ -132,64 +132,64 @@ function InfoForm ({
     <Wrapper>
       {/* Store Info (left) */}
       <div>
-        <FormControl error={!!nameError} margin="normal">
-          <InputLabel htmlFor="name">{'Nom *'}</InputLabel>
+        <FormControl error={!!nameError} margin='normal'>
+          <InputLabel htmlFor='name'>{'Nom *'}</InputLabel>
           <Input
-            id="name"
+            id='name'
             multiline
             onBlur={verifyName}
             onChange={e => setName(e.target.value)}
             required
             value={name}
           />
-          <FormHelperText id="name-error">{nameError}</FormHelperText>
+          <FormHelperText id='name-error'>{nameError}</FormHelperText>
         </FormControl>
         <br />
-        <FormControl error={!!descriptionError} margin="normal">
+        <FormControl error={!!descriptionError} margin='normal'>
           <TextField
             error={!!descriptionError}
-            label="Description"
-            margin="normal"
+            label='Description'
+            margin='normal'
             multiline
             onBlur={verifyDescription}
             onChange={e => setDescription(e.target.value)}
-            placeholder="Description de votre vitrine"
+            placeholder='Description de votre vitrine'
             required
             value={description}
           />
-          <FormHelperText id="name-error">{descriptionError}</FormHelperText>
+          <FormHelperText id='name-error'>{descriptionError}</FormHelperText>
         </FormControl>
         <div>
-          <FormControl error={!!tagError} margin="normal">
-            <InputLabel htmlFor="tags">{'Ajouter un tag'}</InputLabel>
+          <FormControl error={!!tagError} margin='normal'>
+            <InputLabel htmlFor='tags'>{'Ajouter un tag'}</InputLabel>
             <Input
               endAdornment={
-                <InputAdornment position="end" variant="filled">
+                <InputAdornment position='end' variant='filled'>
                   <IconButton
-                    aria-label="Ajouter un tag"
+                    aria-label='Ajouter un tag'
                     onClick={handleAddTag}
                   >
-                    <AddIcon color="primary" />
+                    <AddIcon color='primary' />
                   </IconButton>
                 </InputAdornment>
               }
-              id="tags"
+              id='tags'
               onChange={e => setTag(e.target.value)}
               value={tag}
             />
-            <FormHelperText id="name-error">{tagError}</FormHelperText>
+            <FormHelperText id='name-error'>{tagError}</FormHelperText>
           </FormControl>
           {tags.length > 0 && (
-            <Paper className="tagsList">
+            <Paper className='tagsList'>
               <Grid container spacing={8}>
-                {tags.map((tag, index) => {
+                {tags.map((myTag, index) => {
                   return (
                     <Grid item key={index}>
                       <Chip
-                        className="chip"
+                        className='chip'
                         key={index}
-                        label={tag}
-                        onDelete={() => setTags(tags.filter(t => t !== tag))}
+                        label={myTag}
+                        onDelete={() => setTags(tags.filter(t => t !== myTag))}
                       />
                     </Grid>
                   )
@@ -202,23 +202,23 @@ function InfoForm ({
       {/* Company Info (right) */}
       <div>
         <TextField
-          label="Entreprise"
-          margin="normal"
+          label='Entreprise'
+          margin='normal'
           onChange={e => setCompany(e.target.value)}
-          placeholder="Nom de votre entreprise"
+          placeholder='Nom de votre entreprise'
           value={company}
         />
         <br />
-        <FormControl error={!!siretError} margin="normal">
-          <InputLabel htmlFor="siret">{'SIRET / SIREN'}</InputLabel>
+        <FormControl error={!!siretError} margin='normal'>
+          <InputLabel htmlFor='siret'>{'SIRET / SIREN'}</InputLabel>
           <Input
-            id="siret"
+            id='siret'
             onBlur={verifySiret}
             onChange={e => setSiret(e.target.value)}
-            placeholder="Numéro SIRET ou SIREN"
+            placeholder='Numéro SIRET ou SIREN'
             value={siret}
           />
-          <FormHelperText id="name-error">{siretError}</FormHelperText>
+          <FormHelperText id='name-error'>{siretError}</FormHelperText>
         </FormControl>
       </div>
     </Wrapper>

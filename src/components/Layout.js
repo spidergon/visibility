@@ -27,19 +27,19 @@ const Layout = ({ children }) => (
         <GlobalStateProvider>
           <Helmet>
             <link
-              href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css"
-              rel="stylesheet"
-              type="text/css"
+              href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css'
+              rel='stylesheet'
+              type='text/css'
             />
             <link
-              crossOrigin="anonymous"
-              href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-              integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
-              rel="stylesheet"
+              crossOrigin='anonymous'
+              href='https://use.fontawesome.com/releases/v5.6.1/css/all.css'
+              integrity='sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP'
+              rel='stylesheet'
             />
             <link
-              href="https://fonts.googleapis.com/css?family=Roboto"
-              rel="stylesheet"
+              href='https://fonts.googleapis.com/css?family=Roboto'
+              rel='stylesheet'
             />
           </Helmet>
           <Style />

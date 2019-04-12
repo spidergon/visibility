@@ -28,19 +28,15 @@ function GeolocForm ({
   setCoordinates
 }) {
   useEffect(() => {
-    if (!address) setFormError(true)
-  }, [])
-
-  useEffect(() => {
-    if (address) setFormError(false)
-  }, [address])
+    setFormError(!address)
+  }, [address, setFormError])
 
   useEffect(() => {
     const [lat, lng] = coordinates
     if (lat !== 0 && lng !== 0) {
       getAddress(lat, lng).then(addr => setAddress(addr))
     }
-  }, [coordinates])
+  }, [coordinates, setAddress])
 
   return (
     <Wrapper>
@@ -54,9 +50,9 @@ function GeolocForm ({
       <TextField
         fullWidth
         InputProps={{ readOnly: true }}
-        margin="normal"
+        margin='normal'
         onChange={e => setAddress(e.target.value)}
-        placeholder="Veuillez cliquer sur la carte pour modifier votre adresse..."
+        placeholder='Veuillez cliquer sur la carte pour modifier votre adresse...'
         required
         value={address}
       />

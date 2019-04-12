@@ -12,8 +12,8 @@ const Index = () => {
 export default () => (
   <Layout>
     <Router>
-      <Index path="/app" />
-      <Dash path="/app/dashboard" />
+      <Index path='/app' />
+      <Dash path='/app/dashboard' />
     </Router>
   </Layout>
 )

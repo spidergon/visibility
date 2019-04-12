@@ -40,7 +40,7 @@ function Dash () {
   }
 
   return (
-    <Wrapper className="inner">
+    <Wrapper className='inner'>
       <Page />
       <MobileTab />
     </Wrapper>

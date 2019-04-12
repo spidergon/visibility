@@ -39,24 +39,24 @@ function Login () {
     const code = error && error.code
     if (code === AUTH_CREDENTIAL_IN_USE) {
       return (
-        <span className="error">
+        <span className='error'>
           {'Un compte possède déjà ces informations de connexion !'}
         </span>
       )
     } else if (code) {
-      return <span className="error">{'La connexion a échoué !'}</span>
+      return <span className='error'>{'La connexion a échoué !'}</span>
     }
   }
 
   return (
     <Wrapper>
-      <div className="content">
+      <div className='content'>
         {!loading ? <h2>{'Connexion'}</h2> : <CircularProgress />}
         <h4>{'Connectez-vous pour gérer votre compte !'}</h4>
         {userLoading && <p>{'Chargement...'}</p>}
         {!userLoading && user && (
           <>
-            <p className="info">{'Vous êtes déjà connecté(e) !'}</p>
+            <p className='info'>{'Vous êtes déjà connecté(e) !'}</p>
             <Button
               handleClick={() => {
                 user.signOut()
@@ -71,29 +71,29 @@ function Login () {
           <>
             {showError()}
             {!isLoginEmail ? (
-              <div className="buttons">
+              <div className='buttons'>
                 <Button
-                  classes="facebook"
+                  classes='facebook'
                   disabled={loading}
                   handleClick={() => authenticate('Facebook')}
                 >
-                  <i className="fab fa-facebook" />
+                  <i className='fab fa-facebook' />
                   {'Se connecter avec Facebook'}
                 </Button>
                 <Button
-                  classes="twitter"
+                  classes='twitter'
                   disabled={loading}
                   handleClick={() => authenticate('Twitter')}
                 >
-                  <i className="fab fa-twitter" />
+                  <i className='fab fa-twitter' />
                   {'Se connecter avec Twitter'}
                 </Button>
                 <Button
-                  classes="email"
+                  classes='email'
                   disabled={loading}
                   handleClick={() => setIsLoginEmail(true)}
                 >
-                  <i className="fas fa-envelope" />
+                  <i className='fas fa-envelope' />
                   {'Se connecter par e-mail'}
                 </Button>
               </div>

@@ -33,7 +33,7 @@ function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
   }
   return (
     <form
-      autoComplete="off"
+      autoComplete='off'
       onSubmit={e => {
         e.preventDefault()
         if (!error) dispatch('next')
@@ -42,18 +42,18 @@ function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
       {content}
       <Actions>
         <Button
-          className="button"
+          className='button'
           disabled={step === 0}
           onClick={e => dispatch('prev')}
         >
           {'Retour'}
         </Button>
         <Button
-          className="button"
-          color="primary"
+          className='button'
+          color='primary'
           disabled={error}
-          type="submit"
-          variant="contained"
+          type='submit'
+          variant='contained'
         >
           {'Suivant'}
         </Button>

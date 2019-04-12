@@ -34,18 +34,18 @@ const Wrapper = styled.div`
 function HeaderTab () {
   const [{ tabVal }] = useGlobalState('dash')
   return (
-    <Wrapper className="header">
+    <Wrapper className='header'>
       <MuiTabs
         centered
-        indicatorColor="primary"
+        indicatorColor='primary'
         onChange={(e, val) => setTabVal(val)}
-        textColor="primary"
+        textColor='primary'
         value={tabVal}
       >
-        <Tab label="Mes Vitrines" />
-        <Tab label="Mes Favoris" />
-        <Tab label="Créer une vitrine" />
-        <Tab label="Mon Compte" />
+        <Tab label='Mes Vitrines' />
+        <Tab label='Mes Favoris' />
+        <Tab label='Créer une vitrine' />
+        <Tab label='Mon Compte' />
       </MuiTabs>
     </Wrapper>
   )
@@ -54,7 +54,7 @@ function HeaderTab () {
 function MobileTab () {
   const [{ tabVal }] = useGlobalState('dash')
   return (
-    <Wrapper className="mobile">
+    <Wrapper className='mobile'>
       <BottomNavigation
         className={'mobileNavigation'}
         onChange={(e, val) => setTabVal(val)}
@@ -62,18 +62,18 @@ function MobileTab () {
       >
         <BottomNavigationAction
           icon={<StoreIcon />}
-          label="Vitrines"
+          label='Vitrines'
           value={0}
         />
         <BottomNavigationAction
           icon={<FavoriteIcon />}
-          label="Favoris"
+          label='Favoris'
           value={1}
         />
-        <BottomNavigationAction icon={<AddIcon />} label="Créer" value={2} />
+        <BottomNavigationAction icon={<AddIcon />} label='Créer' value={2} />
         <BottomNavigationAction
           icon={<AccountCircleIcon />}
-          label="Compte"
+          label='Compte'
           value={3}
         />
       </BottomNavigation>

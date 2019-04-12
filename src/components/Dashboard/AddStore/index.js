@@ -151,13 +151,13 @@ function AddStore () {
 
   return (
     <Wrapper>
-      <Seo title="Nouvelle Vitrine" />
+      <Seo title='Nouvelle Vitrine' />
       <Helmet>
         <link
-          crossOrigin=""
-          href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-          rel="stylesheet"
+          crossOrigin=''
+          href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css'
+          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+          rel='stylesheet'
         />
       </Helmet>
       <center>
@@ -167,8 +167,8 @@ function AddStore () {
           <CircularProgress />
         )}
       </center>
-      <div className="desktop">
-        <Stepper activeStep={step} orientation="vertical">
+      <div className='desktop'>
+        <Stepper activeStep={step} orientation='vertical'>
           {stepTitles.map((label, index) => {
             return (
               <Step key={label}>
@@ -179,7 +179,7 @@ function AddStore () {
           })}
         </Stepper>
       </div>
-      <div className="mobile">
+      <div className='mobile'>
         <Stepper activeStep={step} alternativeLabel>
           {stepTitles.map((label, index) => {
             return (
@@ -190,26 +190,26 @@ function AddStore () {
           })}
         </Stepper>
         {step < stepTitles.length && (
-          <div className="content">{content(step)}</div>
+          <div className='content'>{content(step)}</div>
         )}
       </div>
       {/* Actions */}
       {step === stepTitles.length && (
-        <Paper className="action" elevation={0} square>
+        <Paper className='action' elevation={0} square>
           <Typography>{'Votre vitrine est complète !'}</Typography>
           <Button
-            className="button"
+            className='button'
             disabled={loading}
             onClick={() => dispatch('reset')}
           >
             {'Corriger'}
           </Button>
           <Button
-            className="button"
-            color="primary"
+            className='button'
+            color='primary'
             disabled={loading}
             onClick={handleCreate}
-            variant="contained"
+            variant='contained'
           >
             {'Créer'}
           </Button>

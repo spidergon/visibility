@@ -46,7 +46,7 @@ function Map ({ coordinates, setCoordinates }) {
   useEffect(() => {
     const map = mapRef.current
     if (map) map.leafletElement.locate()
-  }, [])
+  }, [mapRef])
 
   const updatePosition = latlng => {
     setCoordinates(latlng)
@@ -74,7 +74,7 @@ function Map ({ coordinates, setCoordinates }) {
     <Wrapper>
       <LeafletMap
         center={defaultCoords}
-        className="map"
+        className='map'
         onClick={handleClick}
         onLocationfound={handleLocationFound}
         onZoomend={handleZoomEnd}
@@ -83,11 +83,11 @@ function Map ({ coordinates, setCoordinates }) {
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {showMarker && (
           <Marker
-            alt="Leaflet Marker"
+            alt='Leaflet Marker'
             draggable
             onDragend={handleDragEnd}
             position={defaultCoords}

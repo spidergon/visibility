@@ -65,13 +65,13 @@ function Card ({
 }) {
   const [isOwn] = useState(store.author === userId)
   const [status, setStatus] = useState('(Non publiée)')
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
   const [menuOpen, setMenuOpen] = useState(false)
   const [diagOpen, setDiagOpen] = useState(false)
   const [diagTitle, setDiagTitle] = useState('')
   const [diagText, setDiagText] = useState('')
-  const [loved, setLoved] = useState(false)
+  const [loved] = useState(false)
 
   useEffect(() => {
     setMenuOpen(!!anchorEl)
@@ -83,7 +83,7 @@ function Card ({
       if (store.status === 'waiting') setStatus('(En attente)')
       else if (store.status === 'error') setStatus('(En erreur)')
     }
-  }, [status])
+  }, [isOwn, store.status])
 
   // useEffect(() => {
   //   console.log(store, userId, defaultImg)
@@ -115,20 +115,16 @@ function Card ({
 
   const Diag = () => (
     <Dialog
-      aria-labelledby="responsive-dialog-title"
+      aria-labelledby='responsive-dialog-title'
       onClose={() => setDiagOpen(false)}
       open={diagOpen}
     >
-      <DialogTitle id="responsive-dialog-title">{diagTitle}</DialogTitle>
+      <DialogTitle id='responsive-dialog-title'>{diagTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>{diagText}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button
-          autoFocus
-          onClick={() => setDiagOpen(false)}
-          variant="contained"
-        >
+        <Button onClick={() => setDiagOpen(false)} variant='contained'>
           {'Annuler'}
         </Button>
         <Button
@@ -145,14 +141,14 @@ function Card ({
 
   return (
     <Wrapper>
-      <MUICard className="card">
+      <MUICard className='card'>
         {/* HEADER */}
         <CardHeader
           action={
             isOwn && (
               <IconButton
-                aria-haspopup="true"
-                aria-label="More"
+                aria-haspopup='true'
+                aria-label='More'
                 aria-owns={menuOpen ? 'card-menu' : null}
                 onClick={e => setAnchorEl(e.currentTarget)}
               >
@@ -162,9 +158,9 @@ function Card ({
           }
           avatar={
             loading ? (
-              <CircularProgress className="progress" />
+              <CircularProgress className='progress' />
             ) : (
-              <Avatar aria-label="Store" className={`status-${store.status}`}>
+              <Avatar aria-label='Store' className={`status-${store.status}`}>
                 {store.name.substring(0, 1)}
               </Avatar>
             )
@@ -174,26 +170,26 @@ function Card ({
         />
         {/* MEDIA */}
         <CardMedia
-          className="media"
+          className='media'
           image={store.photos.length ? store.photos[0].src : defaultImg}
           onClick={() => navigate(`/store/${store.id}`)}
-          title="Voir vitrine"
+          title='Voir vitrine'
         />
         {/* CONTENT */}
         {showContent && (
           <CardContent>
-            <Typography component="p">{store.description}</Typography>
+            <Typography component='p'>{store.description}</Typography>
           </CardContent>
         )}
         {/* ACTIONS */}
-        <CardActions className="actions" disableActionSpacing>
+        <CardActions className='actions' disableActionSpacing>
           {(showFavIcon || showFavIconReadOnly) && (
-            <IconButton aria-label="Add to favorites" onClick={() => {}}>
+            <IconButton aria-label='Add to favorites' onClick={() => {}}>
               <FavoriteIcon className={loved ? 'loved' : ''} />
             </IconButton>
           )}
           {showShareIcon && (
-            <IconButton aria-label="Share">
+            <IconButton aria-label='Share'>
               <ShareIcon />
             </IconButton>
           )}
@@ -203,8 +199,8 @@ function Card ({
           <>
             <Menu
               anchorEl={anchorEl}
-              className="menu"
-              id="card-menu"
+              className='menu'
+              id='card-menu'
               onClose={() => setAnchorEl(null)}
               open={menuOpen}
               PaperProps={{ style: { maxHeight: 48 * 4.5, width: 200 } }}

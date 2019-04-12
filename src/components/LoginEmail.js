@@ -36,17 +36,17 @@ function LoginEmail ({ setIsLoginEmail }) {
   const showError = () => {
     const code = error && error.code
     if (code) {
-      return <span className="error">{'La connexion a échoué !'}</span>
+      return <span className='error'>{'La connexion a échoué !'}</span>
     }
   }
 
   const showInfo = () => {
-    if (info) return <span className="info">{info}</span>
+    if (info) return <span className='info'>{info}</span>
   }
 
   return (
     <LoginEmailForm onSubmit={authenticateEmail}>
-      <span id="back" onClick={() => setIsLoginEmail(false)}>
+      <span id='back' onClick={() => setIsLoginEmail(false)}>
         {'⬅️ Retour'}
       </span>
       <h4>
@@ -55,25 +55,25 @@ function LoginEmail ({ setIsLoginEmail }) {
         }
       </h4>
       <FormControl
-        className="form-content"
+        className='form-content'
         error={!!emailError}
-        margin="normal"
+        margin='normal'
       >
-        <InputLabel htmlFor="tags">{'E-mail'}</InputLabel>
+        <InputLabel htmlFor='tags'>{'E-mail'}</InputLabel>
         <Input
           onChange={e => setEmail(e.target.value)}
           required
           value={email}
         />
-        <FormHelperText id="name-error">{emailError}</FormHelperText>
+        <FormHelperText id='name-error'>{emailError}</FormHelperText>
       </FormControl>
       {showError()}
       {showInfo()}
       <Button
-        className="button"
-        color="primary"
-        type="submit"
-        variant="contained"
+        className='button'
+        color='primary'
+        type='submit'
+        variant='contained'
       >
         {loading ? 'Chargement...' : 'Envoyer le lien magique'}
       </Button>

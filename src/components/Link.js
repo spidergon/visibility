@@ -7,8 +7,8 @@ const Link = ({ children, to, blank, ...other }) => {
     <a
       aria-label={`${to} (s’ouvre dans un nouvel onglet)`}
       href={to}
-      rel="noreferrer noopener nofollow"
-      target="_blank"
+      rel='noreferrer noopener nofollow'
+      target='_blank'
       {...other}
     >
       {children}

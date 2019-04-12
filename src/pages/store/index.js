@@ -12,9 +12,9 @@ const Index = () => {
 export default () => (
   <Layout>
     <Router>
-      <Index path="/store" />
-      <Store path="/store/:storeId" />
-      <Store edit path="/store/:storeId/edit" />
+      <Index path='/store' />
+      <Store path='/store/:storeId' />
+      <Store edit path='/store/:storeId/edit' />
     </Router>
   </Layout>
 )

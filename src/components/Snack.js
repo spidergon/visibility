@@ -38,10 +38,10 @@ const Wrapper = styled.div`
 `
 
 const variantIcons = {
-  success: <CheckCircleIcon className="icon iconVariant" />,
-  warning: <WarningIcon className="icon iconVariant" />,
-  error: <ErrorIcon className="icon iconVariant" />,
-  info: <InfoIcon className="icon iconVariant" />
+  success: <CheckCircleIcon className='icon iconVariant' />,
+  warning: <WarningIcon className='icon iconVariant' />,
+  error: <ErrorIcon className='icon iconVariant' />,
+  info: <InfoIcon className='icon iconVariant' />
 }
 
 function Snack ({ vertical = 'top', horizontal = 'center' }) {
@@ -65,19 +65,19 @@ function Snack ({ vertical = 'top', horizontal = 'center' }) {
         <SnackbarContent
           action={[
             <IconButton
-              aria-label="Close"
-              className="close"
-              color="inherit"
-              key="close"
+              aria-label='Close'
+              className='close'
+              color='inherit'
+              key='close'
               onClick={hideSnack}
             >
-              <CloseIcon className="icon" />
+              <CloseIcon className='icon' />
             </IconButton>
           ]}
-          aria-describedby="client-snackbar"
+          aria-describedby='client-snackbar'
           className={variant}
           message={
-            <span className="message" id="client-snackbar">
+            <span className='message' id='client-snackbar'>
               {variantIcons[variant]}
               {msg}
             </span>

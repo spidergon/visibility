@@ -28,7 +28,7 @@ function Stores ({ fav, user, userLoading }) {
   useEffect(() => {
     const nb = stores && stores.length ? ` (${stores.length})` : ``
     setTitle(fav ? `Mes Favoris${nb}` : `Mes Vitrines${nb}`)
-  }, [stores])
+  }, [fav, stores])
 
   return (
     <Wrapper>
@@ -36,13 +36,13 @@ function Stores ({ fav, user, userLoading }) {
       <center>
         <h2>{title}</h2>
         {!loading && !userLoading && !fav && !stores.length && (
-          <Button className="button" onClick={() => setTabVal(2)}>
+          <Button className='button' onClick={() => setTabVal(2)}>
             {'Ajouter une vitrine'}
           </Button>
         )}
         {(userLoading || loading) && <CircularProgress />}
       </center>
-      <div className="content">
+      <div className='content'>
         <Grid container spacing={24}>
           {!userLoading &&
             user &&

@@ -199,7 +199,7 @@ export function useMyStore (id) {
   const [loading, setLoading] = useState(null)
   const [store, setStore] = useState(null)
 
-  const myStore = () => {
+  useEffect(() => {
     let cancelled = false
     if (id) {
       if (cancelled) return
@@ -221,13 +221,8 @@ export function useMyStore (id) {
           showSnack(`Vitrine introuvable : ${id}`, 'error')
         })
     }
-    return () => (cancelled = true) // to cancel updates of states when component is unmounted
-  }
-
-  useEffect(() => {
-    const cancel = myStore()
-    return () => cancel() // Cleaning
-  }, [])
+    return () => (cancelled = true) // Cleaning
+  }, [id])
 
   return { loading, store }
 }
@@ -241,7 +236,9 @@ export function useMyStores (user) {
   const [loading, setLoading] = useState(false)
   const [stores, setStores] = useState([])
 
-  const myStores = () => {
+  useEffect(() => {
+    // const cancel = myStores()
+    // return () => cancel() // Cleaning
     let cancelled = false
     if (user && user.uid) {
       if (cancelled) return
@@ -253,12 +250,12 @@ export function useMyStores (user) {
         .limit(8)
         .get()
         .then(snap => {
-          const stores = []
+          const newStores = []
           snap.forEach(function (doc) {
-            stores.push({ id: doc.id, ...doc.data() })
+            newStores.push({ id: doc.id, ...doc.data() })
           })
           if (cancelled) return
-          setStores(stores)
+          setStores(newStores)
           setLoading(false)
         })
         .catch(err => {
@@ -268,12 +265,7 @@ export function useMyStores (user) {
           showSnack("Une erreur interne s'est produite.", 'error')
         })
     }
-    return () => (cancelled = true) // to cancel updates of states when component is unmounted
-  }
-
-  useEffect(() => {
-    const cancel = myStores()
-    return () => cancel() // Cleaning
+    return () => (cancelled = true) // Cleaning
   }, [user])
 
   return { loading, stores }

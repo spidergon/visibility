@@ -5,7 +5,7 @@ import Seo from '../components/Seo'
 
 export default () => (
   <Layout>
-    <Seo title="Connexion" />
+    <Seo title='Connexion' />
     <Login />
   </Layout>
 )

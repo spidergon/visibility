@@ -73,29 +73,29 @@ function Header ({ siteTitle }) {
 
   return (
     <Wrapper>
-      <div className="inner wrap content">
-        <nav className="logo">
-          <Link to="/">
+      <div className='inner wrap content'>
+        <nav className='logo'>
+          <Link to='/'>
             <span>{siteTitle}</span>
           </Link>
         </nav>
-        <nav className="navs">
+        <nav className='navs'>
           {window.location.pathname === dashPath && user && <HeaderTab />}
         </nav>
-        <nav className="profile">
+        <nav className='profile'>
           {window.location.pathname !== '/connexion' &&
             !userLoading &&
             (!user || user.isAnonymous) && (
-            <Link className="link" to="/connexion">
+            <Link className='link' to='/connexion'>
               {'Connexion'}
             </Link>
           )}
-          {userLoading && !user && <CircularProgress className="progress" />}
+          {userLoading && !user && <CircularProgress className='progress' />}
           {!userLoading && user && !user.isAnonymous && (
             <>
               <img
-                alt="Profile"
-                className="avatar"
+                alt='Profile'
+                className='avatar'
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
                 src={user.photoURL}
               />
@@ -108,12 +108,12 @@ function Header ({ siteTitle }) {
             </>
           )}
           {!userLoading && !user && window.location.pathname !== '/connexion' && (
-            <div className="offline">
+            <div className='offline'>
               <span
-                className="menu-anchor"
+                className='menu-anchor'
                 onClick={() => setOffMenuOpen(!offMenuOpen)}
               >
-                <i className="fas fa-bars" />
+                <i className='fas fa-bars' />
               </span>
               <OffMenu
                 anchor={$('.menu-anchor')}
