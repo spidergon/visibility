@@ -7,7 +7,9 @@ import { ThemeProvider } from 'styled-components'
 import { theme, Style } from './styles/Style'
 import { GlobalStateProvider } from '../lib/state'
 import Header from './Header'
+import DashHeader from './Dashboard/Header'
 import Snack from './Snack'
+import { dashPath } from '../lib/utils'
 import '../lib/cookieconsent'
 // setConfig({ pureSFC: true })
 
@@ -44,7 +46,9 @@ const Layout = ({ children }) => (
           </Helmet>
           <Style />
           <Snack />
-          <Header siteTitle={data.site.siteMetadata.title} />
+          {(window.location.pathname === dashPath && (
+            <DashHeader siteTitle={data.site.siteMetadata.title} />
+          )) || <Header siteTitle={data.site.siteMetadata.title} />}
           <main>{children}</main>
         </GlobalStateProvider>
       )}

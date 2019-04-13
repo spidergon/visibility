@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
@@ -27,8 +27,6 @@ const Wrapper = styled.div`
   }
 `
 
-let unmounted = false // block async state update when component has been unmouted
-
 function InfoForm ({
   setFormError,
   name,
@@ -48,11 +46,13 @@ function InfoForm ({
   const [tagError, setTagError] = useState('')
   const [siretError, setSiretError] = useState('')
 
+  const didCancel = useRef(false) // to block async state update when component has been unmounted
+
   const verifyName = useCallback(async () => {
     if (!name) return setNameError('Veuillez saisir un nom.')
     const newName = name.trim()
     if (await storeExists(slugify(newName))) {
-      if (unmounted) return
+      if (didCancel.current) return
       setName(newName)
       setNameError("Ce nom n'est pas disponible.")
     }
@@ -60,10 +60,7 @@ function InfoForm ({
 
   useEffect(() => {
     verifyName()
-    unmounted = false
-    return () => {
-      unmounted = true
-    }
+    return () => (didCancel.current = true)
   }, [verifyName])
 
   useEffect(() => {

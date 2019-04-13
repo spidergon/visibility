@@ -7,57 +7,68 @@ import Divider from '@material-ui/core/Divider'
 import { setTabVal } from '../lib/state'
 import { dashPath } from '../lib/utils'
 
-function goTo (to, hide, action) {
+function goToDash (hide, action) {
   if (hide) hide()
   if (action) action()
-  navigate(to)
+  navigate(dashPath)
 }
 
-function OffMenu ({ anchor, hide, isOpen, user }) {
-  return (
-    <Menu anchorEl={anchor} id='off-menu' onClose={hide} open={isOpen}>
-      <MenuItem onClick={() => goTo('/connexion')}>{'Connexion'}</MenuItem>
-    </Menu>
-  )
-}
+const LogoutMenuItem = ({ signOut }) => (
+  <MenuItem
+    className='logout'
+    onClick={() => {
+      signOut()
+      setTabVal(0)
+      navigate('/')
+    }}
+  >
+    {'Déconnexion'}
+  </MenuItem>
+)
 
-function UserMenu ({ anchor, hide, isOpen, user }) {
-  return (
-    <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
-      <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(3))}>
-        {`${user.displayName ? `${user.displayName} ` : ''}${
-          user.email ? `(${user.email})` : ''
-        }`}
-      </MenuItem>
-      <Divider />
-      {window.location.pathname !== dashPath && (
-        <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(0))}>
+const UserMenu = ({ anchor, hide, isOpen, user }) => (
+  <>
+    {(window.location.pathname !== dashPath && (
+      <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
+        <MenuItem onClick={() => goToDash(hide, () => setTabVal(3))}>
+          {`${user.displayName ? `${user.displayName} ` : ''}${
+            user.email ? `(${user.email})` : ''
+          }`}
+        </MenuItem>
+        <Divider />
+        <MenuItem onClick={() => goToDash(hide, () => setTabVal(0))}>
           {'Tableau de bord'}
         </MenuItem>
-      )}
-      <MenuItem onClick={() => goTo(dashPath, hide, () => setTabVal(2))}>
-        {'Créer une Vitrine'}
-      </MenuItem>
-      <Divider />
-      <MenuItem
-        className='logout'
-        onClick={() => {
-          user.signOut()
-          setTabVal(0)
-          navigate('/')
-        }}
-      >
-        {'Déconnexion'}
-      </MenuItem>
-    </Menu>
-  )
+        <MenuItem onClick={() => goToDash(hide, () => setTabVal(2))}>
+          {'Créer une Vitrine'}
+        </MenuItem>
+        <Divider />
+        <LogoutMenuItem signOut={() => user.signOut()} />
+      </Menu>
+    )) || (
+      <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
+        <MenuItem onClick={() => navigate('/')}>{'Accueil'}</MenuItem>
+        <LogoutMenuItem signOut={() => user.signOut()} />
+      </Menu>
+    )}
+  </>
+)
+
+const OffMenu = ({ anchor, hide, isOpen, user }) => (
+  <Menu anchorEl={anchor} id='off-menu' onClose={hide} open={isOpen}>
+    <MenuItem onClick={() => navigate('/connexion')}>{'Connexion'}</MenuItem>
+  </Menu>
+)
+
+LogoutMenuItem.propTypes = {
+  signOut: PropTypes.func.isRequired
 }
 
-OffMenu.propTypes = UserMenu.propTypes = {
+UserMenu.propTypes = OffMenu.propTypes = {
   anchor: PropTypes.object,
   hide: PropTypes.func.isRequired,
   isOpen: PropTypes.bool,
   user: PropTypes.object
 }
 
-export { OffMenu, UserMenu }
+export { UserMenu, OffMenu }
