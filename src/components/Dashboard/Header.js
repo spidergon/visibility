@@ -12,9 +12,8 @@ const Wrapper = styled.header`
   position: absolute;
   top: 0;
   width: 100%;
-  height: ${props => props.theme.dashHeaderHeight};
   line-height: ${props => props.theme.dashHeaderHeight};
-  background-color: unset;
+  background-color: #fff;
   border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
   z-index: 9;
   .content {
@@ -22,9 +21,12 @@ const Wrapper = styled.header`
     padding: 0 24px;
   }
   nav {
-    &.logo a {
-      font-size: 24px;
-      color: inherit;
+    &.logo {
+      height: ${props => props.theme.dashHeaderHeight};
+      a {
+        font-size: 24px;
+        color: inherit;
+      }
     }
     &.profile {
       img.avatar {

@@ -5,7 +5,7 @@ import Image from '../Image'
 import Hero from './Hero'
 import { dashPath } from '../../lib/utils'
 
-const Wrapper = styled.section``
+const Wrapper = styled.div``
 
 const Home = () => (
   <Wrapper>

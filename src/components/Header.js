@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -11,56 +11,83 @@ const Wrapper = styled.header`
   position: absolute;
   top: 0;
   width: 100%;
-  height: ${props => props.theme.headerHeight};
+  line-height: ${props => props.theme.headerHeight};
   background-color: unset;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.28); */
-  border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
+  transition: background-color 0.3s ease 0s !important;
   z-index: 9;
   .content {
     grid-template-columns: auto 1fr auto;
     padding: 0 24px;
-  }
-  nav {
-    &.logo a {
-      font-size: 24px;
-      color: inherit;
-    }
-    &.profile {
-      a.link {
-        text-transform: uppercase;
-      }
-      img.avatar {
-        border-radius: 100%;
-        vertical-align: middle;
-        cursor: pointer;
-        width: 40px;
-      }
-      .offline {
-        display: none;
-        i {
+    nav {
+      &.logo {
+        height: ${props => props.theme.headerHeight};
+        a {
           font-size: 24px;
-          vertical-align: middle;
+          color: inherit;
         }
       }
-      .progress {
-        width: 40px;
-        margin-top: 3px;
+      &.profile {
+        ul {
+          display: table;
+          li {
+            display: table-cell;
+            a.link {
+              display: inline-block;
+              padding: 0 8px;
+              color: #fff;
+              .sub {
+                border-bottom: 2px solid transparent;
+                &:hover {
+                  border-bottom-color: #fff;
+                }
+                span {
+                  padding: 8px;
+                }
+              }
+            }
+          }
+        }
+        img.avatar,
+        .progress,
+        .offline i {
+          vertical-align: middle;
+          cursor: pointer;
+        }
+        img.avatar {
+          border-radius: 100%;
+          width: 40px;
+        }
+        .offline {
+          display: none;
+          i {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+  &.opaque {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
+    a.link {
+      color: ${props => props.theme.black} !important;
+      .sub:hover {
+        border-bottom-color: ${props => props.theme.black} !important;
       }
     }
   }
   @media screen and (max-width: ${props => props.theme.sm}) {
-    nav {
-      &.profile {
-        .link {
-          display: none;
-        }
-        .offline {
-          display: block;
-        }
+    background-color: transparent !important;
+    .profile {
+      .link {
+        display: none !important;
+      }
+      .offline {
+        display: block !important;
       }
     }
   }
-  @media (min-width: 744px) {
+  @media (min-width: ${props => props.theme.sm}) {
     position: fixed;
   }
   @media (min-width: 1128px) {
@@ -74,10 +101,37 @@ const Wrapper = styled.header`
 function Header ({ siteTitle }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [offMenuOpen, setOffMenuOpen] = useState(false)
+  const [scrollDown, setScrollDown] = useState(false)
   const { userLoading, user } = useUser()
 
+  const didCancel = useRef(false) // to block async state update when component has been unmounted
+
+  useEffect(() => {
+    if (window.location.pathname === '/') {
+      let down = false
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (!down && window.scrollY > 0) {
+            down = true
+            if (!didCancel.current) setScrollDown(true)
+          } else if (down && window.scrollY === 0) {
+            down = false
+            if (!didCancel.current) setScrollDown(false)
+          }
+        },
+        { passive: true }
+      )
+    }
+    return () => (didCancel.current = true)
+  }, [])
+
   return (
-    <Wrapper>
+    <Wrapper
+      className={`${
+        window.location.pathname !== '/' || scrollDown ? 'opaque' : ''
+      }`}
+    >
       <div className='content grid'>
         <nav className='logo'>
           <Link to='/'>
@@ -89,9 +143,15 @@ function Header ({ siteTitle }) {
           {window.location.pathname !== '/connexion' &&
             !userLoading &&
             (!user || user.isAnonymous) && (
-            <Link className='link' to='/connexion'>
-              {'Connexion'}
-            </Link>
+            <ul>
+              <li>
+                <Link className='link' to='/connexion'>
+                  <div className='sub'>
+                    <span>{'Connexion'}</span>
+                  </div>
+                </Link>
+              </li>
+            </ul>
           )}
           {userLoading && !user && <CircularProgress className='progress' />}
           {!userLoading && user && !user.isAnonymous && (

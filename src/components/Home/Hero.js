@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.section`
-  height: 300px;
-  background-color: #ffd;
+  padding-top: 5rem;
+  height: 100vh;
+  background-color: lightgray;
 `
 
 function Hero () {

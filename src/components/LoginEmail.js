@@ -1,12 +1,28 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
-import { LoginEmailForm } from './styles/LoginStyle'
+import { infoLabel } from './Login'
 import { EMAIL_REGEX, sendSignInEmailLink } from '../lib/user'
+
+const LoginEmailForm = styled.form`
+  display: grid;
+  grid-gap: 20px;
+  justify-items: center;
+  max-width: 500px;
+  margin: 20px auto 0;
+  #back {
+    cursor: pointer;
+  }
+  ${infoLabel}
+  .form-content {
+    margin: 0;
+  }
+`
 
 function LoginEmail ({ setIsLoginEmail }) {
   const [loading, setLoading] = useState(false)

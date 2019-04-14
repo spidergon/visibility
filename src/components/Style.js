@@ -1,10 +1,9 @@
 import { createGlobalStyle } from 'styled-components'
-import './style.css'
+import '../assets/css/style.css'
 
 const theme = {
   primary: '#3f51b5',
-  // black: '#17394d',
-  black: '#212121',
+  black: 'rgb(72, 72, 72)',
   gray: '#dadce0',
   blue: '#039be5',
   orange: '#f6755e',
@@ -20,10 +19,10 @@ const theme = {
   xs: '480px'
 }
 
-const Style = createGlobalStyle`
+const GlobalStyle = createGlobalStyle`
   body {
-    color: ${props => props.theme.black}
     -webkit-font-smoothing: antialiased;
+    color: ${props => props.theme.black};
     font-family: 'Roboto', sans-serif;
   }
   a {
@@ -31,4 +30,4 @@ const Style = createGlobalStyle`
   }
 `
 
-export { theme, Style }
+export { theme, GlobalStyle }

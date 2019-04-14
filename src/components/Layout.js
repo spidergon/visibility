@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import { ThemeProvider } from 'styled-components'
-import { theme, Style } from './styles/Style'
+import { theme, GlobalStyle } from './Style'
 import { GlobalStateProvider } from '../lib/state'
 import Header from './Header'
 import DashHeader from './Dashboard/Header'
@@ -44,7 +44,7 @@ const Layout = ({ children }) => (
               rel='stylesheet'
             />
           </Helmet>
-          <Style />
+          <GlobalStyle />
           <Snack />
           {(window.location.pathname === dashPath && (
             <DashHeader siteTitle={data.site.siteMetadata.title} />
