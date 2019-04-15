@@ -9,9 +9,9 @@ import { $ } from '../../lib/bling'
 import useUser from '../../lib/user'
 
 const Wrapper = styled.header`
-  position: absolute;
+  position: sticky;
   top: 0;
-  width: 100%;
+  height: ${props => props.theme.dashHeaderHeight};
   line-height: ${props => props.theme.dashHeaderHeight};
   background-color: #fff;
   border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
@@ -40,9 +40,6 @@ const Wrapper = styled.header`
         margin-top: 3px;
       }
     }
-  }
-  @media (min-width: 744px) {
-    position: fixed;
   }
   @media (min-width: 1128px) {
     .content {

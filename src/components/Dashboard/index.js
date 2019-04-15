@@ -9,7 +9,6 @@ import Account from './Account'
 import { MobileTab } from './Tabs'
 
 const Wrapper = styled.div`
-  margin-top: 3rem;
   padding-top: 2rem;
   @media (max-width: 800px) {
     margin-bottom: 5rem;
