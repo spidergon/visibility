@@ -18,6 +18,8 @@ const Home = () => (
         <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
           <Image />
         </div> */}
+        <Link to={'/connexion'}>{'Connexion'}</Link>
+        {' | '}
         <Link to={dashPath}>{'Dashboard'}</Link>
         {' | '}
         <Link to={'/store/ma-vitrine-2'}>{'Ma Vitrine 2'}</Link>
