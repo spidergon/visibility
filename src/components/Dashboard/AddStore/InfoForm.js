@@ -31,6 +31,8 @@ function InfoForm ({
   setFormError,
   name,
   setName,
+  activity,
+  setActivity,
   description,
   setDescription,
   tags,
@@ -42,6 +44,7 @@ function InfoForm ({
 }) {
   const [tag, setTag] = useState('')
   const [nameError, setNameError] = useState('')
+  const [activityError, setActivityError] = useState('')
   const [descriptionError, setDescriptionError] = useState('')
   const [tagError, setTagError] = useState('')
   const [siretError, setSiretError] = useState('')
@@ -68,6 +71,10 @@ function InfoForm ({
   }, [name])
 
   useEffect(() => {
+    setActivityError('')
+  }, [activity])
+
+  useEffect(() => {
     setDescriptionError('')
   }, [description])
 
@@ -82,6 +89,12 @@ function InfoForm ({
   useEffect(() => {
     setFormError(!!(nameError || descriptionError || tagError || siretError))
   }, [setFormError, nameError, descriptionError, tagError, siretError])
+
+  const verifyActivity = () => {
+    if (!activity) {
+      return setActivityError('Veuillez saisir une activité.')
+    }
+  }
 
   const verifyDescription = () => {
     if (!description) {
@@ -133,13 +146,24 @@ function InfoForm ({
           <InputLabel htmlFor='name'>{'Nom *'}</InputLabel>
           <Input
             id='name'
-            multiline
             onBlur={verifyName}
             onChange={e => setName(e.target.value)}
             required
             value={name}
           />
           <FormHelperText id='name-error'>{nameError}</FormHelperText>
+        </FormControl>
+        <br />
+        <FormControl error={!!activityError} margin='normal'>
+          <InputLabel htmlFor='activity'>{'Activity *'}</InputLabel>
+          <Input
+            id='activity'
+            onBlur={verifyActivity}
+            onChange={e => setActivity(e.target.value)}
+            required
+            value={activity}
+          />
+          <FormHelperText id='activity-error'>{activityError}</FormHelperText>
         </FormControl>
         <br />
         <FormControl error={!!descriptionError} margin='normal'>
@@ -226,6 +250,8 @@ InfoForm.propTypes = {
   setFormError: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   setName: PropTypes.func.isRequired,
+  activity: PropTypes.string.isRequired,
+  setActivity: PropTypes.func.isRequired,
   description: PropTypes.string.isRequired,
   setDescription: PropTypes.func.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

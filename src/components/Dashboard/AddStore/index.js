@@ -63,6 +63,7 @@ function AddStore () {
   const [loading, setLoading] = useState(false)
 
   const [name, setName] = useState('Ma Vitrine')
+  const [activity, setActivity] = useState('Hôtels, Restaurants')
   const [description, setDescription] = useState('Une description')
   const [tags, setTags] = useState(['Restaurant', 'Wifi', 'Famille', 'Bar'])
   const [company, setCompany] = useState('CS Digital')
@@ -91,6 +92,8 @@ function AddStore () {
           info: {
             name,
             setName,
+            activity,
+            setActivity,
             description,
             setDescription,
             tags,
@@ -125,6 +128,7 @@ function AddStore () {
         addStore({
           slug,
           name,
+          activity,
           description,
           tags,
           company,

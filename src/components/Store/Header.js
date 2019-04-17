@@ -38,8 +38,8 @@ function Header ({ store }) {
       </Helmet>
       <Map coordinates={store.coordinates} noLocate readOnly zoom={17} />
       <div className='header-main-infos'>
-        <h1 className='title no-margin'>{store.name}</h1>
-        <h2 className='activity'>{'Hôtels, Restaurants'}</h2>
+        <h1 className='name no-margin'>{store.name}</h1>
+        <h2 className='activity'>{store.activity}</h2>
         <div className='address'>{store.address}</div>
       </div>
     </Wrapper>
