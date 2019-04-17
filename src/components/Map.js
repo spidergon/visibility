@@ -1,19 +1,27 @@
 import React, { createRef, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-// import L from 'leaflet'
-// import 'leaflet/dist/leaflet.css'
+import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
 
-// L.Marker.prototype.options.icon = L.icon({
-//   iconUrl: require('leaflet/dist/images/marker-icon.png'),
-//   shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-// })
+L.Marker.prototype.options.icon = L.icon({
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  iconSize: [25, 41],
+  iconAnchor: [12, 40]
+})
 
 const Wrapper = styled.div`
-  .map {
+  .map,
+  .map__readonly {
     width: 100%;
+  }
+  .map {
     height: 400px;
+  }
+  .map__readonly {
+    height: 250px;
   }
 `
 
@@ -32,8 +40,8 @@ function coordLabel (coord) {
   return `${latLabel} ${lngLabel}`
 }
 
-function Map ({ coordinates, setCoordinates }) {
-  const [zoom, setZoom] = useState(12)
+function Map ({ coordinates, noLocate, readOnly, setCoordinates, zoom }) {
+  const [myZoom, setMyZoom] = useState(zoom || 12)
   const [showMarker, setShowMarker] = useState(false)
   const [defaultCoords, setDefaultCoords] = useState([
     4.938232002540988,
@@ -44,26 +52,39 @@ function Map ({ coordinates, setCoordinates }) {
   const markerRef = createRef()
 
   useEffect(() => {
+    if (noLocate) {
+      setDefaultCoords(coordinates)
+      if (!showMarker) setShowMarker(true)
+      return
+    }
     const map = mapRef.current
     if (map) map.leafletElement.locate()
-  }, [mapRef])
+  }, [coordinates, mapRef, noLocate, showMarker])
 
   const updatePosition = latlng => {
-    setCoordinates(latlng)
+    if (typeof setCoordinates === 'function') setCoordinates(latlng)
     setDefaultCoords(latlng)
     if (!showMarker) setShowMarker(true)
   }
 
   const handleClick = e => {
+    if (readOnly) return
     const { lat, lng } = e.latlng
     updatePosition([lat, lng])
   }
 
   const handleLocationFound = ({ latitude, longitude }) => {
-    updatePosition([latitude, longitude])
+    if (
+      coordinates &&
+      coordinates.length > 1 &&
+      coordinates[0] !== 0 &&
+      coordinates[1] !== 0
+    ) {
+      updatePosition(coordinates)
+    } else updatePosition([latitude, longitude])
   }
 
-  const handleZoomEnd = e => setZoom(e.target._zoom) // Update the zoom
+  const handleZoomEnd = e => setMyZoom(e.target._zoom) // Update the zoom
 
   const handleDragEnd = () => {
     const { lat, lng } = markerRef.current.leafletElement.getLatLng()
@@ -74,12 +95,13 @@ function Map ({ coordinates, setCoordinates }) {
     <Wrapper>
       <LeafletMap
         center={defaultCoords}
-        className='map'
+        className={readOnly ? 'map__readonly' : 'map'}
         onClick={handleClick}
         onLocationfound={handleLocationFound}
         onZoomend={handleZoomEnd}
         ref={mapRef}
-        zoom={zoom}
+        scrollWheelZoom={!readOnly}
+        zoom={myZoom}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -88,7 +110,7 @@ function Map ({ coordinates, setCoordinates }) {
         {showMarker && (
           <Marker
             alt='Leaflet Marker'
-            draggable
+            draggable={!readOnly}
             onDragend={handleDragEnd}
             position={defaultCoords}
             ref={markerRef}
@@ -111,8 +133,11 @@ function Map ({ coordinates, setCoordinates }) {
 }
 
 Map.propTypes = {
-  coordinates: PropTypes.array.isRequired,
-  setCoordinates: PropTypes.func.isRequired
+  coordinates: PropTypes.array,
+  noLocate: PropTypes.bool,
+  readOnly: PropTypes.bool,
+  setCoordinates: PropTypes.func,
+  zoom: PropTypes.number
 }
 
 export default Map

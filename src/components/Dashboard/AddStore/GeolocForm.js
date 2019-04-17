@@ -17,7 +17,7 @@ async function getAddress (lat, lng) {
   if (data && data.display_name) {
     return data.display_name
   }
-  return null
+  return ''
 }
 
 function GeolocForm ({
