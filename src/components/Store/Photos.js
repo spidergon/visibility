@@ -4,8 +4,9 @@ import styled from 'styled-components'
 import Grid from '@material-ui/core/Grid'
 
 const Wrapper = styled.section`
+  overflow-x: auto;
   .photo_block {
-    width: 100%;
+    width: max-content;
     .photo_block__item {
       padding-right: 1px;
       img {
@@ -14,6 +15,9 @@ const Wrapper = styled.section`
         object-fit: cover;
         cursor: pointer;
       }
+    }
+    .photo_block__add {
+      background-color: pink;
     }
   }
 `
@@ -27,6 +31,9 @@ function Photos ({ photos }) {
             <img alt={photo.name} src={photo.src} />
           </Grid>
         ))}
+        <Grid item>
+          <div className='photo_block__add'>{'action'}</div>
+        </Grid>
       </Grid>
     </Wrapper>
   )
