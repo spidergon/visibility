@@ -58,7 +58,7 @@ function Store ({ storeId, edit }) {
         <>
           <Seo title={`${store.name}${edit ? ' (Edition)' : ''}`} />
           <Header store={store} />
-          <Photos />
+          <Photos photos={store.photos} />
         </>
       )}
       {edit && <p>{'EDIT'}</p>}
