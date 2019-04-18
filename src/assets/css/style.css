@@ -39,3 +39,6 @@ p {
 .no-margin {
   margin: 0 !important;
 }
+.loading {
+  z-index: 999;
+}

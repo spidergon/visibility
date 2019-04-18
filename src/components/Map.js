@@ -13,15 +13,9 @@ L.Marker.prototype.options.icon = L.icon({
 })
 
 const Wrapper = styled.div`
-  .map,
-  .map__readonly {
-    width: 100%;
-  }
   .map {
+    width: 100%;
     height: 400px;
-  }
-  .map__readonly {
-    height: 250px;
   }
 `
 
@@ -40,7 +34,14 @@ function coordLabel (coord) {
   return `${latLabel} ${lngLabel}`
 }
 
-function Map ({ coordinates, noLocate, readOnly, setCoordinates, zoom }) {
+function Map ({
+  coordinates,
+  noLocate,
+  readOnly,
+  setCoordinates,
+  styleSize,
+  zoom
+}) {
   const [myZoom, setMyZoom] = useState(zoom || 12)
   const [showMarker, setShowMarker] = useState(false)
   const [defaultCoords, setDefaultCoords] = useState([
@@ -95,12 +96,13 @@ function Map ({ coordinates, noLocate, readOnly, setCoordinates, zoom }) {
     <Wrapper>
       <LeafletMap
         center={defaultCoords}
-        className={readOnly ? 'map__readonly' : 'map'}
+        className='map'
         onClick={handleClick}
         onLocationfound={handleLocationFound}
         onZoomend={handleZoomEnd}
         ref={mapRef}
         scrollWheelZoom={!readOnly}
+        style={styleSize ? { height: styleSize } : {}}
         zoom={myZoom}
       >
         <TileLayer
@@ -137,6 +139,7 @@ Map.propTypes = {
   noLocate: PropTypes.bool,
   readOnly: PropTypes.bool,
   setCoordinates: PropTypes.func,
+  styleSize: PropTypes.string,
   zoom: PropTypes.number
 }
 

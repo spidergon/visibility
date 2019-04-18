@@ -25,26 +25,30 @@ const Wrapper = styled.section`
   }
 `
 
-function Header ({ store }) {
-  return (
-    <Wrapper>
-      <Helmet>
-        <link
-          crossOrigin=''
-          href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css'
-          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
-          rel='stylesheet'
-        />
-      </Helmet>
-      <Map coordinates={store.coordinates} noLocate readOnly zoom={17} />
-      <div className='header-main-infos'>
-        <h1 className='name no-margin'>{store.name}</h1>
-        <h2 className='activity'>{store.activity}</h2>
-        <div className='address'>{store.address}</div>
-      </div>
-    </Wrapper>
-  )
-}
+const Header = ({ store }) => (
+  <Wrapper>
+    <Helmet>
+      <link
+        crossOrigin=''
+        href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css'
+        integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+        rel='stylesheet'
+      />
+    </Helmet>
+    <Map
+      coordinates={store.coordinates}
+      noLocate
+      readOnly
+      styleSize='250px'
+      zoom={17}
+    />
+    <div className='header-main-infos'>
+      <h1 className='name no-margin'>{store.name}</h1>
+      <h2 className='activity'>{store.activity}</h2>
+      <div className='address'>{store.address}</div>
+    </div>
+  </Wrapper>
+)
 
 Header.propTypes = {
   store: PropTypes.object.isRequired

@@ -7,6 +7,7 @@ import Seo from '../Seo'
 import { useMyStore } from '../../lib/base'
 import useUser from '../../lib/user'
 import Header from './Header'
+import Photos from './Photos'
 
 const Wrapper = styled.div`
   padding-top: ${props => props.theme.headerHeight};
@@ -57,6 +58,7 @@ function Store ({ storeId, edit }) {
         <>
           <Seo title={`${store.name}${edit ? ' (Edition)' : ''}`} />
           <Header store={store} />
+          <Photos />
         </>
       )}
       {edit && <p>{'EDIT'}</p>}

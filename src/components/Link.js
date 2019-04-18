@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link as GatsbyLink } from 'gatsby'
 
-const Link = ({ children, to, blank, ...other }) => {
+function Link ({ children, to, blank, ...other }) {
   const A = blank ? (
     <a
       aria-label={`${to} (s’ouvre dans un nouvel onglet)`}
