@@ -3,7 +3,20 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Map as LeafletMap, Marker, Popup, TileLayer } from 'react-leaflet'
+import {
+  Map as LeafletMap,
+  Marker,
+  Popup,
+  TileLayer,
+  ZoomControl
+} from 'react-leaflet'
+
+const Wrapper = styled.div`
+  .map {
+    width: 100%;
+    height: 400px;
+  }
+`
 
 L.Marker.prototype.options.icon = L.icon({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
@@ -12,12 +25,12 @@ L.Marker.prototype.options.icon = L.icon({
   iconAnchor: [12, 40]
 })
 
-const Wrapper = styled.div`
-  .map {
-    width: 100%;
-    height: 400px;
-  }
-`
+L.control.zoom({
+  zoomInText: '++',
+  zoomInTitle: 'Zoom avant',
+  zoomOutText: '--',
+  zoomOutTitle: 'Zoom arrière'
+})
 
 function toDMS (coord) {
   const absolute = Math.abs(coord)
@@ -35,6 +48,7 @@ function coordLabel (coord) {
 }
 
 function Map ({
+  controlsToRight,
   coordinates,
   noLocate,
   readOnly,
@@ -61,6 +75,11 @@ function Map ({
     const map = mapRef.current
     if (map) map.leafletElement.locate()
   }, [coordinates, mapRef, noLocate, showMarker])
+
+  useEffect(() => {
+    // if (controlsToRight) {
+    // }
+  }, [controlsToRight])
 
   const updatePosition = latlng => {
     if (typeof setCoordinates === 'function') setCoordinates(latlng)
@@ -104,11 +123,13 @@ function Map ({
         scrollWheelZoom={!readOnly}
         style={styleSize ? { height: styleSize } : {}}
         zoom={myZoom}
+        zoomControl={!controlsToRight}
       >
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
+        <ZoomControl position='topright' />
         {showMarker && (
           <Marker
             alt='Leaflet Marker'
@@ -135,6 +156,7 @@ function Map ({
 }
 
 Map.propTypes = {
+  controlsToRight: PropTypes.bool,
   coordinates: PropTypes.array,
   noLocate: PropTypes.bool,
   readOnly: PropTypes.bool,

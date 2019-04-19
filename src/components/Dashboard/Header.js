@@ -14,7 +14,7 @@ const Wrapper = styled.header`
   height: ${props => props.theme.dashHeaderHeight};
   line-height: ${props => props.theme.dashHeaderHeight};
   background-color: #fff;
-  border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
+  border-bottom: ${props => props.theme.headerBottom};
   z-index: 9;
   .content {
     grid-template-columns: auto 1fr auto;

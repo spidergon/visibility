@@ -68,7 +68,7 @@ const Wrapper = styled.header`
   }
   &.opaque {
     background-color: #fff;
-    border-bottom: 1px solid rgba(151, 151, 151, 0.2) !important;
+    border-bottom: ${props => props.theme.headerBottom};
     a.link {
       color: ${props => props.theme.black} !important;
       .sub:hover {
