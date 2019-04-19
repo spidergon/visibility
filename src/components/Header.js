@@ -11,6 +11,7 @@ const Wrapper = styled.header`
   position: absolute;
   top: 0;
   width: 100%;
+  height: ${props => props.theme.headerHeight};
   line-height: ${props => props.theme.headerHeight};
   background-color: unset;
   transition: background-color 0.3s ease 0s !important;

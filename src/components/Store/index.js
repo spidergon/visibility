@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { navigate } from 'gatsby'
+import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
@@ -48,6 +49,14 @@ function Store ({ storeId, edit }) {
 
   return (
     <Wrapper>
+      <Helmet>
+        <link
+          crossOrigin=''
+          href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
+          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+          rel='stylesheet'
+        />
+      </Helmet>
       {loading && (
         <center className='loading'>
           <CircularProgress />

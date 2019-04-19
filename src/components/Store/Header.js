@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import Helmet from 'react-helmet'
 import Map from '../Map'
 import Photos from './Photos'
 
@@ -14,8 +13,9 @@ const Wrapper = styled.section`
     bottom: 0;
     z-index: 999;
     background-color: #fff;
-    border: ${props => props.theme.headerBottom};
-    border-bottom: none !important;
+    /* border: none ${props => props.theme.headerBottom}; */
+    /* border-bottom: none !important; */
+    margin: 0 0 10px 10px;
     .infos {
       width: 400px;
       padding: 0 10px;
@@ -35,16 +35,7 @@ const Wrapper = styled.section`
 
 const Header = ({ store }) => (
   <Wrapper>
-    <Helmet>
-      <link
-        crossOrigin=''
-        href='https://unpkg.com/leaflet@1.3.4/dist/leaflet.css'
-        integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
-        rel='stylesheet'
-      />
-    </Helmet>
     <Map
-      controlsToRight
       coordinates={store.coordinates}
       noLocate
       readOnly
