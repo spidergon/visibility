@@ -54,21 +54,16 @@ function Map ({
     4.938232002540988,
     -52.33507454395295
   ])
-  const [centerCoords, setCenterCoords] = useState([
-    4.938232002540988,
-    -52.33507454395295
-  ])
+  const [centerCoords, setCenterCoords] = useState(defaultCoords)
 
   const mapRef = createRef()
   const markerRef = createRef()
 
   useEffect(() => {
-    console.log('passe')
     if (noLocate) {
       setDefaultCoords(coordinates)
-      setCenterCoords([coordinates[0], coordinates[1]])
+      setCenterCoords([coordinates[0], coordinates[1] - 0.0025]) // push the center a bit on the left
       if (!showMarker) setShowMarker(true)
-      // return
     }
   }, [coordinates, noLocate, showMarker])
 
@@ -80,7 +75,6 @@ function Map ({
   }, [mapRef, noLocate])
 
   const updatePosition = latlng => {
-    console.log('update')
     if (typeof setCoordinates === 'function') setCoordinates(latlng)
     setDefaultCoords(latlng)
     setCenterCoords(latlng)
@@ -88,14 +82,12 @@ function Map ({
   }
 
   const handleClick = e => {
-    console.log('click')
     if (readOnly) return
     const { lat, lng } = e.latlng
     updatePosition([lat, lng])
   }
 
   const handleLocationFound = ({ latitude, longitude }) => {
-    console.log('location found')
     if (
       coordinates &&
       coordinates.length > 1 &&
