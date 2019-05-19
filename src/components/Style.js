@@ -12,7 +12,7 @@ const theme = {
   dashHeaderHeight: '3rem',
   headerBottom: '1px solid rgba(151, 151, 151, 0.2) !important;',
   spacingUnit: '1rem',
-  bcTransition: 'background-color 0.2s ease-in-out, color 0.2sease-in-out',
+  bcTransition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
   xl: '1680px',
   lg: '1280px',
   md: '980px',

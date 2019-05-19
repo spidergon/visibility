@@ -14,7 +14,7 @@ const Wrapper = styled.header`
   height: ${props => props.theme.headerHeight};
   line-height: ${props => props.theme.headerHeight};
   background-color: unset;
-  transition: background-color 0.3s ease 0s !important;
+  transition: background-color 0.4s ease !important;
   z-index: 9;
   .content {
     grid-template-columns: auto 1fr auto;
@@ -37,6 +37,7 @@ const Wrapper = styled.header`
               padding: 0 8px;
               color: #fff;
               .sub {
+                height: ${props => props.theme.headerHeight};
                 border-bottom: 2px solid transparent;
                 &:hover {
                   border-bottom-color: #fff;
