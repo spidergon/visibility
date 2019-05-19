@@ -18,14 +18,17 @@ export default function useUser () {
 
   useEffect(() => {
     if (user) {
-      // Add some info into the database
+      // Add user into the database
       addUser({
         uid: user.uid,
         created: new Date(),
         admin: false
       })
-      // Set the user
+      // Set the current formatted user
       setFormattedUser({
+        uid: user.uid,
+        isAnonymous: user.isAnonymous,
+        emailVerified: user.emailVerified,
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL
@@ -33,9 +36,6 @@ export default function useUser () {
           : user.email
             ? `https://gravatar.com/avatar/${md5(user.email)}?s=50`
             : null,
-        emailVerified: user.emailVerified,
-        isAnonymous: user.isAnonymous,
-        uid: user.uid,
         signOut: () => auth.signOut()
       })
     } else {
@@ -54,9 +54,8 @@ export default function useUser () {
  * @param {function} setError - the error callback.
  */
 export function signIn (provider, authHandler, setLoading, setError) {
-  const authProvider = new firebase.auth[`${provider}AuthProvider`]()
   auth
-    .signInWithPopup(authProvider)
+    .signInWithPopup(new firebase.auth[`${provider}AuthProvider`]())
     .then(authHandler)
     .catch(error => {
       setError({ code: error.code, message: error.message })

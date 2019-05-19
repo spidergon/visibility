@@ -3,12 +3,12 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
-import conf from '../../firebase/config'
+import config from '../../firebase/config'
 import { showSnack } from './state'
 
 /*  --- Init --- */
 
-firebase.initializeApp(conf)
+firebase.initializeApp(config)
 
 export default firebase
 
