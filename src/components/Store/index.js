@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
 import { useMyStore } from '../../lib/base'
-import useUser from '../../lib/user'
+import { useSession } from '../../lib/user'
 import Header from './Header'
 
 const Wrapper = styled.div`
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 
 function Store ({ storeId, edit }) {
   const { loading, store } = useMyStore(storeId)
-  const { userLoading, user } = useUser()
+  const { initializing, user } = useSession()
 
   useEffect(() => {
     if (store) console.log(store)
@@ -35,10 +35,10 @@ function Store ({ storeId, edit }) {
 
   useEffect(() => {
     // Can't edit if not authenticated user
-    if (userLoading === false && !user) {
+    if (initializing === false && !user) {
       navigate(`/store/${storeId}`) // go back to store page
     }
-  }, [storeId, userLoading, user])
+  }, [storeId, initializing, user])
 
   useEffect(() => {
     // Can't edit if user is not the owner

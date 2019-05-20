@@ -6,7 +6,7 @@ import Link from '../Link'
 import { UserMenu } from '../Menu'
 import { HeaderTab } from './Tabs'
 import { $ } from '../../lib/bling'
-import useUser from '../../lib/user'
+import { useSession } from '../../lib/user'
 
 const Wrapper = styled.header`
   position: sticky;
@@ -51,7 +51,7 @@ const Wrapper = styled.header`
 
 function Header ({ siteTitle }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const { userLoading, user } = useUser()
+  const { initializing, user } = useSession()
 
   return (
     <Wrapper>
@@ -63,8 +63,8 @@ function Header ({ siteTitle }) {
         </nav>
         <nav className='navs'>{user && <HeaderTab />}</nav>
         <nav className='profile'>
-          {userLoading && !user && <CircularProgress className='progress' />}
-          {!userLoading && user && !user.isAnonymous && (
+          {initializing && !user && <CircularProgress className='progress' />}
+          {!initializing && user && !user.isAnonymous && (
             <>
               <img
                 alt='Profile'

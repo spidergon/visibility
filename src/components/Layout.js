@@ -5,7 +5,6 @@ import Helmet from 'react-helmet'
 import { StaticQuery, graphql } from 'gatsby'
 import { ThemeProvider } from 'styled-components'
 import { theme, GlobalStyle } from './Style'
-import { GlobalStateProvider } from '../lib/state'
 import Header from './Header'
 import DashHeader from './Dashboard/Header'
 import Snack from './Snack'
@@ -26,7 +25,7 @@ const Layout = ({ children }) => (
         }
       `}
       render={data => (
-        <GlobalStateProvider>
+        <>
           <Helmet>
             <link
               href='//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css'
@@ -50,7 +49,7 @@ const Layout = ({ children }) => (
             <DashHeader siteTitle={data.site.siteMetadata.title} />
           )) || <Header siteTitle={data.site.siteMetadata.title} />}
           <main>{children}</main>
-        </GlobalStateProvider>
+        </>
       )}
     />
   </ThemeProvider>

@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from './Link'
 import { OffMenu, UserMenu } from './Menu'
 import { $ } from '../lib/bling'
-import useUser from '../lib/user'
+import { useSession } from '../lib/user'
 
 const Wrapper = styled.header`
   position: absolute;
@@ -104,7 +104,8 @@ function Header ({ siteTitle }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [offMenuOpen, setOffMenuOpen] = useState(false)
   const [scrollDown, setScrollDown] = useState(false)
-  const { userLoading, user } = useUser()
+
+  const { initializing, user } = useSession()
 
   const didCancel = useRef(false) // to block async state update when component has been unmounted
 
@@ -143,7 +144,7 @@ function Header ({ siteTitle }) {
         <nav className='navs' />
         <nav className='profile'>
           {window.location.pathname !== '/connexion' &&
-            !userLoading &&
+            !initializing &&
             (!user || user.isAnonymous) && (
             <ul>
               <li>
@@ -155,8 +156,8 @@ function Header ({ siteTitle }) {
               </li>
             </ul>
           )}
-          {userLoading && !user && <CircularProgress className='progress' />}
-          {!userLoading && user && !user.isAnonymous && (
+          {initializing && !user && <CircularProgress className='progress' />}
+          {!initializing && user && !user.isAnonymous && (
             <>
               <img
                 alt='Profile'
@@ -172,7 +173,7 @@ function Header ({ siteTitle }) {
               />
             </>
           )}
-          {!userLoading && !user && window.location.pathname !== '/connexion' && (
+          {!initializing && !user && window.location.pathname !== '/connexion' && (
             <div className='offline'>
               <span
                 className='menu-anchor'

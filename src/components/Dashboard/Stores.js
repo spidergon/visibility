@@ -21,9 +21,9 @@ const Wrapper = styled.div`
   }
 `
 
-function Stores ({ fav, user, userLoading }) {
+function Stores ({ fav, user, initializing }) {
   const [title, setTitle] = useState('')
-  const { loading, stores } = useMyStores(user)
+  const { loading, stores } = useMyStores(user, fav)
 
   useEffect(() => {
     const nb = stores && stores.length ? ` (${stores.length})` : ``
@@ -35,16 +35,16 @@ function Stores ({ fav, user, userLoading }) {
       <Seo title={title} />
       <center>
         <h2>{title}</h2>
-        {!loading && !userLoading && !fav && !stores.length && (
+        {!loading && !initializing && !fav && !stores.length && (
           <Button className='button' onClick={() => setTabVal(2)}>
             {'Ajouter une vitrine'}
           </Button>
         )}
-        {(userLoading || loading) && <CircularProgress />}
+        {(initializing || loading) && <CircularProgress />}
       </center>
       <div className='content'>
         <Grid container spacing={24}>
-          {!userLoading &&
+          {!initializing &&
             user &&
             stores &&
             stores.map(store => (
@@ -61,7 +61,7 @@ function Stores ({ fav, user, userLoading }) {
 Stores.propTypes = {
   fav: PropTypes.bool,
   user: PropTypes.object,
-  userLoading: PropTypes.bool
+  initializing: PropTypes.bool
 }
 
 export default Stores

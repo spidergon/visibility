@@ -232,7 +232,7 @@ export function useMyStore (id) {
  * @param {Object} user - the user object.
  * @returns {Object} Object containing { loading, stores }.
  */
-export function useMyStores (user) {
+export function useMyStores (user, fav = false) {
   const [loading, setLoading] = useState(false)
   const [stores, setStores] = useState([])
 
@@ -240,7 +240,7 @@ export function useMyStores (user) {
     // const cancel = myStores()
     // return () => cancel() // Cleaning
     let cancelled = false
-    if (user && user.uid) {
+    if (!fav && user && user.uid) {
       if (cancelled) return
       setLoading(true)
       db.collection(storeCollectionName)
@@ -266,7 +266,7 @@ export function useMyStores (user) {
         })
     }
     return () => (cancelled = true) // Cleaning
-  }, [user])
+  }, [fav, user])
 
   return { loading, stores }
 }

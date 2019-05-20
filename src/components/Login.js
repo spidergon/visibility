@@ -7,7 +7,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import Button from './Button'
 import LoginEmail from './LoginEmail'
 import { dashPath } from '../lib/utils'
-import useUser, {
+import {
+  useSession,
   AUTH_CREDENTIAL_IN_USE,
   signIn,
   signInEmailLink
@@ -109,7 +110,7 @@ function Login () {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const { userLoading, user } = useUser()
+  const { initializing, user } = useSession()
 
   useEffect(() => {
     // Sign in and Redirect in case the user signed in with email link
@@ -149,8 +150,8 @@ function Login () {
         </IconButton>
         {!loading ? <h2>{'Connexion'}</h2> : <CircularProgress />}
         <h4>{'Connectez-vous pour gérer votre compte !'}</h4>
-        {userLoading && <p>{'Chargement...'}</p>}
-        {!userLoading && user && (
+        {initializing && <p>{'Chargement...'}</p>}
+        {!initializing && user && (
           <>
             <p className='info'>{'Vous êtes déjà connecté(e) !'}</p>
             <Button
@@ -163,7 +164,7 @@ function Login () {
             </Button>
           </>
         )}
-        {!userLoading && !user && (
+        {!initializing && !user && (
           <>
             {showError()}
             {!isLoginEmail ? (

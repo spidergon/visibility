@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { navigate } from 'gatsby'
 import styled from 'styled-components'
-import useUser from '../../lib/user'
+import { useSession } from '../../lib/user'
 import { useGlobalState, showSnack } from '../../lib/state'
 import Stores from './Stores'
 import AddStore from './AddStore'
@@ -16,22 +16,22 @@ const Wrapper = styled.div`
 `
 
 function Dash () {
-  const { userLoading, user } = useUser()
+  const { initializing, user } = useSession()
   const [{ tabVal }] = useGlobalState('dash')
 
   useEffect(() => {
-    if (!userLoading && !user) {
+    if (!initializing && !user) {
       showSnack('Connexion requise !', 'error')
       navigate('/connexion')
     }
-  }, [userLoading, user])
+  }, [initializing, user])
 
   const Page = () => {
     switch (tabVal) {
       case 0:
-        return <Stores user={user} userLoading={userLoading} />
+        return <Stores initializing={initializing} user={user} />
       case 1:
-        return <Stores fav />
+        return <Stores fav initializing={initializing} user={user} />
       case 2:
         return <AddStore />
       case 3:
