@@ -7,13 +7,21 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
 import { useStore } from '../../lib/base'
 import { useSession } from '../../lib/user'
-import Header from './Header'
 import { showSnack } from '../../lib/state'
+import Header from './Header'
+import Description from './Description'
 
 const Wrapper = styled.div`
   padding-top: ${props => props.theme.headerHeight};
   .loading {
     margin-top: 2rem;
+  }
+  .presentation {
+    grid-template-columns: 1fr auto;
+    margin-top: 30px;
+    .showcase {
+      /* justify-self: end; */
+    }
   }
 `
 
@@ -73,6 +81,10 @@ function Store ({ storeId, edit }) {
         <>
           <Seo title={`${store.name}${edit ? ' (Edition)' : ''}`} />
           <Header store={store} user={user} />
+          <section className='inner wrap grid presentation'>
+            <Description />
+            <section className='showcase'>{'Mise en avant'}</section>
+          </section>
         </>
       )}
       {edit && <p>{'EDIT'}</p>}

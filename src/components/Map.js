@@ -62,7 +62,7 @@ function Map ({
   useEffect(() => {
     if (noLocate) {
       setDefaultCoords(coordinates)
-      setCenterCoords([coordinates[0], coordinates[1] - 0.004]) // push the center a bit on the left
+      setCenterCoords([coordinates[0], coordinates[1] - 0.0035]) // push the center a bit on the left
       if (!showMarker) setShowMarker(true)
     }
   }, [coordinates, noLocate, showMarker])
