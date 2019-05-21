@@ -26,12 +26,14 @@ p {
 }
 
 .inner {
-  margin: 0 auto;
+  position: relative;
+  width: 100%;
   max-width: 1400px;
+  margin: 0 auto;
 }
 .wrap {
   padding: 0 24px;
-  overflow: auto;
+  /* overflow: auto; */
 }
 .grid {
   display: grid;
