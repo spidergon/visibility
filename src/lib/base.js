@@ -6,7 +6,9 @@ import 'firebase/storage'
 import config from '../../firebase/config'
 import { showSnack } from './state'
 
-/*  --- Init --- */
+/*  ------------
+    --- Init ---
+    ------------  */
 
 firebase.initializeApp(config)
 
@@ -18,7 +20,9 @@ export const db = firebase.firestore()
 
 export const storage = firebase.storage()
 
-/*  --- Storage --- */
+/*  ---------------
+    --- Storage ---
+    ---------------  */
 
 /**
  * Upload a file to the storage.
@@ -48,7 +52,9 @@ export function deleteFile (path) {
     .delete()
 }
 
-/*  --- FireStore --- */
+/*  -----------------
+    --- FireStore ---
+    -----------------  */
 
 const storeCollectionName = 'stores'
 const userCollectionName = 'users'
@@ -176,6 +182,31 @@ export function publishStore (id, callback) {
     'Mise en ligne imposible.',
     callback
   )
+}
+
+/**
+ * Add a fan to the store or remove it.
+ * @param {*} storeId - the id of the store to be updated.
+ * @param {*} userId - the user id to add or remove.
+ * @param {*} callback - function to execute in case of success.
+ * @param {*} isFan - whether the user is fan or not
+ */
+export function addRemoveStoreFav (storeId, userId, callback, isFan = false) {
+  if (storeId && userId) {
+    let fans = firebase.firestore.FieldValue.arrayUnion(userId)
+    if (isFan) fans = firebase.firestore.FieldValue.arrayRemove(userId)
+    return db
+      .collection(storeCollectionName)
+      .doc(storeId)
+      .update({ fans })
+      .then(() => {
+        if (typeof callback === 'function') callback()
+      })
+      .catch(err => {
+        console.log(err)
+        showSnack("Une erreur interne s'est produite.", 'error')
+      })
+  }
 }
 
 /**

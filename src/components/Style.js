@@ -8,6 +8,7 @@ export const theme = {
   blue: '#039be5',
   orange: '#f6755e',
   orange2: '#f78a76',
+  loved: 'red',
   headerHeight: '5rem',
   dashHeaderHeight: '3rem',
   headerBottom: '1px solid rgba(151, 151, 151, 0.2) !important;',

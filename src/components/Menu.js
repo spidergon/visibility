@@ -39,6 +39,9 @@ const UserMenu = ({ anchor, hide, isOpen, user }) => (
         <MenuItem onClick={() => goToDash(hide, () => setTabVal(0))}>
           {'Tableau de bord'}
         </MenuItem>
+        <MenuItem onClick={() => goToDash(hide, () => setTabVal(1))}>
+          {'Mes favoris'}
+        </MenuItem>
         <MenuItem onClick={() => goToDash(hide, () => setTabVal(2))}>
           {'Créer une Vitrine'}
         </MenuItem>

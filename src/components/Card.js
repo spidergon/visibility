@@ -24,8 +24,9 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import defaultImg from '../assets/images/gatsby-icon.png'
-import { deleteStore, publishStore } from '../lib/base'
+import { addRemoveStoreFav, deleteStore, publishStore } from '../lib/base'
 import { dashPath } from '../lib/utils'
+import { showSnack } from '../lib/state'
 
 const Wrapper = styled.div`
   .card {
@@ -46,10 +47,9 @@ const Wrapper = styled.div`
     cursor: pointer;
   }
   .actions {
-    display: flex;
-  }
-  .loved {
-    color: red;
+    .loved {
+      color: ${props => props.theme.loved};
+    }
   }
 `
 
@@ -127,6 +127,24 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
     </Dialog>
   )
 
+  const setInFavCallback = () => {
+    if (store.loved) {
+      store.loved = false
+      showSnack("Vous n'aimez plus cette vitrine ?", 'success')
+    } else {
+      store.loved = true
+      showSnack('La vitrine a été ajoutée à vos favoris !', 'success')
+    }
+  }
+
+  const addRemoveToFav = () => {
+    addRemoveStoreFav(store.id, userId, setInFavCallback, store.loved)
+  }
+
+  const share = () => {
+    console.log('SHARE')
+  }
+
   return (
     <Wrapper>
       <MUICard className='card'>
@@ -170,12 +188,24 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
         {/* ACTIONS */}
         <CardActions className='actions' disableActionSpacing>
           {!hideFavIcon && (
-            <IconButton aria-label='Add to favorites' onClick={() => {}}>
+            <IconButton
+              aria-label={
+                store.loved ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
+              }
+              onClick={addRemoveToFav}
+              title={
+                store.loved ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
+              }
+            >
               <FavoriteIcon className={store.loved ? 'loved' : ''} />
             </IconButton>
           )}
           {!hideShareIcon && (
-            <IconButton aria-label='Share'>
+            <IconButton
+              aria-label='Partager la vitrine sur les réseaux sociaux'
+              onClick={share}
+              title='Partager la vitrine sur les réseaux sociaux'
+            >
               <ShareIcon />
             </IconButton>
           )}

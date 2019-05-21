@@ -72,7 +72,7 @@ function Store ({ storeId, edit }) {
       {!loading && store && (
         <>
           <Seo title={`${store.name}${edit ? ' (Edition)' : ''}`} />
-          <Header store={store} />
+          <Header store={store} user={user} />
         </>
       )}
       {edit && <p>{'EDIT'}</p>}
