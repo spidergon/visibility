@@ -43,7 +43,12 @@ const Wrapper = styled.div`
   }
 `
 
-const stepTitles = ['Informations générales', 'Photos', 'Géolocalisation']
+const stepTitles = [
+  'Informations générales',
+  'Description',
+  'Photos',
+  'Géolocalisation'
+]
 
 function stepReducer (step, action) {
   switch (action) {
@@ -59,7 +64,7 @@ function stepReducer (step, action) {
 }
 
 function AddStore () {
-  const [step, dispatch] = useReducer(stepReducer, 0)
+  const [step, dispatch] = useReducer(stepReducer, 1)
   const [loading, setLoading] = useState(false)
 
   const [name, setName] = useState('Ma Vitrine')
@@ -94,14 +99,16 @@ function AddStore () {
             setName,
             activity,
             setActivity,
-            description,
-            setDescription,
             tags,
             setTags,
             company,
             setCompany,
             siret,
             setSiret
+          },
+          description: {
+            description,
+            setDescription
           },
           photos: {
             photos,

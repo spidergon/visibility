@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import InfoForm from './InfoForm'
+import DescriptionForm from './DescriptionForm'
 import PhotosForm from './PhotosForm'
 import GeolocForm from './GeolocForm'
 
@@ -15,7 +16,11 @@ const Actions = styled.div`
   }
 `
 
-function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
+function Content ({
+  step,
+  dispatch,
+  data: { info, description, photos, geoloc }
+}) {
   const [error, setError] = useState(false)
   let content
   switch (step) {
@@ -23,9 +28,12 @@ function Content ({ step, dispatch, data: { info, photos, geoloc } }) {
       content = <InfoForm {...info} setFormError={setError} />
       break
     case 1:
-      content = <PhotosForm {...photos} />
+      content = <DescriptionForm {...description} setFormError={setError} />
       break
     case 2:
+      content = <PhotosForm {...photos} />
+      break
+    case 3:
       content = <GeolocForm {...geoloc} setFormError={setError} />
       break
     default:
@@ -67,6 +75,7 @@ Content.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.shape({
     info: PropTypes.object.isRequired,
+    description: PropTypes.object.isRequired,
     photos: PropTypes.object.isRequired,
     geoloc: PropTypes.object.isRequired
   })

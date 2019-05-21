@@ -33,8 +33,6 @@ function InfoForm ({
   setName,
   activity,
   setActivity,
-  description,
-  setDescription,
   tags,
   setTags,
   company,
@@ -45,7 +43,6 @@ function InfoForm ({
   const [tag, setTag] = useState('')
   const [nameError, setNameError] = useState('')
   const [activityError, setActivityError] = useState('')
-  const [descriptionError, setDescriptionError] = useState('')
   const [tagError, setTagError] = useState('')
   const [siretError, setSiretError] = useState('')
 
@@ -75,10 +72,6 @@ function InfoForm ({
   }, [activity])
 
   useEffect(() => {
-    setDescriptionError('')
-  }, [description])
-
-  useEffect(() => {
     setTagError('')
   }, [tag])
 
@@ -87,18 +80,12 @@ function InfoForm ({
   }, [siret])
 
   useEffect(() => {
-    setFormError(!!(nameError || descriptionError || tagError || siretError))
-  }, [setFormError, nameError, descriptionError, tagError, siretError])
+    setFormError(!!(nameError || tagError || siretError))
+  }, [setFormError, nameError, tagError, siretError])
 
   const verifyActivity = () => {
     if (!activity) {
       return setActivityError('Veuillez saisir une activité.')
-    }
-  }
-
-  const verifyDescription = () => {
-    if (!description) {
-      return setDescriptionError('Veuillez saisir une description.')
     }
   }
 
@@ -164,21 +151,6 @@ function InfoForm ({
             value={activity}
           />
           <FormHelperText id='activity-error'>{activityError}</FormHelperText>
-        </FormControl>
-        <br />
-        <FormControl error={!!descriptionError} margin='normal'>
-          <TextField
-            error={!!descriptionError}
-            label='Description'
-            margin='normal'
-            multiline
-            onBlur={verifyDescription}
-            onChange={e => setDescription(e.target.value)}
-            placeholder='Description de votre vitrine'
-            required
-            value={description}
-          />
-          <FormHelperText id='name-error'>{descriptionError}</FormHelperText>
         </FormControl>
         <div>
           <FormControl error={!!tagError} margin='normal'>
@@ -252,8 +224,6 @@ InfoForm.propTypes = {
   setName: PropTypes.func.isRequired,
   activity: PropTypes.string.isRequired,
   setActivity: PropTypes.func.isRequired,
-  description: PropTypes.string.isRequired,
-  setDescription: PropTypes.func.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   setTags: PropTypes.func.isRequired,
   company: PropTypes.string.isRequired,
