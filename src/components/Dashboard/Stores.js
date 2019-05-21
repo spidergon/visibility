@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { navigate } from 'gatsby'
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Seo from '../Seo'
 import { useMyStores } from '../../lib/base'
-import { setTabVal } from '../../lib/state'
+import { setTabVal, showSnack } from '../../lib/state'
 import Card from '../Card'
 
 const Wrapper = styled.div`
@@ -23,12 +24,20 @@ const Wrapper = styled.div`
 
 function Stores ({ fav, user, initializing }) {
   const [title, setTitle] = useState('')
-  const { loading, stores } = useMyStores(user, fav)
+  const { error, loading, stores } = useMyStores(user, fav)
 
   useEffect(() => {
     const nb = stores && stores.length ? ` (${stores.length})` : ``
     setTitle(fav ? `Mes Favoris${nb}` : `Mes Vitrines${nb}`)
   }, [fav, stores])
+
+  useEffect(() => {
+    if (error) {
+      showSnack("Une erreur internet s'est produite", 'error')
+      console.log(error)
+      navigate('/')
+    }
+  }, [error])
 
   return (
     <Wrapper>

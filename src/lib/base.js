@@ -54,6 +54,22 @@ const storeCollectionName = 'stores'
 const userCollectionName = 'users'
 
 /**
+ * Check if a user exists.
+ * @param {string} id the id of the user.
+ */
+export async function userExists (id) {
+  const doc = await db
+    .collection(userCollectionName)
+    .doc(id)
+    .get()
+    .catch(() => {
+      /* Silent is golden */
+    })
+  if (doc) return doc.exists
+  return false
+}
+
+/**
  * Create a new user in the database.
  * @param {Object} data - the data of the new user.
  */
@@ -68,22 +84,6 @@ export async function addUser (data) {
         .set(data)
     }
   }
-}
-
-/**
- * Check if a user exists.
- * @param {string} id the id of the user.
- */
-export async function userExists (id) {
-  const doc = await db
-    .collection(userCollectionName)
-    .doc(id)
-    .get()
-    .catch(() => {
-      /* Silent is golden */
-    })
-  if (doc) return doc.exists
-  return false
 }
 
 /**
@@ -113,6 +113,7 @@ export function addStore (data) {
     data.created = new Date()
     data.archived = false
     data.status = 'offline'
+    data.fans = []
     data.errorMsg = ''
     delete data.slug
     return db
@@ -177,96 +178,152 @@ export function publishStore (id, callback) {
   )
 }
 
-// /**
-//  * Get a store by its id.
-//  * @param {string} id the id of the store.
-//  */
-// export async function getStore (id) {
-//   const doc = await db
-//     .collection(storeCollectionName)
-//     .doc(id)
-//     .get()
-//   if (doc && doc.exists) return { id, ...doc.data() }
-//   return null
-// }
-
 /**
  * Hook that provides the store by its id.
  * @param {string} id - the id.
- * @returns {Object} Object containing { loading, store }.
+ * @returns {Object} { error, loading, store }.
  */
-export function useMyStore (id) {
-  const [loading, setLoading] = useState(null)
+export function useStore (id) {
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [store, setStore] = useState(null)
 
   useEffect(() => {
-    let cancelled = false
-    if (id) {
-      if (cancelled) return
-      setLoading(true)
-      db.collection(storeCollectionName)
-        .doc(id)
-        .get()
-        .then(doc => {
-          if (cancelled) return
-          if (doc && doc.exists) {
-            setStore({ id, ...doc.data() })
-          }
+    const unsubscribe = db
+      .collection(storeCollectionName)
+      .doc(id)
+      .onSnapshot(
+        doc => {
+          if (doc && doc.exists) setStore({ id, ...doc.data() })
           setLoading(false)
-        })
-        .catch(err => {
-          if (cancelled) return
-          setLoading(false)
-          console.log(err)
-          showSnack(`Vitrine introuvable : ${id}`, 'error')
-        })
-    }
-    return () => (cancelled = true) // Cleaning
+        },
+        err => setError(err)
+      )
+    return () => unsubscribe()
   }, [id])
 
-  return { loading, store }
+  return { error, loading, store }
+}
+
+// /**
+//  * Hook that provides the store by its id.
+//  * @param {string} id - the id.
+//  * @returns {Object} Object containing { loading, store }.
+//  */
+// export function useMyStore (id) {
+//   const [loading, setLoading] = useState(null)
+//   const [store, setStore] = useState(null)
+
+//   useEffect(() => {
+//     let cancelled = false
+//     if (id) {
+//       if (cancelled) return
+//       setLoading(true)
+//       db.collection(storeCollectionName)
+//         .doc(id)
+//         .get()
+//         .then(doc => {
+//           if (cancelled) return
+//           if (doc && doc.exists) {
+//             setStore({ id, ...doc.data() })
+//           }
+//           setLoading(false)
+//         })
+//         .catch(err => {
+//           if (cancelled) return
+//           setLoading(false)
+//           console.log(err)
+//           showSnack(`Vitrine introuvable : ${id}`, 'error')
+//         })
+//     }
+//     return () => (cancelled = true) // Cleaning
+//   }, [id])
+
+//   return { loading, store }
+// }
+
+/** Get the first part of the query depending on user and fav */
+function userFavQuery (user, fav) {
+  const uid = user ? user.uid : null
+  const collection = db.collection(storeCollectionName)
+  if (fav) return collection.where('fans', 'array-contains', uid)
+  return collection.where('author', '==', uid)
 }
 
 /**
  * Hook that provides the stores for a user.
  * @param {Object} user - the user object.
- * @returns {Object} Object containing { loading, stores }.
+ * @returns {Object} { error, loading, stores }.
  */
 export function useMyStores (user, fav = false) {
-  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [stores, setStores] = useState([])
 
   useEffect(() => {
-    // const cancel = myStores()
-    // return () => cancel() // Cleaning
-    let cancelled = false
-    if (!fav && user && user.uid) {
-      if (cancelled) return
-      setLoading(true)
-      db.collection(storeCollectionName)
-        .where('author', '==', user.uid)
-        .where('archived', '==', false)
-        .orderBy('created', 'desc')
-        .limit(8)
-        .get()
-        .then(snap => {
-          const newStores = []
-          snap.forEach(function (doc) {
-            newStores.push({ id: doc.id, ...doc.data() })
+    const unsubscribe = userFavQuery(user, fav)
+      .where('archived', '==', false)
+      .orderBy('created', 'desc')
+      .limit(8)
+      .onSnapshot(
+        snapshot => {
+          const myStores = []
+          snapshot.forEach(doc => {
+            const data = doc.data()
+            data.loved = data.fans.includes(user ? user.uid : null)
+            myStores.push({ id: doc.id, ...data })
           })
-          if (cancelled) return
-          setStores(newStores)
+          setStores(myStores)
           setLoading(false)
-        })
-        .catch(err => {
-          if (cancelled) return
-          setLoading(false)
-          console.log(err)
-          showSnack("Une erreur interne s'est produite.", 'error')
-        })
-    }
-    return () => (cancelled = true) // Cleaning
+        },
+        err => setError(err)
+      )
+    return () => unsubscribe()
   }, [fav, user])
 
-  return { loading, stores }
+  return { error, loading, stores }
 }
+
+// /**
+//  * Hook that provides the stores for a user.
+//  * @param {Object} user - the user object.
+//  * @returns {Object} Object containing { loading, stores }.
+//  */
+// export function useMyStores_ (user, fav = false) {
+//   const [loading, setLoading] = useState(false)
+//   const [stores, setStores] = useState([])
+
+//   useEffect(() => {
+//     // const cancel = myStores()
+//     // return () => cancel() // Cleaning
+//     let cancelled = false
+//     if (!fav && user && user.uid) {
+//       if (cancelled) return
+//       setLoading(true)
+//       db.collection(storeCollectionName)
+//         .where('author', '==', user.uid)
+//         .where('archived', '==', false)
+//         .orderBy('created', 'desc')
+//         .limit(8)
+//         .get()
+//         .then(snap => {
+//           const newStores = []
+//           snap.forEach(function (doc) {
+//             newStores.push({ id: doc.id, ...doc.data() })
+//           })
+//           if (cancelled) return
+//           setStores(newStores)
+//           setLoading(false)
+//         })
+//         .catch(err => {
+//           if (cancelled) return
+//           setLoading(false)
+//           console.log(err)
+//           showSnack("Une erreur interne s'est produite.", 'error')
+//         })
+//     }
+//     return () => (cancelled = true) // Cleaning
+//   }, [fav, user])
+
+//   return { loading, stores }
+// }

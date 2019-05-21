@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components'
 import '../assets/css/style.css'
 
-const theme = {
+export const theme = {
   primary: '#3f51b5',
   black: 'rgb(72, 72, 72)',
   gray: '#dadce0',
@@ -20,7 +20,7 @@ const theme = {
   xs: '480px'
 }
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body {
     -webkit-font-smoothing: antialiased;
     color: ${props => props.theme.black};
@@ -30,5 +30,3 @@ const GlobalStyle = createGlobalStyle`
     color: ${props => props.theme.blue};
   }
 `
-
-export { theme, GlobalStyle }

@@ -55,14 +55,7 @@ const Wrapper = styled.div`
 
 let diagAction
 
-function Card ({
-  userId,
-  store,
-  showContent,
-  showFavIcon,
-  showFavIconReadOnly,
-  showShareIcon
-}) {
+function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
   const [isOwn] = useState(store.author === userId)
   const [status, setStatus] = useState('(Non publiée)')
   const [loading] = useState(false)
@@ -71,7 +64,6 @@ function Card ({
   const [diagOpen, setDiagOpen] = useState(false)
   const [diagTitle, setDiagTitle] = useState('')
   const [diagText, setDiagText] = useState('')
-  const [loved] = useState(false)
 
   useEffect(() => {
     setMenuOpen(!!anchorEl)
@@ -84,10 +76,6 @@ function Card ({
       else if (store.status === 'error') setStatus('(En erreur)')
     }
   }, [isOwn, store.status])
-
-  // useEffect(() => {
-  //   console.log(store, userId, defaultImg)
-  // }, [])
 
   const openDiag = (title, text, action) => {
     setAnchorEl(null)
@@ -145,16 +133,14 @@ function Card ({
         {/* HEADER */}
         <CardHeader
           action={
-            isOwn && (
-              <IconButton
-                aria-haspopup='true'
-                aria-label='More'
-                aria-owns={menuOpen ? 'card-menu' : null}
-                onClick={e => setAnchorEl(e.currentTarget)}
-              >
-                <MoreVertIcon />
-              </IconButton>
-            )
+            <IconButton
+              aria-haspopup='true'
+              aria-label='More'
+              aria-owns={menuOpen ? 'card-menu' : null}
+              onClick={e => setAnchorEl(e.currentTarget)}
+            >
+              <MoreVertIcon />
+            </IconButton>
           }
           avatar={
             loading ? (
@@ -183,31 +169,31 @@ function Card ({
         )}
         {/* ACTIONS */}
         <CardActions className='actions' disableActionSpacing>
-          {(showFavIcon || showFavIconReadOnly) && (
+          {!hideFavIcon && (
             <IconButton aria-label='Add to favorites' onClick={() => {}}>
-              <FavoriteIcon className={loved ? 'loved' : ''} />
+              <FavoriteIcon className={store.loved ? 'loved' : ''} />
             </IconButton>
           )}
-          {showShareIcon && (
+          {!hideShareIcon && (
             <IconButton aria-label='Share'>
               <ShareIcon />
             </IconButton>
           )}
         </CardActions>
         {/* MENU */}
-        {isOwn && (
-          <>
-            <Menu
-              anchorEl={anchorEl}
-              className='menu'
-              id='card-menu'
-              onClose={() => setAnchorEl(null)}
-              open={menuOpen}
-              PaperProps={{ style: { maxHeight: 48 * 4.5, width: 200 } }}
-            >
-              <MenuItem onClick={() => navigate(`/store/${store.id}`)}>
-                {'Voir vitrine'}
-              </MenuItem>
+        <Menu
+          anchorEl={anchorEl}
+          className='menu'
+          id='card-menu'
+          onClose={() => setAnchorEl(null)}
+          open={menuOpen}
+          PaperProps={{ style: { maxHeight: 48 * 4.5, width: 200 } }}
+        >
+          <MenuItem onClick={() => navigate(`/store/${store.id}`)}>
+            {'Voir vitrine'}
+          </MenuItem>
+          {isOwn && (
+            <div>
               <Divider />
               <MenuItem onClick={() => navigate(`/store/${store.id}/edit`)}>
                 {'Modifier'}
@@ -219,10 +205,10 @@ function Card ({
                   <MenuItem onClick={openPublishDiag}>{'Publier'}</MenuItem>
                 </div>
               )}
-            </Menu>
-            <Diag />
-          </>
-        )}
+            </div>
+          )}
+        </Menu>
+        <Diag />
       </MUICard>
     </Wrapper>
   )
@@ -232,9 +218,8 @@ Card.propTypes = {
   userId: PropTypes.string.isRequired,
   store: PropTypes.object.isRequired,
   showContent: PropTypes.bool,
-  showFavIcon: PropTypes.bool,
-  showFavIconReadOnly: PropTypes.bool,
-  showShareIcon: PropTypes.bool
+  hideFavIcon: PropTypes.bool,
+  hideShareIcon: PropTypes.bool
 }
 
 export default Card

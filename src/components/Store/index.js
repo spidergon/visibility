@@ -5,9 +5,10 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
-import { useMyStore } from '../../lib/base'
+import { useStore } from '../../lib/base'
 import { useSession } from '../../lib/user'
 import Header from './Header'
+import { showSnack } from '../../lib/state'
 
 const Wrapper = styled.div`
   padding-top: ${props => props.theme.headerHeight};
@@ -17,14 +18,12 @@ const Wrapper = styled.div`
 `
 
 function Store ({ storeId, edit }) {
-  const { loading, store } = useMyStore(storeId)
+  const { error, loading, store } = useStore(storeId)
   const { initializing, user } = useSession()
 
   useEffect(() => {
     if (store) console.log(store)
   }, [store])
-
-  // TODO: Improve those effects
 
   useEffect(() => {
     // Can't edit if store doesn't exist or archived
@@ -46,6 +45,14 @@ function Store ({ storeId, edit }) {
       navigate(`/store/${storeId}`) // go back to store page
     }
   }, [store, storeId, user])
+
+  useEffect(() => {
+    if (error) {
+      showSnack("Une erreur internet s'est produite", 'error')
+      console.log(error)
+      navigate('/')
+    }
+  }, [error])
 
   return (
     <Wrapper>

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import Link from '../Link'
-import Image from '../Image'
 import Hero from './Hero'
 import { dashPath } from '../../lib/utils'
 
@@ -12,12 +11,6 @@ const Home = () => (
     <Hero />
     <section className='lorem'>
       <div className='inner wrap'>
-        {/* <h1>{'Hi people'}</h1>
-        <p>{`{'Welcome to your new Gatsby site.'}̀`}</p>
-        <p>{`{'Now go build something great.'}̀`}</p>
-        <div style={{ maxWidth: '300px', marginBottom: '1.45rem' }}>
-          <Image />
-        </div> */}
         <Link to={'/connexion'}>{'Connexion'}</Link>
         {' | '}
         <Link to={dashPath}>{'Dashboard'}</Link>
@@ -44,7 +37,7 @@ const Home = () => (
           </em>{' '}
           Now 'I'' have to pay ''them'!
         ̀`}</p>
-        <h2>Really?!</h2>
+        <h2>{'Really?!'}</h2>
         <p>{`
           You, a bobsleder!? That I'd like to see! I'm Santa Claus! Of all the
           friends I've had… you're the first. I love you, buddy! You mean while
