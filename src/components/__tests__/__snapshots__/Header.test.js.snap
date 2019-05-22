@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header/> renders correctly 1`] = `
+<header
+  className="sc-bdVaJa lcpSoN"
+>
+  <div
+    className="content grid"
+  >
+    <nav
+      className="logo"
+    >
+      <a
+        href="/"
+      >
+        <span>
+          Visibility
+        </span>
+      </a>
+    </nav>
+    <nav
+      className="navs"
+    />
+    <nav
+      className="profile"
+    >
+      <ul>
+        <li>
+          <a
+            className="link"
+            href="/connexion"
+          >
+            <div
+              className="sub"
+            >
+              <span>
+                Connexion
+              </span>
+            </div>
+          </a>
+        </li>
+      </ul>
+      <div
+        className="offline"
+      >
+        <span
+          className="menu-anchor"
+          onClick={[Function]}
+        >
+          <i
+            className="fas fa-bars"
+          />
+        </span>
+      </div>
+    </nav>
+  </div>
+</header>
+`;

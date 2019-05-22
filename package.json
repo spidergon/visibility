@@ -16,7 +16,7 @@
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "lint": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' -o ./eslint_result.html -f html .",
     "lint:fix": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' . --fix",
     "fire-storage": "cd firebase && firebase deploy --only storage",
@@ -61,6 +61,8 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
+    "babel-preset-gatsby": "^0.1.11",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-jsx": "^6.0.2",
@@ -72,6 +74,9 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "1.6.0",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^24.8.0",
+    "react-test-renderer": "^16.8.6"
   }
 }
