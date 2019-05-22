@@ -20,8 +20,7 @@ const useAuth = () => {
         addUser({
           uid: user.uid,
           created: new Date(),
-          admin: false,
-          favs: []
+          admin: false
         })
         formattedUser = {
           uid: user.uid,
