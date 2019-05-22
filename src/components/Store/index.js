@@ -10,6 +10,7 @@ import { useSession } from '../../lib/user'
 import { showSnack } from '../../lib/state'
 import Header from './Header'
 import Description from './Description'
+import Showcase from './Showcase'
 
 const Wrapper = styled.div`
   padding-top: ${props => props.theme.headerHeight};
@@ -19,9 +20,6 @@ const Wrapper = styled.div`
   .presentation {
     grid-template-columns: 1fr auto;
     margin-top: 30px;
-    .showcase {
-      /* justify-self: end; */
-    }
   }
 `
 
@@ -82,8 +80,8 @@ function Store ({ storeId, edit }) {
           <Seo title={`${store.name}${edit ? ' (Edition)' : ''}`} />
           <Header store={store} user={user} />
           <section className='inner wrap grid presentation'>
-            <Description />
-            <section className='showcase'>{'Mise en avant'}</section>
+            <Description store={store} />
+            <Showcase store={store} />
           </section>
         </>
       )}

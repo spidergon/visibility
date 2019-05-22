@@ -78,17 +78,19 @@ function Header ({ store, user }) {
               <div className='address'>{store.address}</div>
             </div>
             <div className='actions'>
-              <IconButton
-                aria-label={
-                  inFav ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
-                }
-                onClick={addRemoveToFav}
-                title={
-                  inFav ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
-                }
-              >
-                <FavoriteIcon className={inFav ? 'loved' : ''} />
-              </IconButton>
+              {user && (
+                <IconButton
+                  aria-label={
+                    inFav ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
+                  }
+                  onClick={addRemoveToFav}
+                  title={
+                    inFav ? 'Vitrine dans vos favoris' : 'Ajouter aux favoris'
+                  }
+                >
+                  <FavoriteIcon className={inFav ? 'loved' : ''} />
+                </IconButton>
+              )}
               <IconButton
                 aria-label='Partager la vitrine sur les réseaux sociaux'
                 onClick={share}
@@ -114,7 +116,7 @@ function Header ({ store, user }) {
 
 Header.propTypes = {
   store: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object
 }
 
 export default Header

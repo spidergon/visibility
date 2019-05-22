@@ -52,6 +52,7 @@
     "react-dropzone": "^10.1.4",
     "react-helmet": "^5.2.1",
     "react-hooks-global-state": "^0.9.0",
+    "react-html-parser": "^2.0.2",
     "react-leaflet": "^2.3.0",
     "react-router-dom": "^5.0.0",
     "slugify": "^1.3.4",

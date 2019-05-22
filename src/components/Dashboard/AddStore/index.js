@@ -69,7 +69,7 @@ function AddStore () {
 
   const [name, setName] = useState('Ma Vitrine')
   const [activity, setActivity] = useState('Hôtels, Restaurants')
-  const [description, setDescription] = useState('Une description')
+  const [description, setDescription] = useState('')
   const [tags, setTags] = useState(['Restaurant', 'Wifi', 'Famille', 'Bar'])
   const [company, setCompany] = useState('CS Digital')
   const [siret, setSiret] = useState('522 948 256')

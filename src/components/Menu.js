@@ -30,14 +30,17 @@ const UserMenu = ({ anchor, hide, isOpen, user }) => (
   <>
     {(window.location.pathname !== dashPath && (
       <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
-        <MenuItem onClick={() => goToDash(hide, () => setTabVal(3))}>
+        <MenuItem
+          onClick={() => goToDash(hide, () => setTabVal(3))}
+          title='Mon compte'
+        >
           {`${user.displayName ? `${user.displayName} ` : ''}${
             user.email ? `(${user.email})` : ''
           }`}
         </MenuItem>
         <Divider />
         <MenuItem onClick={() => goToDash(hide, () => setTabVal(0))}>
-          {'Tableau de bord'}
+          {'Mes vitrines'}
         </MenuItem>
         <MenuItem onClick={() => goToDash(hide, () => setTabVal(1))}>
           {'Mes favoris'}

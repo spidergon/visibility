@@ -25,6 +25,11 @@ const Wrapper = styled.div`
         z-index: 2;
       }
     }
+    .no-photo-div {
+      position: absolute;
+      top: 12px;
+      left: 45px;
+    }
   }
 `
 
@@ -54,13 +59,15 @@ function Photos ({ photos }) {
         title={
           photos.length > 1
             ? `Voir les ${photos.length} photos`
-            : 'Voir la photo'
+            : photos.length === 1 && 'Voir la photo'
         }
       >
         {photos.map((photo, id) => (
           <img alt='Vitrine Showcase' key={id} src={photo.src} />
         ))}
-        {photos.length === 0 && <div>{'Pas de photos'}</div>}
+        {photos.length === 0 && (
+          <div className='no-photo-div'>{'Pas de photos'}</div>
+        )}
       </div>
     </Wrapper>
   )
