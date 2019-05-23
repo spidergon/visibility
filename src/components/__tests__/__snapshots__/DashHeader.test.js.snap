@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Header/> renders correctly 1`] = `
+<header
+  className="sc-bwzfXH eFVGrB"
+>
+  <div
+    className="content grid"
+  >
+    <nav
+      className="logo"
+    >
+      <a
+        href="/"
+      >
+        <span>
+          Visibility
+        </span>
+      </a>
+    </nav>
+    <nav
+      className="navs"
+    />
+    <nav
+      className="profile"
+    />
+  </div>
+</header>
+`;
