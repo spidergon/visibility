@@ -59,7 +59,9 @@ function Photos ({ photos }) {
         title={
           photos.length > 1
             ? `Voir les ${photos.length} photos`
-            : photos.length === 1 && 'Voir la photo'
+            : photos.length === 1
+              ? 'Voir la photo'
+              : ''
         }
       >
         {photos.map((photo, id) => (

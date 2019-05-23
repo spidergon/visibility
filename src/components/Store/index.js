@@ -32,7 +32,7 @@ function Store ({ storeId, edit }) {
   }, [store])
 
   useEffect(() => {
-    // Can't edit if store doesn't exist or archived
+    // Can't see store if it doesn't exist or is archived
     if ((loading === false && !store) || (store && store.archived)) {
       navigate('/')
     }
@@ -40,17 +40,17 @@ function Store ({ storeId, edit }) {
 
   useEffect(() => {
     // Can't edit if not authenticated user
-    if (initializing === false && !user) {
+    if (edit && initializing === false && !user) {
       navigate(`/store/${storeId}`) // go back to store page
     }
-  }, [storeId, initializing, user])
+  }, [edit, initializing, storeId, user])
 
   useEffect(() => {
     // Can't edit if user is not the owner
-    if (store && user && store.author !== user.uid) {
+    if (edit && store && user && store.author !== user.uid) {
       navigate(`/store/${storeId}`) // go back to store page
     }
-  }, [store, storeId, user])
+  }, [edit, store, storeId, user])
 
   useEffect(() => {
     if (error) {

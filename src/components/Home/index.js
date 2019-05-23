@@ -15,7 +15,7 @@ const Home = () => (
         {' | '}
         <Link to={dashPath}>{'Dashboard'}</Link>
         {' | '}
-        <Link to={'/store/le-bon-resto'}>{'Le Bon Resto'}</Link>
+        <Link to={'/store/ma-superbe-vitrine'}>{'Ma Super Vitrine'}</Link>
 
         <h1>{'Can I use the gun?'}</h1>
         <p>{`

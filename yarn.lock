@@ -10835,6 +10835,13 @@ react-hooks-global-state@^0.9.0:
   resolved "https://registry.yarnpkg.com/react-hooks-global-state/-/react-hooks-global-state-0.9.0.tgz#72faae48e1489241af399f91ef5402f21861af9c"
   integrity sha512-zG77NerUAk2HbLlDahkFdKpuTZFsnkuuZ48hzPSEtLStp5ydFO5CGItFG/uqJ5X+QTPbqSCqRH/X562ghQnaGQ==
 
+react-hooks-testing-library@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-hooks-testing-library/-/react-hooks-testing-library-0.5.0.tgz#571af3522f88ea4ac23c634fb4deff84873f2bc2"
+  integrity sha512-qX4SA28pcCCf1Q23Gtl1VKqQk26pSPTEsdLtfJanDqm4oacT5wadL+e2Xypk/H+AOXN5kdZrWmXkt+hAaiNHgg==
+  dependencies:
+    "@babel/runtime" "^7.4.2"
+
 react-hot-loader@^4.8.4:
   version "4.8.6"
   resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.8.6.tgz#8352805be277de70d6da8657552d0fc55faa0014"
@@ -13109,6 +13116,11 @@ w3c-hr-time@^1.0.1:
   integrity sha1-gqwr/2PZUOqeMYmlimViX+3xkEU=
   dependencies:
     browser-process-hrtime "^0.1.2"
+
+waait@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/waait/-/waait-1.0.4.tgz#1d177bab3175bfb56f0f832526582e0ca0b2650d"
+  integrity sha512-fMUqZH5xkzDgzw3b0CzOq7IBjIx9ig09gnpnRpRgonbPOZJWGURXWWHWt3xJa8cpxjh1WGFzRAD96V8i2C8Wmg==
 
 wait-for-expect@^1.1.1:
   version "1.2.0"

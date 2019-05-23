@@ -64,7 +64,7 @@ function stepReducer (step, action) {
 }
 
 function AddStore () {
-  const [step, dispatch] = useReducer(stepReducer, 1)
+  const [step, dispatch] = useReducer(stepReducer, 0)
   const [loading, setLoading] = useState(false)
 
   const [name, setName] = useState('Ma Vitrine')
