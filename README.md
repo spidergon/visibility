@@ -7,11 +7,12 @@
 
 ## Stack
 
-- React (UI library)
+- React (UI library) + Hooks
 - GatsbyJS (static site framework)
 - Firebase (Authentication, Database (Cloud FireStore) and Storage) 
 - styled-components (CSS styling)
 - Leaflet and OpenStreetMap (Maps)
+- Jest (JS Testing)
 
 ## Setup
 
