@@ -42,6 +42,7 @@ function coordLabel (coord) {
 
 function Map ({
   coordinates,
+  coordList,
   noLocate,
   readOnly,
   setCoordinates,
@@ -148,6 +149,27 @@ function Map ({
             </Popup>
           </Marker>
         )}
+        {coordList &&
+          coordList.map((coords, id) => (
+            <Marker
+              alt='Leaflet Marker'
+              draggable={!readOnly}
+              key={id}
+              onDragend={handleDragEnd}
+              position={[coordinates[0] - 0.0035, coordinates[1]]}
+            >
+              <Popup minWidth={90}>
+                <center>
+                  {'Position:'} <br />
+                  {`Lat. : ${coordinates[0]}`}
+                  <br />
+                  {`Lon. : ${coordinates[1]}`}
+                  <br />
+                  {coordLabel(coordinates)}
+                </center>
+              </Popup>
+            </Marker>
+          ))}
       </LeafletMap>
     </Wrapper>
   )
@@ -155,6 +177,7 @@ function Map ({
 
 Map.propTypes = {
   coordinates: PropTypes.array,
+  coordList: PropTypes.array,
   noLocate: PropTypes.bool,
   readOnly: PropTypes.bool,
   setCoordinates: PropTypes.func,

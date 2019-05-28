@@ -59,6 +59,16 @@ export function deleteFile (path) {
 const storeCollectionName = 'stores'
 const userCollectionName = 'users'
 
+// Configure offline persistence
+db.enablePersistence({ synchronizeTabs: true }).catch(err => {
+  if (err.code === 'unimplemented') {
+    // The current browser does not support all of the
+    // features required to enable persistence.
+    console.log("Data can't be persisted on your browser")
+  }
+})
+// Subsequent queries will use persistence, if it was enabled successfully
+
 /**
  * Check if a user exists.
  * @param {string} id the id of the user.

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import TextField from '@material-ui/core/TextField'
@@ -48,40 +48,28 @@ function InfoForm ({
 
   const didCancel = useRef(false) // to block async state update when component has been unmounted
 
-  const verifyName = useCallback(async () => {
-    if (!name) return setNameError('Veuillez saisir un nom.')
-    const newName = name.trim()
-    if (await storeExists(slugify(newName))) {
-      if (didCancel.current) return
-      setName(newName)
-      setNameError("Ce nom n'est pas disponible.")
-    }
-  }, [name, setName])
+  useEffect(() => () => (didCancel.current = true), [])
 
-  useEffect(() => {
-    verifyName()
-    return () => (didCancel.current = true)
-  }, [verifyName])
+  useEffect(() => setNameError(''), [name])
 
-  useEffect(() => {
-    setNameError('')
-  }, [name])
+  useEffect(() => setActivityError(''), [activity])
 
-  useEffect(() => {
-    setActivityError('')
-  }, [activity])
+  useEffect(() => setTagError(''), [tag])
 
-  useEffect(() => {
-    setTagError('')
-  }, [tag])
-
-  useEffect(() => {
-    setSiretError('')
-  }, [siret])
+  useEffect(() => setSiretError(''), [siret])
 
   useEffect(() => {
     setFormError(!!(nameError || tagError || siretError))
   }, [setFormError, nameError, tagError, siretError])
+
+  const verifyName = async () => {
+    if (!name) return setNameError('Veuillez saisir un nom.')
+    const newName = name.trim()
+    if (!didCancel.current && (await storeExists(slugify(newName)))) {
+      setName(newName)
+      setNameError("Ce nom n'est pas disponible.")
+    }
+  }
 
   const verifyActivity = () => {
     if (!activity) {
