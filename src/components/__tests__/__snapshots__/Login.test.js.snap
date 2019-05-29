@@ -9,11 +9,10 @@ exports[`<Login/> renders correctly 1`] = `
   >
     <button
       aria-label="Close"
-      className="MuiButtonBase-root-7 MuiIconButton-root-1 closeIcon"
+      className="MuiButtonBase-root MuiIconButton-root closeIcon"
       disabled={false}
       onBlur={[Function]}
       onClick={[Function]}
-      onContextMenu={[Function]}
       onFocus={[Function]}
       onKeyDown={[Function]}
       onKeyUp={[Function]}
@@ -23,15 +22,15 @@ exports[`<Login/> renders correctly 1`] = `
       onTouchEnd={[Function]}
       onTouchMove={[Function]}
       onTouchStart={[Function]}
-      tabIndex="0"
+      tabIndex={0}
       type="button"
     >
       <span
-        className="MuiIconButton-label-6"
+        className="MuiIconButton-label"
       >
         <svg
           aria-hidden="true"
-          className="MuiSvgIcon-root-10"
+          className="MuiSvgIcon-root"
           focusable="false"
           role="presentation"
           viewBox="0 0 24 24"
@@ -45,9 +44,6 @@ exports[`<Login/> renders correctly 1`] = `
           />
         </svg>
       </span>
-      <span
-        className="MuiTouchRipple-root-19"
-      />
     </button>
     <h2>
       Connexion

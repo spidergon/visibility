@@ -52,7 +52,7 @@ function Stores ({ fav, user, initializing }) {
         {(initializing || loading) && <CircularProgress />}
       </center>
       <div className='content'>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           {!initializing &&
             user &&
             stores &&

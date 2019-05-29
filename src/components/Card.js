@@ -31,6 +31,7 @@ import { showSnack } from '../lib/state'
 const Wrapper = styled.div`
   .card {
     max-width: 400px;
+    text-align: initial;
   }
   .status-online {
     background: green;
@@ -60,14 +61,9 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
   const [status, setStatus] = useState('(Non publiée)')
   const [loading] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
-  const [menuOpen, setMenuOpen] = useState(false)
   const [diagOpen, setDiagOpen] = useState(false)
   const [diagTitle, setDiagTitle] = useState('')
   const [diagText, setDiagText] = useState('')
-
-  useEffect(() => {
-    setMenuOpen(!!anchorEl)
-  }, [anchorEl])
 
   useEffect(() => {
     if (isOwn) {
@@ -154,7 +150,7 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
             <IconButton
               aria-haspopup='true'
               aria-label='More'
-              aria-owns={menuOpen ? 'card-menu' : null}
+              aria-owns={anchorEl ? 'card-menu' : null}
               onClick={e => setAnchorEl(e.currentTarget)}
             >
               <MoreVertIcon />
@@ -186,7 +182,7 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
           </CardContent>
         )}
         {/* ACTIONS */}
-        <CardActions className='actions' disableActionSpacing>
+        <CardActions className='actions' disableSpacing>
           {!hideFavIcon && (
             <IconButton
               aria-label={
@@ -216,7 +212,7 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
           className='menu'
           id='card-menu'
           onClose={() => setAnchorEl(null)}
-          open={menuOpen}
+          open={Boolean(anchorEl)}
           PaperProps={{ style: { maxHeight: 48 * 4.5, width: 200 } }}
         >
           <MenuItem onClick={() => navigate(`/store/${store.id}`)}>

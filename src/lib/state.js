@@ -2,7 +2,7 @@ import { createGlobalState } from 'react-hooks-global-state'
 
 const defaultState = {
   snack: { msg: '', variant: '' },
-  dash: { tabVal: 2 }
+  dash: { tabVal: 0 }
 }
 
 export const {
