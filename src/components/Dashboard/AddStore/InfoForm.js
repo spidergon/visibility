@@ -162,7 +162,7 @@ function InfoForm ({
           </FormControl>
           {tags.length > 0 && (
             <Paper className='tagsList'>
-              <Grid container spacing={8}>
+              <Grid container spacing={3}>
                 {tags.map((myTag, index) => {
                   return (
                     <Grid item key={index}>
