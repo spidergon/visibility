@@ -166,8 +166,8 @@ function AddStore () {
       <Helmet>
         <link
           crossOrigin=''
-          href='https://unpkg.com/leaflet@1.4.0/dist/leaflet.css'
-          integrity='sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=='
+          href='https://unpkg.com/leaflet@1.5.1/dist/leaflet.css'
+          integrity='sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=='
           rel='stylesheet'
         />
       </Helmet>

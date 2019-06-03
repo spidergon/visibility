@@ -15,13 +15,12 @@ const detailsQuery = graphql`
   }
 `
 
-function Seo ({ description, lang, meta, keywords, title }) {
+function Seo ({ description, lang, meta, title }) {
   return (
     <StaticQuery
       query={detailsQuery}
-      render={data => {
-        const metaDescription =
-          description || data.site.siteMetadata.description
+      render={({ site }) => {
+        const metaDescription = description || site.siteMetadata.description
         return (
           <Helmet
             htmlAttributes={{
@@ -50,7 +49,7 @@ function Seo ({ description, lang, meta, keywords, title }) {
               },
               {
                 name: 'twitter:creator',
-                content: data.site.siteMetadata.author
+                content: site.siteMetadata.author
               },
               {
                 name: 'twitter:title',
@@ -61,17 +60,17 @@ function Seo ({ description, lang, meta, keywords, title }) {
                 content: metaDescription
               }
             ]
-              .concat(
-                keywords.length > 0
-                  ? {
-                    name: 'keywords',
-                    content: keywords.join(', ')
-                  }
-                  : []
-              )
+              // .concat(
+              //   keywords.length > 0
+              //     ? {
+              //       name: 'keywords',
+              //       content: keywords.join(', ')
+              //     }
+              //     : []
+              // )
               .concat(meta)}
             title={title}
-            titleTemplate={`%s – ${data.site.siteMetadata.title}`}
+            titleTemplate={`%s – ${site.siteMetadata.title}`}
           />
         )
       }}
@@ -79,18 +78,17 @@ function Seo ({ description, lang, meta, keywords, title }) {
   )
 }
 
+Seo.defaultProps = {
+  lang: `fr`,
+  meta: [],
+  description: ``
+}
+
 Seo.propTypes = {
   description: PropTypes.string,
   lang: PropTypes.string,
-  meta: PropTypes.array,
-  keywords: PropTypes.arrayOf(PropTypes.string),
+  meta: PropTypes.arrayOf(PropTypes.object),
   title: PropTypes.string.isRequired
-}
-
-Seo.defaultProps = {
-  lang: 'fr',
-  meta: [],
-  keywords: []
 }
 
 export default Seo
