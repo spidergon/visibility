@@ -31,8 +31,8 @@
     "cookieconsent": "^3.1.1",
     "draft-js": "^0.10.5",
     "draftjs-to-html": "^0.8.4",
-    "firebase": "6.1.0",
-    "gatsby": "^2.8.4",
+    "firebase": "6.1.1",
+    "gatsby": "^2.8.6",
     "gatsby-background-image": "^0.7.0",
     "gatsby-image": "^2.1.2",
     "gatsby-plugin-create-client-paths": "^2.0.5",
@@ -51,12 +51,12 @@
     "react-draft-wysiwyg": "^1.13.2",
     "react-dropzone": "^10.1.5",
     "react-helmet": "^5.2.1",
-    "react-hooks-global-state": "^0.11.0",
+    "react-hooks-global-state": "^0.12.0",
     "react-html-parser": "^2.0.2",
     "react-leaflet": "^2.3.0",
     "react-router-dom": "^5.0.1",
     "slugify": "^1.3.4",
-    "styled-components": "^4.2.1",
+    "styled-components": "^4.3.1",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
@@ -79,9 +79,9 @@
     "eslint-plugin-standard": "^4.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^24.8.0",
-    "jest-dom": "^3.4.0",
+    "jest-dom": "^3.5.0",
     "react-hooks-testing-library": "^0.5.1",
     "react-test-renderer": "^16.8.6",
-    "waait": "^1.0.4"
+    "waait": "^1.0.5"
   }
 }

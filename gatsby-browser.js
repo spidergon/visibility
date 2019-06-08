@@ -3,6 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
+
 /* eslint-disable react/prop-types */
 
 import React from 'react'
