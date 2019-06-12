@@ -1,27 +1,20 @@
 {
   "name": "visibility",
   "description": "Visibilité des entreprises en Guyane et dans les Caraïbes",
-  "version": "0.0.1",
-  "keywords": [
-    "gatsby"
-  ],
-  "author": "Chris Servius (https://github.com/spidergon)",
+  "version": "0.1.0",
+  "author": "Christopher Servius (https://github.com/spidergon)",
   "private": true,
   "license": "MIT",
-  "repository": "git@github.com:spidergon/visibility.git",
-  "homepage": "https://github.com/spidergon/visibility#readme",
-  "bugs": {
-    "url": "https://github.com/spidergon/visibility/issues"
-  },
   "scripts": {
     "develop": "gatsby develop",
     "build": "gatsby build",
+    "tunnel": "ngrok http -host-header=rewrite http://localhost:9000",
     "test": "jest --watch",
     "lint": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' -o ./eslint_result.html -f html .",
-    "lint:fix": "eslint --ignore-pattern '/node_modules/*' --ignore-pattern '/public/*' --ignore-pattern '.cache/*' . --fix",
-    "fire-storage": "cd firebase && firebase deploy --only storage",
-    "fire-rules": "cd firebase && firebase deploy --only firestore:rules",
-    "fire-index": "cd firebase && firebase deploy --only firestore:indexes"
+    "fire": "firebase deploy",
+    "fire-storage": "firebase deploy --only storage",
+    "fire-rules": "firebase deploy --only firestore:rules",
+    "fire-indexes": "firebase deploy --only firestore:indexes"
   },
   "dependencies": {
     "@material-ui/core": "^4.1.0",
@@ -83,5 +76,13 @@
     "react-hooks-testing-library": "^0.5.1",
     "react-test-renderer": "^16.8.6",
     "waait": "^1.0.5"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "repository": "git@github.com:spidergon/visibility.git",
+  "homepage": "https://github.com/spidergon/visibility#readme",
+  "bugs": {
+    "url": "https://github.com/spidergon/visibility/issues"
   }
 }

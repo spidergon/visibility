@@ -2,9 +2,11 @@ module.exports = {
   siteMetadata: {
     title: `Visibility`,
     description: `Visibilité des entreprises en Guyane et dans les Caraïbes`,
-    author: `@chrisservius`
+    author: `@chrisservius`,
+    keywords: ['guyane']
   },
   plugins: [
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -12,7 +14,6 @@ module.exports = {
         path: `${__dirname}/src/assets/images`
       }
     },
-    `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-styled-components`,

@@ -9,12 +9,17 @@
 import React from 'react'
 import { GlobalStateProvider } from './src/lib/state'
 import UserProvider from './src/components/UserProvider'
+import Layout from './src/components/Layout'
 
 export const wrapRootElement = ({ element }) => (
   <GlobalStateProvider>
     <UserProvider>{element}</UserProvider>
   </GlobalStateProvider>
 )
+
+export const wrapPageElement = ({ element, props }) => {
+  return <Layout {...props}>{element}</Layout>
+}
 
 export const onServiceWorkerUpdateReady = () => {
   const answer = window.confirm(

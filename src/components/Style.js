@@ -21,7 +21,7 @@ export const theme = {
   xs: '480px'
 }
 
-export const GlobalStyle = createGlobalStyle`
+export const Style = createGlobalStyle`
   body {
     -webkit-font-smoothing: antialiased;
     color: ${props => props.theme.black};

@@ -3,14 +3,21 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/storage'
-import config from '../../firebase/config'
 import { showSnack } from './state'
 
 /*  ------------
     --- Init ---
     ------------  */
 
-firebase.initializeApp(config)
+firebase.initializeApp({
+  apiKey: process.env.BASE_API_KEY,
+  authDomain: process.env.BASE_AUTH_DOMAIN,
+  databaseURL: process.env.BASE_DATABASE_URL,
+  projectId: process.env.BASE_PROJECT_ID,
+  storageBucket: process.env.BASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.BASE_APP_MESSAGING_SENDER_ID,
+  appId: process.env.BASE_APP_ID
+})
 
 export default firebase
 
