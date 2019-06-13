@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Grid from '@material-ui/core/Grid'
 import Seo from '../Seo'
-import { useMyStores } from '../../lib/base'
+import { useMyStores } from '../Firebase'
 import { setTabVal, showSnack } from '../../lib/state'
 import Card from '../Card'
 

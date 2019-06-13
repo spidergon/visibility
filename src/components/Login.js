@@ -7,12 +7,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import Button from './Button'
 import LoginEmail from './LoginEmail'
 import { dashPath } from '../lib/utils'
-import {
-  useSession,
-  AUTH_CREDENTIAL_IN_USE,
-  signIn,
-  signInEmailLink
-} from '../lib/user'
+import { useFirebase, useAuth, AUTH_CREDENTIAL_IN_USE } from './Firebase'
 
 const infoLabel = css`
   .error,
@@ -101,28 +96,35 @@ const Wrapper = styled.div`
   }
 `
 
-function authHandler () {
-  navigate(dashPath) // Redirection
-}
-
 function Login () {
   const [isLoginEmail, setIsLoginEmail] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
-  const { initializing, user } = useSession()
+  const { initializing, user } = useAuth()
 
-  useEffect(() => {
-    // Sign in and Redirect in case the user signed in with email link
-    signInEmailLink(error => {
-      if (error) return setError(error)
-      authHandler()
-    })
-  }, [])
+  const firebase = useFirebase()
+
+  const authHandler = () => navigate(dashPath) // Redirection
+
+  // useEffect(() => {
+  //   if (firebase) {
+  //     // Sign in and Redirect in case the user signed in with email link
+  //     firebase.signInEmailLink(error => {
+  //       if (error) return setError(error)
+  //       authHandler()
+  //     })
+  //   }
+  // }, [firebase])
+
+  const fallback = err => {
+    setLoading(false)
+    setError(err)
+  }
 
   const authenticate = provider => {
     setLoading(true)
-    signIn(provider, authHandler, setLoading, setError)
+    firebase.signIn(provider, authHandler, fallback)
   }
 
   const showError = () => {
@@ -195,7 +197,10 @@ function Login () {
                 </Button>
               </div>
             ) : (
-              <LoginEmail setIsLoginEmail={setIsLoginEmail} />
+              <LoginEmail
+                firebase={firebase}
+                setIsLoginEmail={setIsLoginEmail}
+              />
             )}
           </>
         )}

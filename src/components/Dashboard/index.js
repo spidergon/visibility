@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { navigate } from 'gatsby'
 import styled from 'styled-components'
-import { useSession } from '../../lib/user'
+import { useAuth, useFirebase } from '../Firebase'
 import { useGlobalState, showSnack } from '../../lib/state'
 import Stores from './Stores'
 import AddStore from './AddStore'
@@ -16,8 +16,8 @@ const Wrapper = styled.div`
 `
 
 function Dash () {
-  const { initializing, user } = useSession()
   const [{ tabVal }] = useGlobalState('dash')
+  const { initializing, user } = useAuth()
 
   useEffect(() => {
     if (!initializing && !user) {

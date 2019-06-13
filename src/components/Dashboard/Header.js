@@ -6,7 +6,7 @@ import Link from '../Link'
 import { UserMenu } from '../Menu'
 import { HeaderTab } from './Tabs'
 import { $ } from '../../lib/bling'
-import { useSession } from '../../lib/user'
+import { useAuth } from '../Firebase'
 
 const Wrapper = styled.header`
   position: sticky;
@@ -51,7 +51,7 @@ const Wrapper = styled.header`
 
 function Header ({ siteTitle }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const { initializing, user } = useSession()
+  const { initializing, user } = useAuth()
 
   return (
     <Wrapper>

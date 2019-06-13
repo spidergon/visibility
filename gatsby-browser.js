@@ -8,12 +8,12 @@
 
 import React from 'react'
 import { GlobalStateProvider } from './src/lib/state'
-import UserProvider from './src/components/UserProvider'
+import { FirebaseProvider } from './src/components/Firebase'
 import Layout from './src/components/Layout'
 
 export const wrapRootElement = ({ element }) => (
   <GlobalStateProvider>
-    <UserProvider>{element}</UserProvider>
+    <FirebaseProvider>{element}</FirebaseProvider>
   </GlobalStateProvider>
 )
 

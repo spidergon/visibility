@@ -49,12 +49,12 @@ const UserMenu = ({ anchor, hide, isOpen, user }) => (
           {'Créer une Vitrine'}
         </MenuItem>
         <Divider />
-        <LogoutMenuItem signOut={() => user.signOut()} />
+        <LogoutMenuItem signOut={user.signOut} />
       </Menu>
     )) || (
       <Menu anchorEl={anchor} id='user-menu' onClose={hide} open={isOpen}>
         <MenuItem onClick={() => navigate('/')}>{'Accueil'}</MenuItem>
-        <LogoutMenuItem signOut={() => user.signOut()} />
+        <LogoutMenuItem signOut={user.signOut} />
       </Menu>
     )}
   </>

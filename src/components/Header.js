@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from './Link'
+import { useAuth } from './Firebase'
 import { OffMenu, UserMenu } from './Menu'
 import { $ } from '../lib/bling'
-import { useSession } from '../lib/user'
 
 const Wrapper = styled.header`
   position: absolute;
@@ -105,7 +105,8 @@ function Header ({ siteTitle }) {
   const [offMenuOpen, setOffMenuOpen] = useState(false)
   const [scrollDown, setScrollDown] = useState(false)
 
-  const { initializing, user } = useSession()
+  // const { initializing, user } = useSession()
+  const { initializing, user } = useAuth()
 
   const didCancel = useRef(false) // to block async state update when component has been unmounted
 

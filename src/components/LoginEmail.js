@@ -7,7 +7,7 @@ import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 import Button from '@material-ui/core/Button'
 import { infoLabel } from './Login'
-import { EMAIL_REGEX, sendSignInEmailLink } from '../lib/user'
+import { EMAIL_REGEX } from './Firebase'
 
 const LoginEmailForm = styled.form`
   display: grid;
@@ -24,7 +24,7 @@ const LoginEmailForm = styled.form`
   }
 `
 
-function LoginEmail ({ setIsLoginEmail }) {
+function LoginEmail ({ firebase, setIsLoginEmail }) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
@@ -42,7 +42,7 @@ function LoginEmail ({ setIsLoginEmail }) {
       return setEmailError('E-mail incorrect.')
     }
 
-    await sendSignInEmailLink(email, error => {
+    await firebase.sendSignInEmailLink(email, error => {
       setLoading(false)
       if (error) return setError(error)
       setInfo('Votre lien a été envoyé !')
@@ -98,6 +98,7 @@ function LoginEmail ({ setIsLoginEmail }) {
 }
 
 LoginEmail.propTypes = {
+  firebase: PropTypes.object.isRequired,
   setIsLoginEmail: PropTypes.func.isRequired
 }
 
