@@ -5,12 +5,11 @@ import Helmet from 'react-helmet'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Seo from '../Seo'
-import { useStore } from '../../lib/base'
-import { useSession } from '../../lib/user'
 import { showSnack } from '../../lib/state'
 import Header from './Header'
 import Description from './Description'
 import Showcase from './Showcase'
+import { useAuth, useStore } from '../Firebase'
 
 const Wrapper = styled.div`
   padding-top: ${props => props.theme.headerHeight};
@@ -25,7 +24,7 @@ const Wrapper = styled.div`
 
 function Store ({ storeId, edit }) {
   const { error, loading, store } = useStore(storeId)
-  const { initializing, user } = useSession()
+  const { initializing, user } = useAuth()
 
   useEffect(() => {
     if (store) console.log(store)

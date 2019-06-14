@@ -24,7 +24,7 @@ import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import defaultImg from '../assets/images/gatsby-icon.png'
-import { addRemoveStoreFav, deleteStore, publishStore } from '../lib/base'
+import { useFirebase } from './Firebase'
 import { dashPath } from '../lib/utils'
 import { showSnack } from '../lib/state'
 
@@ -65,6 +65,8 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
   const [diagTitle, setDiagTitle] = useState('')
   const [diagText, setDiagText] = useState('')
 
+  const firebase = useFirebase()
+
   useEffect(() => {
     if (isOwn) {
       if (store.status === 'online') setStatus('(En ligne)')
@@ -78,14 +80,24 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
     setDiagOpen(true)
     setDiagTitle(title)
     setDiagText(text)
-    diagAction = () => action(store.id, () => navigate(dashPath))
+    diagAction = () =>
+      action(
+        store.id,
+        successMsg => {
+          showSnack(successMsg, 'success')
+          navigate(dashPath)
+        },
+        failMsg => {
+          showSnack(failMsg, 'error')
+        }
+      )
   }
 
   const openRemoveDiag = () => {
     openDiag(
       `Suppression de "${store.name}"`,
       'Voulez-vous vraiment supprimer cette vitrine ?',
-      deleteStore
+      firebase.deleteStore
     )
   }
 
@@ -93,7 +105,7 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
     openDiag(
       `Mise en ligne de "${store.name}"`,
       'Voulez-vous vraiment publier cette vitrine (elle sera placée en attente de validation) ?',
-      publishStore
+      firebase.publishStore
     )
   }
 
@@ -134,7 +146,13 @@ function Card ({ userId, store, showContent, hideFavIcon, hideShareIcon }) {
   }
 
   const addRemoveToFav = () => {
-    addRemoveStoreFav(store.id, userId, setInFavCallback, store.loved)
+    firebase.addRemoveStoreFav(
+      store.id,
+      userId,
+      setInFavCallback,
+      () => showSnack("Une erreur interne s'est produite.", 'error'),
+      store.loved
+    )
   }
 
   const share = () => {

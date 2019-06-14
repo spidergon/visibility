@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import Link from '../Link'
 import { UserMenu } from '../Menu'
 import { HeaderTab } from './Tabs'
 import { $ } from '../../lib/bling'
+import useSiteMetadata from '../../lib/useSiteMetadata'
 import { useAuth } from '../Firebase'
 
 const Wrapper = styled.header`
@@ -49,8 +49,10 @@ const Wrapper = styled.header`
   }
 `
 
-function Header ({ siteTitle }) {
+function Header () {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+
+  const { title } = useSiteMetadata()
   const { initializing, user } = useAuth()
 
   return (
@@ -58,7 +60,7 @@ function Header ({ siteTitle }) {
       <div className='content grid'>
         <nav className='logo'>
           <Link to='/'>
-            <span>{siteTitle}</span>
+            <span>{title}</span>
           </Link>
         </nav>
         <nav className='navs'>{user && <HeaderTab />}</nav>
@@ -84,10 +86,6 @@ function Header ({ siteTitle }) {
       </div>
     </Wrapper>
   )
-}
-
-Header.propTypes = {
-  siteTitle: PropTypes.string.isRequired
 }
 
 export default Header

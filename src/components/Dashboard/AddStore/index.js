@@ -13,7 +13,7 @@ import Seo from '../../Seo'
 import Content from './Content'
 import { setTabVal, showSnack } from '../../../lib/state'
 import { slugify } from '../../../lib/utils'
-import { addStore, storeExists } from '../../../lib/base'
+import { useFirebase } from '../../Firebase'
 
 const Wrapper = styled.div`
   .mobile {
@@ -77,6 +77,8 @@ function AddStore () {
   const [address, setAddress] = useState('')
   const [coordinates, setCoordinates] = useState([0, 0])
 
+  const firebase = useFirebase()
+
   // useEffect(() => {
   //   function unloadHandler (e) {
   //     e.preventDefault()
@@ -131,19 +133,20 @@ function AddStore () {
     if (name && description) {
       setLoading(true)
       const slug = slugify(name)
-      if (!(await storeExists(slug))) {
-        addStore({
-          slug,
-          name,
-          activity,
-          description,
-          tags,
-          company,
-          siret,
-          photos,
-          address,
-          coordinates
-        })
+      if (!(await firebase.storeExists(slug))) {
+        firebase
+          .addStore({
+            slug,
+            name,
+            activity,
+            description,
+            tags,
+            company,
+            siret,
+            photos,
+            address,
+            coordinates
+          })
           .then(() => setTabVal(0)) //  then, go to tap #0 (Mes Vitrines)
           .catch(err => {
             console.log(err)

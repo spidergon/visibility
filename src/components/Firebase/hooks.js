@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
 import FirebaseContext from './context'
+import { storeCollectionName } from './firebase'
 
 export const useFirebase = () => useContext(FirebaseContext)
 
@@ -30,6 +31,37 @@ export const useAuth = () => {
 
   // return state
   return { initializing, user }
+}
+
+/**
+ * Hook that provides the store by its id.
+ * @param {string} id - the id.
+ * @returns {Object} { error, loading, store }.
+ */
+export const useStore = id => {
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [store, setStore] = useState(null)
+
+  const firebase = useFirebase()
+
+  useEffect(() => {
+    if (firebase) {
+      const unsubscribe = firebase.db
+        .collection(storeCollectionName)
+        .doc(id)
+        .onSnapshot(
+          doc => {
+            if (doc && doc.exists) setStore({ id, ...doc.data() })
+            setLoading(false)
+          },
+          err => setError(err)
+        )
+      return () => unsubscribe()
+    }
+  }, [firebase, id])
+
+  return { error, loading, store }
 }
 
 /** Get the first part of the query depending on user and fav */

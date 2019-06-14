@@ -1,5 +1,5 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
+import { render as r } from '../../lib/test-utils'
 import { StaticQuery } from 'gatsby' // mocked
 
 import Layout from '../Layout'
@@ -18,13 +18,11 @@ beforeEach(() => {
 
 describe('<Layout/>', () => {
   it('renders correctly', () => {
-    const tree = renderer
-      .create(
-        <Layout>
-          <h1>{'Hey!'}</h1>
-        </Layout>
-      )
-      .toJSON()
+    const tree = r(
+      <Layout location={{ pathname: '/' }}>
+        <h1>{'Hey!'}</h1>
+      </Layout>
+    )
     expect(tree).toMatchSnapshot()
   })
 })

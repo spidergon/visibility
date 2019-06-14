@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton'
 import AddIcon from '@material-ui/icons/Add'
 import Grid from '@material-ui/core/Grid'
 import { slugify } from '../../../lib/utils'
-import { storeExists } from '../../../lib/base'
+import { useFirebase } from '../../Firebase'
 
 const Wrapper = styled.div`
   display: grid;
@@ -46,6 +46,8 @@ function InfoForm ({
   const [tagError, setTagError] = useState('')
   const [siretError, setSiretError] = useState('')
 
+  const firebase = useFirebase()
+
   const didCancel = useRef(false) // to block async state update when component has been unmounted
 
   useEffect(() => () => (didCancel.current = true), [])
@@ -65,7 +67,7 @@ function InfoForm ({
   const verifyName = async () => {
     if (!name) return setNameError('Veuillez saisir un nom.')
     const newName = name.trim()
-    if (!didCancel.current && (await storeExists(slugify(newName)))) {
+    if (!didCancel.current && (await firebase.storeExists(slugify(newName)))) {
       setName(newName)
       setNameError("Ce nom n'est pas disponible.")
     }

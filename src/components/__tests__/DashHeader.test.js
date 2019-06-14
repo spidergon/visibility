@@ -1,11 +1,10 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
-
+import { render } from '../../lib/test-utils'
 import Header from '../Dashboard/Header'
 
 describe('<Header/>', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<Header siteTitle='Visibility' />).toJSON()
+    const tree = render(<Header siteTitle='Visibility' />)
     expect(tree).toMatchSnapshot()
   })
 })

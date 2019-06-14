@@ -1,11 +1,10 @@
 import React from 'react'
-import renderer from 'react-test-renderer'
-
+import { render } from '../../lib/test-utils'
 import Login from '../Login'
 
 describe('<Login/>', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<Login />).toJSON()
+    const tree = render(<Login />)
     expect(tree).toMatchSnapshot()
   })
 })

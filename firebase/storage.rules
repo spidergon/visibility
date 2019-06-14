@@ -1,13 +1,18 @@
-// Returns true if the uploaded file is an image and its size is below the given number of MB.
-function isImageBelowMaxSize(maxSizeMB) {
-  return request.resource.size < maxSizeMB * 1024 * 1024 && request.resource.contentType.matches('image/.*');
-}
-
 service firebase.storage {
   match /b/{bucket}/o {
-    match /stores/{allPaths=**} {
-      allow write: if request.auth != null && isImageBelowMaxSize(5);
-      allow read: if request.auth != null;
+  	// Returns true if the uploaded file is an image and its size is below the given number of MB.
+		function isImageBelowMaxSize(maxSizeMB) {
+  		return request.resource.size < maxSizeMB * 1024 * 1024 && request.resource.contentType.matches('image/.*');
+		}
+    function isAuth () {
+    	return request.auth != null
+    }
+    function isOwner(userId) {
+    	return userId == request.auth.uid
+    }
+    match /{userId}/{allPaths=**} {
+      allow read: if isAuth();
+      allow write: if isAuth() && ((request.method == 'delete' && isOwner(userId)) || isImageBelowMaxSize(5));
     }
   }
 }

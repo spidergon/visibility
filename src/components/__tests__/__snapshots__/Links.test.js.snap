@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Links/> renders "external" links correctly 1`] = `
+<div>
+  <a
+    aria-label="https://www.google.com (s’ouvre dans un nouvel onglet)"
+    href="https://www.google.com"
+    rel="noreferrer noopener nofollow"
+    target="_blank"
+  >
+    My Link
+  </a>
+</div>
+`;
+
+exports[`<Links/> renders "internal file" links correctly 1`] = `
+<div>
+  <a
+    href="/test.pdf"
+  >
+    My Link
+  </a>
+</div>
+`;
+
+exports[`<Links/> renders "internal" links correctly 1`] = `
+<div>
+  <a
+    href="/"
+  >
+    My Link
+  </a>
+</div>
+`;

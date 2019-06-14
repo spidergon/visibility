@@ -5,8 +5,9 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import CloseIcon from '@material-ui/icons/Cancel'
 import Grid from '@material-ui/core/Grid'
 import Dropzone from 'react-dropzone'
-import { asyncLoop, readFile } from '../../../lib/utils'
-import { uploadFile, deleteFile } from '../../../lib/base'
+import { useFirebase } from '../../Firebase'
+import { asyncLoop } from '../../../lib/utils'
+import { showSnack } from '../../../lib/state'
 
 const Wrapper = styled.div`
   text-align: center;
@@ -74,6 +75,8 @@ function PhotosForm ({ photos, setPhotos }) {
   const [loading, setLoading] = useState(false)
   const [dropError, setDropError] = useState('')
 
+  const firebase = useFirebase()
+
   const handlePreviewDrop = async (acceptedFiles, rejectedFiles) => {
     setDropError('')
 
@@ -96,11 +99,8 @@ function PhotosForm ({ photos, setPhotos }) {
     const totalPhotos = [...photos]
 
     await asyncLoop(acceptedFiles, async f => {
-      const res = await readFile(f, setDropError)
-      if (res) {
-        const uploadRes = await uploadFile(f.name, res)
-        totalPhotos.push(uploadRes)
-      }
+      const uploadRes = await firebase.uploadFile(f)
+      totalPhotos.push(uploadRes)
     })
 
     setPhotos(totalPhotos)
@@ -159,8 +159,14 @@ function PhotosForm ({ photos, setPhotos }) {
               <CloseIcon
                 className='delete'
                 onClick={() => {
-                  deleteFile(photo.path)
-                  setPhotos(photos.filter(p => p.name !== photo.name))
+                  firebase.deleteFile(
+                    photo.path,
+                    () => setPhotos(photos.filter(p => p.name !== photo.name)),
+                    err => {
+                      console.log(err)
+                      showSnack("Une erreur interne s'est produite.", 'error')
+                    }
+                  )
                 }}
               />
             </Grid>

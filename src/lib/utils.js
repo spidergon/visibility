@@ -9,24 +9,24 @@ export async function asyncLoop (array, callback) {
   }
 }
 
-/**
- * Read a file.
- * @param {Object} file - the file object to read.
- * @param {function} setError - the error callback.
- * @returns {Promise} A promise containing the data.
- */
-export function readFile (file, setError) {
-  const reader = new FileReader()
-  return new Promise((resolve, reject) => {
-    reader.onload = () => resolve(reader.result)
-    reader.onerror = () => {
-      reader.abort()
-      setError('Le chargement du fichier a échoué !')
-      reject(new DOMException('Problem parsing input file.'))
-    }
-    reader.readAsDataURL(file)
-  })
-}
+// /**
+//  * Read a file.
+//  * @param {Object} file - the file object to read.
+//  * @param {function} setError - the error callback.
+//  * @returns {Promise} A promise containing the data.
+//  */
+// export function readFile (file, setError) {
+//   const reader = new FileReader()
+//   return new Promise((resolve, reject) => {
+//     reader.onload = () => resolve(reader.result)
+//     reader.onerror = () => {
+//       reader.abort()
+//       setError('Le chargement du fichier a échoué !')
+//       reject(new DOMException('Problem parsing input file.'))
+//     }
+//     reader.readAsDataURL(file)
+//   })
+// }
 
 /**
  * Slugify a name.

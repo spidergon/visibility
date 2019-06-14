@@ -3,26 +3,26 @@ service cloud.firestore {
     function isAdmin() {
       return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
     }
-    function signedIn() {
+    function isAuth() {
     	return request.auth.uid != null;
     }
-    function owner() {
+    function isOwner() {
     	return request.auth.uid == resource.data.author;
     }
     function lessThanLimit(limit) {
       return request.query.limit <= limit;
     }
     match /stores/{storeId} {
-      allow get: if isAdmin() || owner() || (!resource.data.archived && resource.data.status == 'online');
-      allow list: if (isAdmin() || owner()) && lessThanLimit(10);
-      allow create: if signedIn();
-      allow update: if isAdmin() || owner();
+      allow get: if isAdmin() || isOwner() || (!resource.data.archived && resource.data.status == 'online');
+      allow list: if (isAdmin() || isOwner()) && lessThanLimit(10);
+      allow create: if isAuth();
+      allow update: if isAdmin() || isOwner();
       allow delete: if false;
     }
     match /users/{userId} {
       allow get: if isAdmin() || request.auth.uid == userId;
       allow list: if isAdmin() && lessThanLimit(10);
-      allow create: if signedIn();
+      allow create: if isAuth();
       allow update: if isAdmin() || request.auth.uid == userId;
       allow delete: if false;
     }

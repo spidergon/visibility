@@ -6,8 +6,8 @@ import ShareIcon from '@material-ui/icons/Share'
 import FavoriteIcon from '@material-ui/icons/Favorite'
 import Map from '../Map'
 import Photos from './Photos'
-import { addRemoveStoreFav } from '../../lib/base'
 import { showSnack } from '../../lib/state'
+import { useFirebase } from '../Firebase'
 
 const Wrapper = styled.section`
   position: relative;
@@ -49,6 +49,8 @@ function Header ({ store, user }) {
     store.fans.includes(user ? user.uid : null)
   )
 
+  const firebase = useFirebase()
+
   const setInFavCallback = () => {
     if (inFav) {
       setInFav(false)
@@ -60,7 +62,7 @@ function Header ({ store, user }) {
   }
 
   const addRemoveToFav = () => {
-    addRemoveStoreFav(store.id, user.uid, setInFavCallback, inFav)
+    firebase.addRemoveStoreFav(store.id, user.uid, setInFavCallback, inFav)
   }
 
   const share = () => {

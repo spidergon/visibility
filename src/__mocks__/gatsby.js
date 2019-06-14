@@ -22,5 +22,14 @@ module.exports = {
       })
   ),
   StaticQuery: jest.fn(),
-  useStaticQuery: jest.fn()
+  useStaticQuery: jest.fn().mockImplementation(() => ({
+    site: {
+      siteMetadata: {
+        title: 'Site Title',
+        description: 'Une description.',
+        author: 'Christopher Servius',
+        keywords: ['some', 'keywords']
+      }
+    }
+  }))
 }

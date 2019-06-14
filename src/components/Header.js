@@ -6,6 +6,7 @@ import Link from './Link'
 import { useAuth } from './Firebase'
 import { OffMenu, UserMenu } from './Menu'
 import { $ } from '../lib/bling'
+import useSiteMetadata from '../lib/useSiteMetadata'
 
 const Wrapper = styled.header`
   position: absolute;
@@ -100,18 +101,18 @@ const Wrapper = styled.header`
   }
 `
 
-function Header ({ siteTitle }) {
+function Header ({ pathname }) {
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [offMenuOpen, setOffMenuOpen] = useState(false)
   const [scrollDown, setScrollDown] = useState(false)
 
-  // const { initializing, user } = useSession()
   const { initializing, user } = useAuth()
+  const { title } = useSiteMetadata()
 
   const didCancel = useRef(false) // to block async state update when component has been unmounted
 
   useEffect(() => {
-    if (window.location.pathname === '/') {
+    if (pathname === '/') {
       let down = false
       window.addEventListener(
         'scroll',
@@ -128,23 +129,19 @@ function Header ({ siteTitle }) {
       )
     }
     return () => (didCancel.current = true)
-  }, [])
+  }, [pathname])
 
   return (
-    <Wrapper
-      className={`${
-        window.location.pathname !== '/' || scrollDown ? 'opaque' : ''
-      }`}
-    >
+    <Wrapper className={`${pathname !== '/' || scrollDown ? 'opaque' : ''}`}>
       <div className='content grid'>
         <nav className='logo'>
           <Link to='/'>
-            <span>{siteTitle}</span>
+            <span>{title}</span>
           </Link>
         </nav>
         <nav className='navs' />
         <nav className='profile'>
-          {window.location.pathname !== '/connexion' &&
+          {pathname !== '/connexion' &&
             !initializing &&
             (!user || user.isAnonymous) && (
             <ul>
@@ -174,7 +171,7 @@ function Header ({ siteTitle }) {
               />
             </>
           )}
-          {!initializing && !user && window.location.pathname !== '/connexion' && (
+          {!initializing && !user && pathname !== '/connexion' && (
             <div className='offline'>
               <span
                 className='menu-anchor'
@@ -197,7 +194,7 @@ function Header ({ siteTitle }) {
 }
 
 Header.propTypes = {
-  siteTitle: PropTypes.string.isRequired
+  pathname: PropTypes.string.isRequired
 }
 
 export default Header
