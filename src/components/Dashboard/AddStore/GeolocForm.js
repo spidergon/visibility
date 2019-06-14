@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import 'whatwg-fetch'
+import { get } from 'axios'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -42,22 +42,23 @@ function GeolocForm ({
   const getAddress = useCallback(
     async (lat, lng) => {
       gettingAddress = true
-      try {
-        setLoading(true)
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
-        )
-        const data = await res.json()
-        if (data && data.display_name) {
-          setAddr(data.display_name)
-        }
-      } catch (err) {
-        console.error(err)
-        setAddr('')
-      } finally {
-        gettingAddress = false
-        setLoading(false)
-      }
+      setLoading(true)
+      get(
+        `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+      )
+        .then(({ data }) => {
+          if (data.display_name) {
+            setAddr(data.display_name)
+          }
+        })
+        .catch(err => {
+          console.error(err)
+          setAddr('')
+        })
+        .then(() => {
+          gettingAddress = false
+          setLoading(false)
+        })
     },
     [setAddr]
   )

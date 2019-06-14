@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { navigate } from 'gatsby'
 import styled from 'styled-components'
-import { useAuth, useFirebase } from '../Firebase'
+import { useAuth } from '../Firebase'
 import { useGlobalState, showSnack } from '../../lib/state'
 import Stores from './Stores'
 import AddStore from './AddStore'
