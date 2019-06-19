@@ -4,7 +4,7 @@ service firebase.storage {
 		function isImageBelowMaxSize(maxSizeMB) {
   		return request.resource.size < maxSizeMB * 1024 * 1024 && request.resource.contentType.matches('image/.*');
 		}
-    function isAuth () {
+    function isAuth() {
     	return request.auth != null
     }
     function isOwner(userId) {

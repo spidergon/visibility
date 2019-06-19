@@ -109,8 +109,7 @@ class Firebase {
   /**
    * Listen to auth state changes.
    * @param {function} next - the callback to trigger in case of auth user.
-  onAuthUserListener = (next, fallback) =>
-   * @param {function} next - the callback to trigger in case of non auth user.
+   * @param {function} fallback - the callback to trigger in case of non auth user.
    */
   onAuthUserListener = (next, fallback) =>
     this.auth.onAuthStateChanged(user => {
