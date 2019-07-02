@@ -3,13 +3,16 @@ service cloud.firestore {
     function isAuth() {
     	return request.auth.uid != null;
     }
-    function isAdmin() {
+    function online() {
+    	return !resource.data.archived && resource.data.status == 'online'
+    }
+    function owner() {
+    	return request.auth.uid == resource.data.author;
+    }
+    function admin() {
       return isAuth()
       	&& exists(/databases/$(database)/documents/users/$(request.auth.uid))
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
-    }
-    function isOwner() {
-    	return request.auth.uid == resource.data.author;
     }
     function lessThanLimit(limit) {
       return request.query.limit <= limit;
@@ -18,15 +21,16 @@ service cloud.firestore {
       allow read, write: if false;
     }
     match /stores/{storeId} {
-      allow get: if isAdmin() || isOwner() || (!resource.data.archived && resource.data.status == 'online');
-      allow list: if (isAdmin() || isOwner()) && lessThanLimit(10);
+      allow get: if online() || owner() || admin();
+      allow list: if (online() || owner() || admin()) && lessThanLimit(10);
       allow create: if isAuth();
-      allow update: if isAdmin() || isOwner();
+      allow update: if admin() || owner();
     }
     match /users/{userId} {
-      allow get, update: if isAdmin() || request.auth.uid == userId;
-      allow list: if isAdmin() && lessThanLimit(10);
+      allow get: if admin() || request.auth.uid == userId;
+      allow list: if admin() && lessThanLimit(10);
       allow create: if isAuth();
+      allow update: if admin() || request.auth.uid == userId;
     }
   }
 }

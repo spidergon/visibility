@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import FirebaseContext from './context'
 import { storeCollectionName } from './firebase'
 
@@ -10,19 +10,25 @@ export const useAuth = () => {
 
   const firebase = useFirebase()
 
-  useEffect(() => {
-    setInitializing(!user)
-  }, [user])
+  const didCancel = useRef(false)
+  useEffect(() => () => (didCancel.current = true), [])
+
+  // useEffect(() => {
+  //   setInitializing(!user)
+  // }, [user])
+
+  const authHandler = authUser => {
+    if (didCancel.current) return
+    setUser(authUser)
+    setInitializing(false)
+  }
 
   useEffect(() => {
     if (firebase) {
       // listen for auth state changes
       const unsubscribe = firebase.onAuthUserListener(
-        authUser => setUser(authUser), // on success
-        () => {
-          setUser(null)
-          setInitializing(false)
-        }
+        authUser => authHandler(authUser), // on success
+        () => authHandler(null)
       )
       // unsubscribe to the listener when unmounting
       return () => unsubscribe()
@@ -67,6 +73,7 @@ export const useStore = id => {
 /** Get the first part of the query depending on user and fav */
 function userFavQuery (firebase, user, fav) {
   const uid = user ? user.uid : ''
+  console.log(uid, fav)
   const collection = firebase.db.collection('stores')
   if (fav) return collection.where('fans', 'array-contains', uid)
   return collection.where('author', '==', uid)

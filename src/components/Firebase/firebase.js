@@ -1,3 +1,5 @@
+import { gravatar } from '../../lib/utils'
+
 const config = {
   apiKey: process.env.BASE_API_KEY,
   authDomain: process.env.BASE_AUTH_DOMAIN,
@@ -31,6 +33,7 @@ class Firebase {
   /** Configure db offline persistence */
   enablePersistence = () => {
     this.db.enablePersistence({ synchronizeTabs: true }).catch(err => {
+      console.log('persistence error: ', err) // TODO: remove this (debug)
       if (err.code === 'unimplemented') {
         // The current browser does not support all of the
         // features required to enable persistence.
@@ -104,6 +107,7 @@ class Firebase {
     }
   }
 
+  /** Sign Out */
   signOut = () => this.auth.signOut()
 
   /**
@@ -120,7 +124,7 @@ class Firebase {
           email: user.email,
           emailVerified: user.emailVerified,
           displayName: user.displayName,
-          photoURL: user.photoURL,
+          photoURL: user.photoURL ? user.photoURL : gravatar(user.email),
           providerData: user.providerData,
           admin: false,
           signOut: this.signOut

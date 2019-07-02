@@ -55,6 +55,7 @@ function Stores ({ fav, user, initializing }) {
         <Grid container spacing={3}>
           {!initializing &&
             user &&
+            !error &&
             stores &&
             stores.map(store => (
               <Grid item key={store.id} lg={3} md={4} sm={6} xs={12}>

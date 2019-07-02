@@ -1,3 +1,5 @@
+import md5 from 'md5'
+
 /**
  * Loop over an array asynchronously.
  * @param {array} array - the array to loop over.
@@ -27,6 +29,13 @@ export async function asyncLoop (array, callback) {
 //     reader.readAsDataURL(file)
 //   })
 // }
+
+/**
+ * Returns the gravatar url for the given email
+ * @param {string} email - The email to get the avatar from.
+ */
+export const gravatar = email =>
+  `https://www.gravatar.com/avatar/${md5(email)}?d=mp`
 
 /**
  * Slugify a name.
