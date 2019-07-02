@@ -14,19 +14,19 @@ service cloud.firestore {
     function lessThanLimit(limit) {
       return request.query.limit <= limit;
     }
+    match /{document=**} {
+      allow read, write: if false;
+    }
     match /stores/{storeId} {
       allow get: if isAdmin() || isOwner() || (!resource.data.archived && resource.data.status == 'online');
       allow list: if (isAdmin() || isOwner()) && lessThanLimit(10);
       allow create: if isAuth();
       allow update: if isAdmin() || isOwner();
-      allow delete: if false;
     }
     match /users/{userId} {
-      allow get: if isAdmin() || request.auth.uid == userId;
+      allow get, update: if isAdmin() || request.auth.uid == userId;
       allow list: if isAdmin() && lessThanLimit(10);
       allow create: if isAuth();
-      allow update: if isAdmin() || request.auth.uid == userId;
-      allow delete: if false;
     }
   }
 }
