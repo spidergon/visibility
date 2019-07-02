@@ -6,7 +6,7 @@ Object {
   "baseElement": <body>
     <div>
       <header
-        class="opaque sc-bdVaJa iUtKEW"
+        class="sc-bdVaJa iUtKEW"
       >
         <div
           class="content grid"
@@ -54,7 +54,7 @@ Object {
   </body>,
   "container": <div>
     <header
-      class="opaque sc-bdVaJa iUtKEW"
+      class="sc-bdVaJa iUtKEW"
     >
       <div
         class="content grid"

@@ -4,7 +4,7 @@ import Header from '../Header'
 
 describe('<Header/>', () => {
   it('renders correctly', () => {
-    const tree = render(<Header siteTitle='Visibility' />)
+    const tree = render(<Header pathname='/' siteTitle='Visibility' />)
     expect(tree).toMatchSnapshot()
   })
 })

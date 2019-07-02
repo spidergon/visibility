@@ -13,10 +13,14 @@ const FirebaseProvider = ({ children }) => {
     const db = import('firebase/firestore')
     const storage = import('firebase/storage')
 
-    Promise.all([app, auth, db, storage]).then(values => {
-      const newFirebase = getFirebase(values[0])
-      setFirebase(newFirebase)
-    })
+    Promise.all([app, auth, db, storage])
+      .then(values => {
+        const newFirebase = getFirebase(values[0])
+        setFirebase(newFirebase)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }, [])
 
   return (

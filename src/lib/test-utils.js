@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import { render } from '@testing-library/react'
 import { ThemeProvider } from 'styled-components'
 import { theme, Style } from '../components/Style'
+import { GlobalStateProvider } from '../lib/state'
 
 const AllTheProviders = ({ children }) => (
   <ThemeProvider theme={theme}>
     <>
       <Style />
-      {children}
+      <GlobalStateProvider>{children}</GlobalStateProvider>
     </>
   </ThemeProvider>
 )
