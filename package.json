@@ -27,7 +27,7 @@
     "draft-js": "^0.11.0",
     "draftjs-to-html": "^0.8.4",
     "firebase": "6.5.0",
-    "gatsby": "^2.15.6",
+    "gatsby": "^2.18.10",
     "gatsby-background-image": "^0.8.9",
     "gatsby-image": "^2.2.17",
     "gatsby-plugin-create-client-paths": "^2.1.6",
