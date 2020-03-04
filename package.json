@@ -15,7 +15,9 @@
     "fire:storage": "firebase deploy --only storage",
     "fire:rules": "firebase deploy --only firestore:rules",
     "fire:indexes": "firebase deploy --only firestore:indexes",
-    "fire:serve": "firebase serve --only hosting"
+    "fire:serve": "firebase serve --only hosting",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "dependencies": {
     "@material-ui/core": "^4.4.0",
@@ -52,7 +54,8 @@
     "react-leaflet": "^2.4.0",
     "react-router-dom": "^5.0.1",
     "slugify": "^1.3.4",
-    "styled-components": "^4.3.2"
+    "styled-components": "^4.3.2",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -87,5 +90,6 @@
   "homepage": "https://github.com/spidergon/visibility#readme",
   "bugs": {
     "url": "https://github.com/spidergon/visibility/issues"
-  }
+  },
+  "snyk": true
 }
